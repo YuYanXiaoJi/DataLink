@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="adevs.h" />
+    <ClInclude Include="adevs_abstract_simulator.h" />
+    <ClInclude Include="adevs_bag.h" />
+    <ClInclude Include="adevs_cellspace.h" />
+    <ClInclude Include="adevs_corrected_euler.h" />
+    <ClInclude Include="adevs_digraph.h" />
+    <ClInclude Include="adevs_event_listener.h" />
+    <ClInclude Include="adevs_event_locators.h" />
+    <ClInclude Include="adevs_exception.h" />
+    <ClInclude Include="adevs_fmi.h" />
+    <ClInclude Include="adevs_hybrid.h" />
+    <ClInclude Include="adevs_models.h" />
+    <ClInclude Include="adevs_msg_manager.h" />
+    <ClInclude Include="adevs_poly.h" />
+    <ClInclude Include="adevs_qemu.h" />
+    <ClInclude Include="adevs_rand.h" />
+    <ClInclude Include="adevs_rk_45.h" />
+    <ClInclude Include="adevs_sched.h" />
+    <ClInclude Include="adevs_set.h" />
+    <ClInclude Include="adevs_simpledigraph.h" />
+    <ClInclude Include="adevs_simulator.h" />
+    <ClInclude Include="adevs_time.h" />
+    <ClInclude Include="adevs_wrapper.h" />
+    <ClInclude Include="object_pool.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="poly.cpp" />
+    <ClCompile Include="rv.cpp" />
+  </ItemGroup>
+</Project>
