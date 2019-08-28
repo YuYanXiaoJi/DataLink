@@ -30,7 +30,8 @@ namespace utility::sync {
 
 		void erase(const Key& inputKey) {
 			std::lock_guard<std::mutex> lock(map_mutex_);
-			std_map_.erase(inputKey);
+			if(std_map_.find(inputKey)!= std_map_.end())
+				std_map_.erase(inputKey);
 		}
 
 		bool try_get(const Key& inputKey, T& value) {

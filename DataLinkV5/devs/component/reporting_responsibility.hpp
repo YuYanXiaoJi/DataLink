@@ -2,12 +2,16 @@
 #include"../ju_component.hpp"
 #include"../../utility/utility.hpp"
 namespace devs::component {
-	class RuleA
+
+	// 只处理 set_r2 & rm_r2
+	class R2 
 		: JuComponent
 	{
 
 	public:
-		RuleA(Ju& ju, Digraph& _digraph, const std::string&_name, PortType _uid);
+		R2(Ju& ju, Digraph& _digraph, const std::string&_name, PortType _uid);
+
+		FUNC_MakeShared(R2);
 
 		// 通过 JuComponent 继承
 		virtual void delta_int() override;
@@ -15,15 +19,10 @@ namespace devs::component {
 		virtual void output_func(IO_Bag & yb) override;
 		virtual devs::TimeType ta() override;
 
-		//static inline std::shared_ptr<RuleA> 
-		//	make_shared(Ju& ju, Digraph& digraph, const std::string&name, PortType uid)
-		//{
-		//	return std::make_shared<RuleA>(ju, digraph, name, uid);
-		//}
-		FUNC_MakeShared(RuleA)
+		
 	public:
-		std::list<IO_Type> buffer_list;
+		std::list<msg::LocalCmd> local_cmd_list;
 	};
 	//const auto CreatSptrRuleA = RuleA::make_shared;
-	FUNC_CreatSptr(RuleA);
+	FUNC_CreatSptr(R2);
 }

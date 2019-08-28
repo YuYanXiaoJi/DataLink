@@ -6,6 +6,7 @@
 #include<memory>
 #include<any>
 namespace devs {
+	class JuComponent;
 	class Ju
 		:public AtomicAbstract
 	{
@@ -20,14 +21,15 @@ namespace devs {
 		// usage:  auto [is_exist_at, is_exist_rt, is_exist_r2] = GetExist(track_name); 
 		std::tuple<bool, bool, bool> GetExist(const std::string& track_name);
 
-		void AddComponent(const std::string& name, std::any sptr_component);
+		template<class Ty>
+		void AddComponent(const std::string& name, const shared_ptr<Ty>& sptr_component);
 
 	public:
 		
 		std::list<IO_Type>	buffer_list;			//从 hub 接收的消息 全部保存在这里. 立即通过 output 进行触发
 		std::map<std::string, std::any> map_component;	//
 		
-		msg::TimeSlice		current_time_silce;		//保存 接收到的时间片信息
+		msg::TimeSlice		time_silce;			//保存 接收到的时间片信息
 		
 
 		//		
@@ -37,24 +39,29 @@ namespace devs {
 	public:
 		//与Component 传输使用
 		const PortType		port_self_recv;			//内部使用的接收端口
+		const PortType		port_self_recv_to_transpond;//接收 component的消息,在通过port_broadcast_send转发出去
 		const PortType		port_self_send_cmd;		//CMD 转发
 		const PortType		port_self_send_at;		//Active Track 消息转发
 		const PortType		port_self_send_j3;		//J_3 消息转发
 		const PortType		port_self_send_j7;		//J_7 消息转发
 		const PortType		port_self_send_ts;		//TimeSlice 消息转发
-
-		//主要传递 AT 消息
+		
+		
+														//主要传递 AT 消息
 		const PortType		port_private_recv;		//与广播1v1接收端口
 		//主要 传送 J 消息
 		const PortType		port_broadcast_send;	//广播发送端口 
 		const PortType		port_broadcast_recv;	//广播接收端口 
-
+		
 	public:
 		// 通过 AtomicAbstract 继承
 		virtual void delta_int() override;
 		virtual void delta_ext(devs::TimeType e, const IO_Bag & xb) override;
 		virtual void output_func(IO_Bag & yb) override;
 		virtual devs::TimeType ta() override;
+
+	private:
+		void _deal_time_slice_msg(const util::SptrBlob& sptr_ts_blob, IO_Bag & yb);
 	};
 
 	inline auto CreatSptrJu(Digraph& _digraph, const std::string&_name, uint64_t _uid) {
@@ -62,6 +69,12 @@ namespace devs {
 	}
 
 	typedef std::shared_ptr<Ju> SptrJu;
+	template<class Ty>
+	inline void Ju::AddComponent(const std::string & name, const shared_ptr<Ty>& sptr_component)
+	{
+		assert(std::dynamic_pointer_cast<JuComponent>(sptr_component) == nullptr/*必须为JuComponent子类*/);
+		map_component[name] = sptr_component;
+	}
 }
 
 
@@ -92,7 +105,7 @@ struct devs::Ju::TrackInformation
 		time_msec = at.time_msec;
 	}
 
-	explicit TrackInformation(const msg::JointMsg3_0I& j30i) {
+	explicit TrackInformation(const msg::JointMsg3I& j30i) {
 		track_number = j30i.track_number;
 		from_sut_name = j30i.from_sut_name;
 		track_platform = j30i.track_platform;
@@ -105,14 +118,14 @@ struct devs::Ju::TrackInformation
 		return Ty();
 	}
 
-	template <> inline msg::JointMsg3_0I get(TimeType _time, bool is_new_info) {
+	template <> inline msg::JointMsg3I get(TimeType _time, bool is_new_info) {
 
 		std::string t_track_number = this->track_number;
 		if (is_new_info)
 			t_track_number = util::TrackNumberHandler::Create(
 				util::TrackNumberHandler::GetName(t_track_number));
 
-		auto ojb = msg::JointMsg3_0I(
+		auto ojb = msg::JointMsg3I(
 			t_track_number.c_str(),
 			this->from_sut_name.c_str(),
 			this->track_platform,

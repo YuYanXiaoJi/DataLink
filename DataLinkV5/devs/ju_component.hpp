@@ -13,6 +13,7 @@ namespace devs {
 			:AtomicAbstract(_digraph, _name, _uid)
 			, parent(ju)
 			, port_self_send(util::NextUid())
+			, port_self_send_to_transpond(util::NextUid())
 			, port_self_recv_cmd(util::NextUid())
 			, port_self_recv_at(util::NextUid())
 			, port_self_recv_j3(util::NextUid())
@@ -20,6 +21,7 @@ namespace devs {
 			, port_self_recv_ts(util::NextUid())
 		{
 			digraph.couple(this, this->port_self_send, &ju, ju.port_self_recv); //发送给Ju
+			digraph.couple(this, this->port_self_send_to_transpond, &ju, ju.port_self_recv_to_transpond); //发送给Ju
 
 			digraph.couple(&ju, ju.port_self_send_cmd, this, this->port_self_recv_cmd);
 			digraph.couple(&ju, ju.port_self_send_at, this, this->port_self_recv_at);
@@ -39,12 +41,18 @@ namespace devs {
 
 		//与Component 传输使用
 		const PortType		port_self_send;			//内部使用的接收端口
+		const PortType		port_self_send_to_transpond;	
 
 		const PortType		port_self_recv_cmd;		//CMD 转发
 		const PortType		port_self_recv_at;		//Active Track 消息转发
 		const PortType		port_self_recv_j3;		//J_3 消息转发
 		const PortType		port_self_recv_j7;		//J_7 消息转发
 		const PortType		port_self_recv_ts;		//TimeSlice 消息转发
-
+		
 	};
+
 }
+
+#define FUNC_MakeShared(CLASS_NAME) static inline auto	make_shared(Ju& ju, Digraph& digraph, const std::string&name, PortType uid)	{return std::make_shared<CLASS_NAME>(ju, digraph, name, uid);};
+
+#define FUNC_CreatSptr(CLASS_NAME)	const auto CreatSptr##CLASS_NAME=CLASS_NAME::make_shared;

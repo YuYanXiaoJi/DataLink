@@ -27,7 +27,7 @@ int main() {
 		devs::msg::Platform_AIR, 8, 1000
 	);
 
-	auto j30i_1 = devs::msg::JointMsg3_0I(
+	auto j30i_1 = devs::msg::JointMsg3I(
 		util::TrackNumberHandler::Create("Ultraman").c_str(),
 		"ju-3", devs::msg::Platform_AIR, 8, 400);
 

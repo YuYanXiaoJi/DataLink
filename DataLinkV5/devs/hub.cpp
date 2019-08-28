@@ -5,7 +5,7 @@ devs::Hub::Hub(Digraph & _digraph, const std::string & _name, uint64_t _uid)
 	, port_broadcast_send(util::NextUid())
 	, port_broadcast_recv(util::NextUid())
 {
-	//push_buffer(0, port_abandon, next_tdma_frame());
+	this->_PushNextTimeSlice();
 }
 
 void devs::Hub::add_ju(SptrJu sptr_ju)
