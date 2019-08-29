@@ -1,11 +1,15 @@
 #include "ju.hpp"
-#include"ju_component.hpp"
-#include"component/RuleA.hpp"
-#include"component/rule_broadcast.hpp"
-#include"component/reporting_responsibility.hpp"
-#include"component/RuleC.hpp"
-#include"component/RuleD.hpp"
-#include"component/RuleE.hpp"
+#include "ju_component.hpp"
+#include "global_time.hpp"
+#include "component/RuleA.hpp"
+#include "component/rule_broadcast.hpp"
+#include "component/reporting_responsibility.hpp"
+#include "component/RuleC.hpp"
+#include "component/RuleD.hpp"
+#include "component/RuleE.hpp"
+
+#define USE_SUB_TIME_SLICE true
+
 std::shared_ptr<devs::Ju> devs::Ju::make_shared(devs::Digraph & _digraph, const std::string & _name, uint64_t _uid)
 {
 	return std::make_shared<devs::Ju>(_digraph, _name, _uid);
@@ -24,7 +28,6 @@ devs::Ju::Ju(Digraph & _digraph, const std::string & _name, uint64_t _uid)
 	, port_broadcast_send(util::NextUid())
 	, port_broadcast_recv(util::NextUid())
 {
-	
 	AddComponent("RuleA", component::CreatSptrRuleA(*this, digraph, "RuleA", util::NextUid()));
 	AddComponent("RuleB", component::CreatSptrRuleBroadcast(*this, digraph, "RuleBroadcast", util::NextUid()));
 	AddComponent("R2"	, component::CreatSptrR2(*this, digraph, "R2", util::NextUid()));
@@ -48,7 +51,16 @@ std::tuple<bool, bool, bool> devs::Ju::GetExist(const std::string & track_name)
 
 void devs::Ju::delta_int()
 {
-	buffer_list.pop_front();
+	if (buffer_list.empty() == false)
+	{
+		buffer_list.pop_front();
+	}
+#if USE_SUB_TIME_SLICE
+	else if (_time_slice_trigger_queue.empty() == false)
+	{
+		_time_slice_trigger_queue.pop();
+	}
+#endif
 }
 
 void devs::Ju::delta_ext(devs::TimeType e, const IO_Bag & xb)
@@ -98,68 +110,94 @@ void devs::Ju::delta_ext(devs::TimeType e, const IO_Bag & xb)
 
 void devs::Ju::output_func(IO_Bag & yb)
 {
-	auto&y = buffer_list.front();
-	auto& blob = *y.value;
+	if (buffer_list.empty() == false) {
+		auto&y = buffer_list.front();
+		auto& blob = *y.value;
 
-	if (y.port == this->port_broadcast_recv 
-		|| y.port == this->port_self_recv 
-		|| y.port == this->port_private_recv) 
-	{
-		switch (blob[0])
+		if (y.port == this->port_broadcast_recv
+			|| y.port == this->port_self_recv
+			|| y.port == this->port_private_recv)
 		{
-		case msg::Msg_ActiveTrack:
-		{
-			std::cout << name << "\t" << "Message::ActiveTrack" << std::endl;
-			yb.insert(IO_Type{ port_self_send_at,y.value });
-			break;
-		}
+			switch (blob[0])
+			{
+			case msg::Msg_ActiveTrack:
+			{
+				std::cout << name << "\t" << "Message::ActiveTrack" << std::endl;
+				yb.insert(IO_Type{ port_self_send_at,y.value });
+				break;
+			}
 
-		case msg::Msg_JointMsg3I:
-		{
-			std::cout << name << "\t" << "Message::JointMsg3I" << std::endl;
-			yb.insert(IO_Type{ port_self_send_j3,y.value });
-			break;
+			case msg::Msg_JointMsg3I:
+			{
+				std::cout << name << "\t" << "Message::JointMsg3I" << std::endl;
+				yb.insert(IO_Type{ port_self_send_j3,y.value });
+				break;
+			}
+			case msg::Msg_JointMsg7I:
+			{
+				std::cout << name << "\t" << "Message::JointMsg7I" << std::endl;
+				yb.insert(IO_Type{ port_self_send_j7,y.value });
+				break;
+			}
+			case msg::Msg_LocalMsg:
+			{
+				std::cout << name << "\t" << "Message::LocalMsg" << std::endl;
+				yb.insert(IO_Type{ port_self_send_cmd,y.value });
+				break;
+			}
+			case msg::Msg_TimeSilce:
+			{
+				this->_deal_time_slice_msg(y.value, yb);
+				//std::cout << name << "\t" << "Message::TimeSilce\t" << _time_slice_trigger_queue.size()<<  std::endl;
+				break;
+			}
+			default:
+			{
+				std::cout << name << "\t" << "Message::Unkown" << std::endl;
+				break;
+			}
+			}
 		}
-		case msg::Msg_JointMsg7I:
-		{
-			std::cout << name << "\t" << "Message::JointMsg7I" << std::endl;
-			yb.insert(IO_Type{ port_self_send_j7,y.value });
-			break;
-		}
-		case msg::Msg_LocalMsg:
-		{
-			std::cout << name << "\t" << "Message::LocalMsg" << std::endl;
-			yb.insert(IO_Type{ port_self_send_cmd,y.value });
-			break;
-		}
-		case msg::Msg_TimeSilce:
-		{
-			//std::cout << name << "\t" << "Message::TimeSilce" << std::endl;
-			this->_deal_time_slice_msg(y.value, yb);
-			break;
-		}
-		default:
-		{
-			std::cout << name << "\t" << "Message::Unkown" << std::endl;
-			break;
-		}
+		else if (y.port == this->port_self_recv_to_transpond) {
+			yb.insert(IO_Type(port_broadcast_send, y.value));
 		}
 	}
-	else if (y.port == this->port_self_recv_to_transpond) {
-		yb.insert(IO_Type(port_broadcast_send, y.value));
+#if USE_SUB_TIME_SLICE
+	else if(_time_slice_trigger_queue.empty() == false){
+		yb.insert(_time_slice_trigger_queue.top().io_buffer);
 	}
-	
+#endif
 }
 
 devs::TimeType devs::Ju::ta()
 {
-	return buffer_list.empty()*TIME_MAX;
+	if (buffer_list.empty()==false) {
+		return 0;
+	}
+#if USE_SUB_TIME_SLICE
+	else if(_time_slice_trigger_queue.empty()==false){
+		return  global::distance(_time_slice_trigger_queue.top().schedule_time);
+	}
+#endif
+	else {
+		return TIME_MAX;
+	}
 }
 
 void devs::Ju::_deal_time_slice_msg(const util::SptrBlob & sptr_ts_blob, IO_Bag & yb)
 {
 	auto ts = sptr_ts_blob->get<msg::TimeSlice>();
 	this->time_silce = ts;
+
 	yb.insert(IO_Type(port_self_send_ts, sptr_ts_blob));
+
+
+#if USE_SUB_TIME_SLICE
+	//for (auto t = ts.begin_time; t < ts.end_time; t += _time_slice_trigger_interval) {
+	//	_time_slice_trigger_queue.push(ScheduleBufferNode(t, port_self_send_ts, sptr_ts_blob));
+	//}
+#else
+	yb.insert(IO_Type(port_self_send_ts, sptr_ts_blob));
+#endif
 }
 

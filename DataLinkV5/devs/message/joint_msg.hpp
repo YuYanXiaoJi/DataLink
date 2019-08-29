@@ -59,7 +59,7 @@ namespace devs::message {
 		}
 	};
 
-	struct JointMsg7_0I :
+	struct JointMsg7I :
 		public JointMsgBase
 	{
 
@@ -72,7 +72,7 @@ namespace devs::message {
 		// 报文的创造时间
 		TimeType	time_msec;
 
-		JointMsg7_0I(
+		JointMsg7I(
 			const char* _track_number, const char* _from_sut_name, uint8_t _action,
 			TimeType _time_msec)
 			:JointMsgBase("J7", "0I", Msg_JointMsg7I)
@@ -83,7 +83,7 @@ namespace devs::message {
 			time_msec = _time_msec;
 		}
 
-		inline bool operator < (const JointMsg7_0I& obj) const {
+		inline bool operator < (const JointMsg7I& obj) const {
 			return track_number < obj.track_number;
 		}
 	};

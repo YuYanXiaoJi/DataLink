@@ -1,5 +1,6 @@
 #include "RuleD.hpp"
 #include"../../utility/utility.hpp"
+#include"../global_time.hpp"
 devs::component::RuleD::RuleD(Ju & ju, Digraph & _digraph, const std::string & _name, PortType _uid)
 	:JuComponent(ju, _digraph, _name, _uid)
 {
@@ -26,8 +27,16 @@ void devs::component::RuleD::output_func(IO_Bag & yb)
 	auto[is_exist_at, is_exist_rt, is_exist_r2] = parent.GetExist(track_name);
 	if (is_exist_at && is_exist_rt && is_exist_r2 == false) {
 		if (j3.track_quality == 0) {
-			yb.insert(IO_Type(port_self_recv_cmd,
+
+			yb.insert(IO_Type(port_self_send,
 				util::CreateSptrBlob(msg::LocalCmd(msg::CMD_SET_R2, track_name.c_str()))
+			));
+			//发送J7_ACT=0的消息 
+			yb.insert(IO_Type(
+				port_self_send_to_transpond,
+				util::CreateSptrBlob(
+					msg::JointMsg7I(track_name.c_str(), parent.name.c_str(), 0, global::global_msec)
+				)
 			));
 		}
 	}

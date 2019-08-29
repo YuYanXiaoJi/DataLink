@@ -10,6 +10,9 @@ namespace devs {
 	class Ju
 		:public AtomicAbstract
 	{
+	private:
+		struct ScheduleBufferNode;
+
 	public :
 		// J3 AT 的数据最后都到这里
 		struct TrackInformation;
@@ -61,6 +64,9 @@ namespace devs {
 		virtual devs::TimeType ta() override;
 
 	private:
+		const TimeType	_time_slice_trigger_interval =20;
+		util::MinPriorityQueue<ScheduleBufferNode>	_time_slice_trigger_queue;
+	
 		void _deal_time_slice_msg(const util::SptrBlob& sptr_ts_blob, IO_Bag & yb);
 	};
 
@@ -137,5 +143,30 @@ struct devs::Ju::TrackInformation
 		if (_time > 0)
 			ojb.time_msec = _time;
 		return ojb;
+	}
+};
+
+
+struct devs::Ju::ScheduleBufferNode
+{
+	TimeType	schedule_time;//发送时间
+	IO_Type		io_buffer;
+
+	ScheduleBufferNode(TimeType _schedule_time, IO_Type _io_buffer) {
+		schedule_time = _schedule_time;
+		io_buffer = _io_buffer;
+	}
+
+	ScheduleBufferNode(TimeType _schedule_time, PortType _port, util::SptrBlob _sptr_blob) {
+		schedule_time = _schedule_time;
+		io_buffer = IO_Type(_port, _sptr_blob);
+	}
+
+	bool operator < (const ScheduleBufferNode& other)const {
+		return schedule_time < other.schedule_time;
+	}
+
+	bool operator > (const ScheduleBufferNode& other)const {
+		return schedule_time > other.schedule_time;
 	}
 };

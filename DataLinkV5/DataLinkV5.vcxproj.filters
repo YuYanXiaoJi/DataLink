@@ -98,6 +98,15 @@
     <ClInclude Include="devs\handler.hpp">
       <Filter>头文件\devs</Filter>
     </ClInclude>
+    <ClInclude Include="devs\component\RuleC.hpp">
+      <Filter>头文件\devs\component</Filter>
+    </ClInclude>
+    <ClInclude Include="devs\component\RuleD.hpp">
+      <Filter>头文件\devs\component</Filter>
+    </ClInclude>
+    <ClInclude Include="devs\component\RuleE.hpp">
+      <Filter>头文件\devs\component</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
@@ -114,6 +123,15 @@
       <Filter>源文件\devs\component</Filter>
     </ClCompile>
     <ClCompile Include="devs\component\reporting_responsibility.cpp">
+      <Filter>源文件\devs\component</Filter>
+    </ClCompile>
+    <ClCompile Include="devs\component\RuleC.cpp">
+      <Filter>源文件\devs\component</Filter>
+    </ClCompile>
+    <ClCompile Include="devs\component\RuleD.cpp">
+      <Filter>源文件\devs\component</Filter>
+    </ClCompile>
+    <ClCompile Include="devs\component\RuleE.cpp">
       <Filter>源文件\devs\component</Filter>
     </ClCompile>
   </ItemGroup>

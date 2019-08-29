@@ -132,6 +132,9 @@
   <ItemGroup>
     <ClInclude Include="devs\atomic.hpp" />
     <ClInclude Include="devs\component\reporting_responsibility.hpp" />
+    <ClInclude Include="devs\component\RuleC.hpp" />
+    <ClInclude Include="devs\component\RuleD.hpp" />
+    <ClInclude Include="devs\component\RuleE.hpp" />
     <ClInclude Include="devs\component\rule_broadcast.hpp" />
     <ClInclude Include="devs\component\RuleA.hpp" />
     <ClInclude Include="devs\handler.hpp" />
@@ -155,6 +158,9 @@
   <ItemGroup>
     <ClCompile Include="devs\component\reporting_responsibility.cpp" />
     <ClCompile Include="devs\component\RuleA.cpp" />
+    <ClCompile Include="devs\component\RuleC.cpp" />
+    <ClCompile Include="devs\component\RuleD.cpp" />
+    <ClCompile Include="devs\component\RuleE.cpp" />
     <ClCompile Include="devs\component\rule_broadcast.cpp" />
     <ClCompile Include="devs\hub.cpp" />
     <ClCompile Include="devs\ju.cpp" />

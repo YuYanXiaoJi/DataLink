@@ -1,5 +1,5 @@
 #include "RuleC.hpp"
-
+#include"../global_time.hpp"
 devs::component::RuleC::RuleC(Ju & ju, Digraph & _digraph, const std::string & _name, PortType _uid)
 	:JuComponent(ju, _digraph, _name, _uid)
 {
@@ -33,11 +33,18 @@ void devs::component::RuleC::output_func(IO_Bag & yb)
 			auto attn = parent.dict_active_track[track_name];
 
 			if (attn.track_quality - rttn.track_quality >= kThresholdTQ) {
-				yb.insert(IO_Type(port_self_recv_cmd,
+				yb.insert(IO_Type(port_self_send,
 					util::CreateSptrBlob(msg::LocalCmd(msg::CMD_SET_R2, track_name.c_str()))
 				));
 
 
+				//发送J7_ACT=0的消息 
+				yb.insert(IO_Type(
+					port_self_send_to_transpond,
+					util::CreateSptrBlob(
+						msg::JointMsg7I(track_name.c_str(), parent.name.c_str(), 0, global::global_msec)
+					)
+				));
 			}
 		}
 	}

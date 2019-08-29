@@ -50,7 +50,6 @@ void devs::component::RuleE::delta_ext(devs::TimeType e, const IO_Bag & xb)
 				priority_event_queue.remove(iter);
 			}
 		}
-
 	}
 }
 
@@ -58,10 +57,16 @@ void devs::component::RuleE::delta_ext(devs::TimeType e, const IO_Bag & xb)
 void devs::component::RuleE::output_func(IO_Bag & yb)
 {
 	auto e = priority_event_queue.top();
-	
-	yb.insert(IO_Type(port_self_recv_cmd,
+	yb.insert(IO_Type(port_self_send,
 		util::CreateSptrBlob(msg::LocalCmd(msg::CMD_SET_R2, e.track_name.c_str()))
 	));
-	
+	//发送J7_ACT=0的消息 
+	yb.insert(IO_Type(
+		port_self_send_to_transpond,
+		util::CreateSptrBlob(
+			msg::JointMsg7I(e.track_name.c_str(), parent.name.c_str(), 0, global::global_msec)
+		)
+	));
+
 }
 
