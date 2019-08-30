@@ -5,6 +5,7 @@ namespace devs::message {
 		Msg_JointMsgBase,
 		Msg_JointMsg3I, 
 		Msg_JointMsg7I,
+		Msg_JointMsg2I,
 		//////////////////////
 		Msg_ActiveTrack,
 		Msg_MissingTrack,

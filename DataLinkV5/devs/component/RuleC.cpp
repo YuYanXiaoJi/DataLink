@@ -36,8 +36,6 @@ void devs::component::RuleC::output_func(IO_Bag & yb)
 				yb.insert(IO_Type(port_self_send,
 					util::CreateSptrBlob(msg::LocalCmd(msg::CMD_SET_R2, track_name.c_str()))
 				));
-
-
 				//发送J7_ACT=0的消息 
 				yb.insert(IO_Type(
 					port_self_send_to_transpond,
@@ -45,6 +43,7 @@ void devs::component::RuleC::output_func(IO_Bag & yb)
 						msg::JointMsg7I(track_name.c_str(), parent.name.c_str(), 0, global::global_msec)
 					)
 				));
+
 			}
 		}
 	}

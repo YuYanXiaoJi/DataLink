@@ -27,7 +27,6 @@ void devs::component::RuleD::output_func(IO_Bag & yb)
 	auto[is_exist_at, is_exist_rt, is_exist_r2] = parent.GetExist(track_name);
 	if (is_exist_at && is_exist_rt && is_exist_r2 == false) {
 		if (j3.track_quality == 0) {
-
 			yb.insert(IO_Type(port_self_send,
 				util::CreateSptrBlob(msg::LocalCmd(msg::CMD_SET_R2, track_name.c_str()))
 			));

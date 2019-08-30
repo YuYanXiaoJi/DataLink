@@ -10,15 +10,12 @@ namespace devs {
 	class Ju
 		:public AtomicAbstract
 	{
-	private:
-		struct ScheduleBufferNode;
-
 	public :
 		// J3 AT 的数据最后都到这里
 		struct TrackInformation;
-		static std::shared_ptr<Ju> make_shared(Digraph& _digraph, const std::string&_name, uint64_t _uid);
+		static std::shared_ptr<Ju> make_shared(Digraph& _digraph, const std::string&_name, uint64_t _uid, int32_t _uSTN);
 	public:
-		Ju(Digraph& _digraph, const std::string&_name, uint64_t _uid);
+		Ju(Digraph& _digraph, const std::string&_name, uint64_t _uid, int32_t _uSTN);
 
 		// used only c++17 or more than
 		// usage:  auto [is_exist_at, is_exist_rt, is_exist_r2] = GetExist(track_name); 
@@ -47,6 +44,7 @@ namespace devs {
 		const PortType		port_self_send_at;		//Active Track 消息转发
 		const PortType		port_self_send_j3;		//J_3 消息转发
 		const PortType		port_self_send_j7;		//J_7 消息转发
+		const PortType		port_self_send_j2;		//J_2 消息转发
 		const PortType		port_self_send_ts;		//TimeSlice 消息转发
 		
 		
@@ -55,6 +53,8 @@ namespace devs {
 		//主要 传送 J 消息
 		const PortType		port_broadcast_send;	//广播发送端口 
 		const PortType		port_broadcast_recv;	//广播接收端口 
+	public:
+		int32_t _uSTN;
 		
 	public:
 		// 通过 AtomicAbstract 继承
@@ -62,16 +62,17 @@ namespace devs {
 		virtual void delta_ext(devs::TimeType e, const IO_Bag & xb) override;
 		virtual void output_func(IO_Bag & yb) override;
 		virtual devs::TimeType ta() override;
-
 	private:
-		const TimeType	_time_slice_trigger_interval =20;
+		struct ScheduleBufferNode;
+	private:
+		const TimeType	_time_slice_trigger_interval = 20;
 		util::MinPriorityQueue<ScheduleBufferNode>	_time_slice_trigger_queue;
-	
+
 		void _deal_time_slice_msg(const util::SptrBlob& sptr_ts_blob, IO_Bag & yb);
 	};
 
-	inline auto CreatSptrJu(Digraph& _digraph, const std::string&_name, uint64_t _uid) {
-		return Ju::make_shared(_digraph, _name,_uid);
+	inline auto CreatSptrJu(Digraph& _digraph, const std::string&_name, uint64_t _uid,int32_t uSTN) {
+		return Ju::make_shared(_digraph, _name,_uid, uSTN);
 	}
 
 	typedef std::shared_ptr<Ju> SptrJu;
@@ -91,6 +92,7 @@ struct devs::Ju::TrackInformation
 
 	msg::TrackPlatform track_platform;
 	int32_t		track_quality;
+	int32_t		_uSTN;
 
 	TimeType	time_msec;
 
@@ -117,6 +119,8 @@ struct devs::Ju::TrackInformation
 		track_platform = j30i.track_platform;
 		track_quality = j30i.track_quality;
 		time_msec = j30i.time_msec;
+		_uSTN = j30i._uSTN;
+
 	}
 
 	template<class Ty> inline Ty get(TimeType _time = -1, bool is_new_info = true) {
@@ -136,7 +140,8 @@ struct devs::Ju::TrackInformation
 			this->from_sut_name.c_str(),
 			this->track_platform,
 			this->track_quality,
-			this->time_msec
+			this->time_msec,
+			this->_uSTN
 		);
 
 
@@ -145,7 +150,6 @@ struct devs::Ju::TrackInformation
 		return ojb;
 	}
 };
-
 
 struct devs::Ju::ScheduleBufferNode
 {

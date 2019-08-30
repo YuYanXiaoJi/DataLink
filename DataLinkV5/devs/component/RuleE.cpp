@@ -2,6 +2,7 @@
 #include"../handler.hpp"
 #include "../global_time.hpp"
 #include "../../utility/utility.hpp"
+#include"../global_time.hpp"
 devs::component::RuleE::RuleE(Ju & ju, Digraph & _digraph, const std::string & _name, PortType _uid)
 	:JuComponent(ju, _digraph, _name, _uid)
 {
@@ -50,6 +51,7 @@ void devs::component::RuleE::delta_ext(devs::TimeType e, const IO_Bag & xb)
 				priority_event_queue.remove(iter);
 			}
 		}
+
 	}
 }
 
@@ -57,6 +59,7 @@ void devs::component::RuleE::delta_ext(devs::TimeType e, const IO_Bag & xb)
 void devs::component::RuleE::output_func(IO_Bag & yb)
 {
 	auto e = priority_event_queue.top();
+	
 	yb.insert(IO_Type(port_self_send,
 		util::CreateSptrBlob(msg::LocalCmd(msg::CMD_SET_R2, e.track_name.c_str()))
 	));
@@ -67,6 +70,5 @@ void devs::component::RuleE::output_func(IO_Bag & yb)
 			msg::JointMsg7I(e.track_name.c_str(), parent.name.c_str(), 0, global::global_msec)
 		)
 	));
-
 }
 

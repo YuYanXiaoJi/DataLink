@@ -19,6 +19,7 @@ namespace devs {
 			, port_self_recv_j3(util::NextUid())
 			, port_self_recv_j7(util::NextUid())
 			, port_self_recv_ts(util::NextUid())
+			, port_self_recv_j2(util::NextUid())
 		{
 			digraph.couple(this, this->port_self_send, &ju, ju.port_self_recv); //发送给Ju
 			digraph.couple(this, this->port_self_send_to_transpond, &ju, ju.port_self_recv_to_transpond); //发送给Ju
@@ -28,6 +29,8 @@ namespace devs {
 			digraph.couple(&ju, ju.port_self_send_j3, this, this->port_self_recv_j3);
 			digraph.couple(&ju, ju.port_self_send_j7, this, this->port_self_recv_j7);
 			digraph.couple(&ju, ju.port_self_send_ts, this, this->port_self_recv_ts);
+			digraph.couple(&ju, ju.port_self_send_j2, this, this->port_self_recv_j2);
+
 		}
 	public:
 		// 通过 Atomic 继承
@@ -48,7 +51,7 @@ namespace devs {
 		const PortType		port_self_recv_j3;		//J_3 消息转发
 		const PortType		port_self_recv_j7;		//J_7 消息转发
 		const PortType		port_self_recv_ts;		//TimeSlice 消息转发
-		
+		const PortType		port_self_recv_j2;		//J_2 消息转发
 	};
 
 }

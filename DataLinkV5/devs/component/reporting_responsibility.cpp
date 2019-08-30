@@ -1,5 +1,5 @@
 #include "reporting_responsibility.hpp"
-#include "../global_time.hpp"
+
 devs::component::R2::R2(Ju & ju, Digraph & _digraph, const std::string & _name, PortType _uid)
 	:JuComponent(ju, _digraph, _name, _uid)
 {
@@ -28,18 +28,8 @@ void devs::component::R2::output_func(IO_Bag & yb)
 	}
 	else if (cmd.cmd_id == msg::CMD_SET_R2) {
 		if (parent.dict_r2.exist(cmd.track_name)==false) {
-			parent.dict_r2[cmd.track_name] = global::global_msec;
-			
-			//立即广播出去,无视 TimeSlice 的限制
-			yb.insert(IO_Type(
-				port_self_send_to_transpond,
-				util::CreateSptrBlob(
-					parent.dict_active_track[cmd.track_name].get<msg::JointMsg3I>()
-				)
-			));
-
+			parent.dict_r2[cmd.track_name] = 0;
 		}
-
 	}
 }
 

@@ -1,39 +1,52 @@
 #include "ju.hpp"
-#include "ju_component.hpp"
-#include "global_time.hpp"
-#include "component/RuleA.hpp"
-#include "component/rule_broadcast.hpp"
-#include "component/reporting_responsibility.hpp"
-#include "component/RuleC.hpp"
-#include "component/RuleD.hpp"
-#include "component/RuleE.hpp"
+#include"global_time.hpp"
+#include"ju_component.hpp"
+#include"component/RuleA.hpp"
+#include"component/rule_broadcast.hpp"
+#include"component/reporting_responsibility.hpp"
+#include"component/RuleC.hpp"
+#include"component/RuleD.hpp"
+#include"component/RuleE.hpp"
+#include "component/RuleF.h"
+#include "component/RuleG.h"
+#include "component/RuleH.h"
+#include "component/RuleI.h"
+
 
 #define USE_SUB_TIME_SLICE true
 
-std::shared_ptr<devs::Ju> devs::Ju::make_shared(devs::Digraph & _digraph, const std::string & _name, uint64_t _uid)
+std::shared_ptr<devs::Ju> devs::Ju::make_shared(devs::Digraph & _digraph, const std::string & _name, uint64_t _uid, int32_t _uSTN)
 {
-	return std::make_shared<devs::Ju>(_digraph, _name, _uid);
+	return std::make_shared<devs::Ju>(_digraph, _name, _uid, _uSTN);
 }
 
-devs::Ju::Ju(Digraph & _digraph, const std::string & _name, uint64_t _uid)
+devs::Ju::Ju(Digraph & _digraph, const std::string & _name, uint64_t _uid, int32_t uSTN)
 	:AtomicAbstract(_digraph, _name, _uid)
 	, port_self_recv(util::NextUid())
 	, port_self_recv_to_transpond(util::NextUid())
 	, port_self_send_cmd(util::NextUid())
 	, port_self_send_at(util::NextUid())
+	, port_self_send_j2(util::NextUid())
 	, port_self_send_j3(util::NextUid())
 	, port_self_send_j7(util::NextUid())
 	, port_self_send_ts(util::NextUid())
 	, port_private_recv(util::NextUid())
 	, port_broadcast_send(util::NextUid())
 	, port_broadcast_recv(util::NextUid())
+	, _uSTN (uSTN)
 {
+	
 	AddComponent("RuleA", component::CreatSptrRuleA(*this, digraph, "RuleA", util::NextUid()));
 	AddComponent("RuleB", component::CreatSptrRuleBroadcast(*this, digraph, "RuleBroadcast", util::NextUid()));
 	AddComponent("R2"	, component::CreatSptrR2(*this, digraph, "R2", util::NextUid()));
 	AddComponent("RuleC", component::CreatSptrRuleC(*this, digraph, "RuleC", util::NextUid()));
 	AddComponent("RuleD", component::CreatSptrRuleD(*this, digraph, "RuleD", util::NextUid()));
 	AddComponent("RuleE", component::CreatSptrRuleE(*this, digraph, "RuleE", util::NextUid()));
+
+	AddComponent("RuleF", component::CreatSptrRuleF(*this, digraph, "RuleF", util::NextUid()));
+	AddComponent("RuleG", component::CreatSptrRuleG(*this, digraph, "RuleG", util::NextUid()));
+	AddComponent("RuleH", component::CreatSptrRuleH(*this, digraph, "RuleH", util::NextUid()));
+	AddComponent("RuleI", component::CreatSptrRuleI(*this, digraph, "RuleI", util::NextUid()));
 }
 
 
@@ -99,6 +112,14 @@ void devs::Ju::delta_ext(devs::TimeType e, const IO_Bag & xb)
 				}
 				break;
 			}
+			case msg::Msg_JointMsg2I:
+				{
+					auto& msg = blob.get<msg::JointMsg2I>();
+					if (msg.from_sut_name == this->name) {
+						return; // 自己的发出的消息.无视
+					}
+					break;
+				}
 			default:
 				break;
 			}
@@ -147,8 +168,14 @@ void devs::Ju::output_func(IO_Bag & yb)
 			}
 			case msg::Msg_TimeSilce:
 			{
+				//std::cout << name << "\t" << "Message::TimeSilce" << std::endl;
 				this->_deal_time_slice_msg(y.value, yb);
-				//std::cout << name << "\t" << "Message::TimeSilce\t" << _time_slice_trigger_queue.size()<<  std::endl;
+				break;
+			}
+			case msg::Msg_JointMsg2I:
+			{
+				std::cout << name << "\t" << "Message::JointMsg2I" << std::endl;
+				yb.insert(IO_Type{ port_self_send_j2,y.value });
 				break;
 			}
 			default:
@@ -163,7 +190,7 @@ void devs::Ju::output_func(IO_Bag & yb)
 		}
 	}
 #if USE_SUB_TIME_SLICE
-	else if(_time_slice_trigger_queue.empty() == false){
+	else if (_time_slice_trigger_queue.empty() == false) {
 		yb.insert(_time_slice_trigger_queue.top().io_buffer);
 	}
 #endif
@@ -171,11 +198,11 @@ void devs::Ju::output_func(IO_Bag & yb)
 
 devs::TimeType devs::Ju::ta()
 {
-	if (buffer_list.empty()==false) {
+	if (buffer_list.empty() == false) {
 		return 0;
 	}
 #if USE_SUB_TIME_SLICE
-	else if(_time_slice_trigger_queue.empty()==false){
+	else if (_time_slice_trigger_queue.empty() == false) {
 		return  global::distance(_time_slice_trigger_queue.top().schedule_time);
 	}
 #endif
@@ -188,14 +215,11 @@ void devs::Ju::_deal_time_slice_msg(const util::SptrBlob & sptr_ts_blob, IO_Bag 
 {
 	auto ts = sptr_ts_blob->get<msg::TimeSlice>();
 	this->time_silce = ts;
-
-	yb.insert(IO_Type(port_self_send_ts, sptr_ts_blob));
-
-
+	//yb.insert(IO_Type(port_self_send_ts, sptr_ts_blob));
 #if USE_SUB_TIME_SLICE
-	//for (auto t = ts.begin_time; t < ts.end_time; t += _time_slice_trigger_interval) {
-	//	_time_slice_trigger_queue.push(ScheduleBufferNode(t, port_self_send_ts, sptr_ts_blob));
-	//}
+	for (auto t = ts.begin_time; t < ts.end_time; t += _time_slice_trigger_interval) {
+		_time_slice_trigger_queue.push(ScheduleBufferNode(t, port_self_send_ts, sptr_ts_blob));
+	}
 #else
 	yb.insert(IO_Type(port_self_send_ts, sptr_ts_blob));
 #endif
