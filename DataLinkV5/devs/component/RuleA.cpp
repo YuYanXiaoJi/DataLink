@@ -29,7 +29,6 @@ void devs::component::RuleA::delta_ext(devs::TimeType e, const IO_Bag & xb)
     //ºÏ≤‚ sub_tsœ˚œ¢
     if (x.port == GetSelfRecvSubTS()) {
       isRecvSubTS = true;
-      std::cout << x.value->get<msg::SubTimeSlice>().current_time << endl;
     }
 
   }

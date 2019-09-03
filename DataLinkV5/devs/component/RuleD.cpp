@@ -4,44 +4,46 @@
 devs::component::RuleD::RuleD(Ju & ju, Digraph & _digraph, const std::string & _name, PortType _uid)
   :JuComponent(ju, _digraph, _name, _uid)
 {
+  BindSelfRecvTS();
 }
 
 void devs::component::RuleD::delta_int()
 {
-  j3_sptr_blob_list.pop_front();
+  is_recv_ts = false;
 }
 
 void devs::component::RuleD::delta_ext(devs::TimeType e, const IO_Bag & xb)
 {
   for (auto&x : xb) {
-    if (x.port == this->port_self_recv_j3) {
-      j3_sptr_blob_list.push_back(x.value);
+    if (x.port == GetSelfRecvTS()) {
+      is_recv_ts = true;
     }
   }
 }
 
 void devs::component::RuleD::output_func(IO_Bag & yb)
 {
-  auto& j3 = j3_sptr_blob_list.front()->get<msg::JointMsg3I>();
-  auto track_name = util::TrackNumberHandler::GetName(j3.track_number);
-  auto[is_exist_at, is_exist_rt, is_exist_r2] = parent.GetExist(track_name);
-  if (is_exist_at && is_exist_rt && is_exist_r2 == false) {
-    if (j3.track_quality == 0) {
-      yb.insert(IO_Type(port_self_send,
-        util::CreateSptrBlob(msg::LocalCmd(msg::CMD_SET_R2, track_name.c_str()))
-      ));
-      //发送J7_ACT=0的消息 
-      yb.insert(IO_Type(
-        port_self_send_to_transpond,
-        util::CreateSptrBlob(
+  for (auto[track_name, rttn] : parent.dict_recv_track) {
+    auto[is_exist_at, is_exist_rt, is_exist_r2] = parent.GetExist(track_name);
+    if (is_exist_at && is_exist_rt && is_exist_r2 == false) {
+      if (rttn.track_quality == 0) {// TQ==0
+
+        //SET R2
+        yb.insert(IO_Type(GetSelfSend(),
+          util::CreateSptrBlob(msg::LocalCmd(msg::CMD_SET_R2, track_name.c_str()))
+        ));
+
+        //发送J7_ACT=0的消息 
+        yb.insert(CreatBroadcastIO(util::CreateSptrBlob(
           msg::JointMsg7I(track_name.c_str(), parent.name.c_str(), 0, Time::now())
-        )
-      ));
-    }
-  }
+        )));
+      }//IF
+    }//IF
+  }//FOR
+
 }
 
 devs::TimeType devs::component::RuleD::ta()
 {
-  return j3_sptr_blob_list.empty()*TIME_MAX;
+  return (is_recv_ts==false)*TIME_MAX;
 }

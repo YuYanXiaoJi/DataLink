@@ -4,9 +4,8 @@
 namespace devs::component {
 
   /*
-    获得AT时候,将track_name放进缓冲队列中.
-    在
-
+    获得LT时候,将track_name放进缓冲队列中.
+    随后,由Sub Time Slice触发,再进行判别
   */
   class RuleA
     : JuComponent

@@ -31,7 +31,7 @@ int main() {
     util::TrackNumberHandler::Create("Ultraman").c_str(),
     "ju-3", devs::msg::Platform_AIR, 8, 400,10);
 
-  //hub.push_buffer(10000, hub.map_private_recv_port[ju_1->uid], at_1);
+  hub.push_buffer(10000, hub.map_private_recv_port[ju_1->uid], at_1);
   //hub.push_buffer(11000, hub.port_broadcast_send, j30i_1);
   //hub.push_buffer(1500, hub.map_private_recv_port[ju_2->uid], at_2);
 

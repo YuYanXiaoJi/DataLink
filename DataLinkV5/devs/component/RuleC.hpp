@@ -2,6 +2,12 @@
 #include"../ju_component.hpp"
 #include"../../utility/utility.hpp"
 namespace devs::component {
+
+
+  /*
+    由 LT 或者 TS 触发
+    判断 LT_DICT 和 RT_DICT 中 对应TQ的差值
+  */
   class RuleC
     : JuComponent
   {

@@ -12,11 +12,10 @@
 
 // extend
 #include"component/RuleA.hpp"
+#include"component/RuleC.hpp"
+#include"component/RuleD.hpp"
+#include"component/RuleE.hpp"
 
-
-//#include"component/RuleC.hpp"
-//#include"component/RuleD.hpp"
-//#include"component/RuleE.hpp"
 //#include "component/RuleF.h"
 //#include "component/RuleG.h"
 //#include "component/RuleH.h"
@@ -46,13 +45,19 @@ devs::Ju::Ju(Digraph & _digraph, const std::string & _name, uint64_t _uid, int32
   , portBroadcastRecv(util::NextUid())
   , _uSTN (uSTN)
 {
-  //AddComponent("CORE_R2", component::CreatSptrCoreReportingResponsibilityHandler (*this, digraph, "", util::NextUid()));
-  //AddComponent("CORE_Broadcast", component::CreatSptrCoreBroadcastComponent(*this, digraph, "", util::NextUid()));
-  //AddComponent("CORE_Broadcast_J3", component::CreatSptrCoreJ3BroadcastHandler(*this, digraph, "", util::NextUid()));
+  //AddComponent("Verify", component::CreatSptrVerifyMsgComponent(*this, digraph, "", util::NextUid()));
 
-  AddComponent("Verify", component::CreatSptrVerifyMsgComponent(*this, digraph, "", util::NextUid()));
 
-  //AddComponent("RuleA", component::CreatSptrRuleA(*this, digraph, "", util::NextUid()));
+  AddComponent("CORE_R2", component::CreatSptrCoreReportingResponsibilityHandler (*this, digraph, "", util::NextUid()));
+  AddComponent("CORE_Broadcast", component::CreatSptrCoreBroadcastComponent(*this, digraph, "", util::NextUid()));
+  AddComponent("CORE_Broadcast_J3", component::CreatSptrCoreJ3BroadcastHandler(*this, digraph, "", util::NextUid()));
+
+ 
+
+  AddComponent("RuleA", component::CreatSptrRuleA(*this, digraph, "", util::NextUid()));
+  AddComponent("RuleC", component::CreatSptrRuleC(*this, digraph, "", util::NextUid()));
+  AddComponent("RuleD", component::CreatSptrRuleD(*this, digraph, "", util::NextUid()));
+  AddComponent("RuleE", component::CreatSptrRuleE(*this, digraph, "", util::NextUid()));
 }
 
 
@@ -71,8 +76,7 @@ void devs::Ju::delta_int()
   if (buffer_list.empty() == false)
   {
     buffer_list.pop_front();
-  }
-  else if (_time_slice_trigger_queue.empty() == false  && Time::distance(_time_slice_trigger_queue.top().schedule_time)==0)
+  }else if (_time_slice_trigger_queue.empty() == false  && Time::distance(_time_slice_trigger_queue.top().schedule_time)==0)
   {
     _time_slice_trigger_queue.pop();
   }
@@ -94,12 +98,10 @@ void devs::Ju::delta_ext(devs::TimeType e, const IO_Bag & xb)
         {
           auto ts = blob.get<msg::TimeSlice>();
           this->time_silce = ts;
-#if USE_SUB_TIME_SLICE
           for (auto t = ts.begin_time; t < ts.end_time; t += _time_slice_trigger_interval) {
             auto sptr_sts = util::CreateSptrBlob(msg::SubTimeSlice(ts, t));
             _time_slice_trigger_queue.push(ScheduleBufferNode(t, portSelfSendSubTS, sptr_sts));
           }
-#endif  
           break;
         }
         case msg::MsgType::Msg_LocalTrack:
@@ -207,12 +209,10 @@ void devs::Ju::output_func(IO_Bag & yb)
     else if (y.port == this->portSelfRecvToTranspond) {
       yb.insert(IO_Type(portBroadcastSend, y.value));
     }
-  }
-#if USE_SUB_TIME_SLICE
-  else if (_time_slice_trigger_queue.empty() == false) {
+  }else if (_time_slice_trigger_queue.empty() == false) {
     yb.insert(_time_slice_trigger_queue.top().io_buffer);
   }
-#endif
+
 }
 
 devs::TimeType devs::Ju::ta()
@@ -220,11 +220,9 @@ devs::TimeType devs::Ju::ta()
   if (buffer_list.empty() == false) {
     return 0;
   }
-#if USE_SUB_TIME_SLICE
   else if (_time_slice_trigger_queue.empty() == false) {
     return  Time::distance(_time_slice_trigger_queue.top().schedule_time);
   }
-#endif
   else {
     return TIME_MAX;
   }

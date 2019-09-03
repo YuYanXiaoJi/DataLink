@@ -23,8 +23,7 @@ namespace devs {
     // usage:  auto [is_exist_at, is_exist_rt, is_exist_r2] = GetExist(track_name); 
     std::tuple<bool, bool, bool> GetExist(const std::string& track_name);
 
-    template<class Ty>
-    void AddComponent(const std::string& name, const shared_ptr<Ty>& sptr_component);
+    template<class Ty> void AddComponent(const std::string& name, const shared_ptr<Ty>& sptr_component);
 
   public:
     
@@ -32,8 +31,6 @@ namespace devs {
     std::map<std::string, std::any> map_component;  //
     
     msg::TimeSlice    time_silce;                   //保存 接收到的时间片信息
-    
-
     
     util::sync::Map<std::string, TrackInformation>  dict_active_track;
     util::sync::Map<std::string, TrackInformation>  dict_recv_track;

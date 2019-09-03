@@ -2,30 +2,13 @@
 #include"../ju_component.hpp"
 #include"../../utility/utility.hpp"
 namespace devs::component {
+
+  /*
+    当TS触发时,判断 远程报告是否超时.
+  */
   class RuleE
     : JuComponent
   {
-  public:
-    struct _Event {
-      TimeType  schedule_time;  //发送时间
-      std::string track_name;    //目标
-
-      _Event(TimeType st=TIME_MAX, const std::string& _track_name="") {
-        schedule_time = st;
-        track_name = _track_name;
-      }
-
-      inline bool operator <(const _Event& other)const
-      {
-        return schedule_time < other.schedule_time;
-      }
-
-      inline bool operator >(const _Event& other)const
-      {
-        return schedule_time > other.schedule_time;
-      }
-
-    };
   public:
     RuleE(Ju& ju, Digraph& _digraph, const std::string&_name, PortType _uid);
     _FUNC_MakeShared_(RuleE);
@@ -36,7 +19,7 @@ namespace devs::component {
     virtual void output_func(IO_Bag & yb) override;
     virtual devs::TimeType ta() override;
   private:
-    util::MinPriorityQueue<_Event> priority_event_queue;
+    bool is_recv_ts;
   };
   _FUNC_CreatSptr_(RuleE);
 }

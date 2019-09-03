@@ -2,6 +2,10 @@
 #include"../ju_component.hpp"
 #include"../../utility/utility.hpp"
 namespace devs::component {
+
+  /*
+    由TS触发.在output函数中判断是否TQ==0
+  */
   class RuleD
     : JuComponent
   {
@@ -16,7 +20,7 @@ namespace devs::component {
     virtual void output_func(IO_Bag & yb) override;
     virtual devs::TimeType ta() override;
   private:
-    std::list<util::SptrBlob> j3_sptr_blob_list;
+    bool  is_recv_ts = false;
   };
   _FUNC_CreatSptr_(RuleD);
 }
