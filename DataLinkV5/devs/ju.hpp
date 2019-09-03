@@ -40,25 +40,25 @@ namespace devs {
     util::sync::Map<std::string, TimeType>          dict_r2;
   public:
     //与Component 传输使用
-    const PortType    port_self_recv;                       //内部使用的接收端口
+    const PortType    portSelfRecv;                       //内部使用的接收端口
 
-    const PortType    port_self_recv_to_transpond;          //直接广播 component 想要广播的 数据
+    const PortType    portSelfRecvToTranspond;          //直接广播 component 想要广播的 数据
 
     ///注意: 此port 未在 JuComponent 绑定,需要实现绑定
-    const PortType    port_self_send_to_transpond_buffer;   //将 port_self_recv_to_transpond 的数据转发给 CoreBroadcastComponent
+    const PortType    portSelfSendToTranspondBuffer;   //将 port_self_recv_to_transpond 的数据转发给 CoreBroadcastComponent
 
-    const PortType    port_self_send_cmd;                   //CMD 转发
-    const PortType    port_self_send_at;                    //Active Track 消息转发
-    const PortType    port_self_send_j3;                    //J_3 消息转发
-    const PortType    port_self_send_j7;                    //J_7 消息转发
-    const PortType    port_self_send_j2;                    //J_2 消息转发
-    const PortType    port_self_send_ts;                    //TimeSlice 消息转发
-    const PortType    port_self_send_sub_ts;                //TimeSlice 消息转发
+    const PortType    portSelfSendCmd;                   //CMD 转发
+    const PortType    portSelfSendLT;                    //Local Track 消息转发
+    const PortType    portSelfSendJ3;                    //J_3 消息转发
+    const PortType    portSelfSendJ7;                    //J_7 消息转发
+    const PortType    portSelfSendJ2;                    //J_2 消息转发
+    const PortType    portSelfSendTS;                    //TimeSlice 消息转发
+    const PortType    portSelfSendSubTS;                  //TimeSlice 消息转发
     //主要传递 AT 消息
-    const PortType    port_private_recv;                    //与广播1v1接收端口
+    const PortType    portPrivateRecv;                    //与广播1v1接收端口
     //主要 传送 J 消息
-    const PortType    port_broadcast_send;                  //广播发送端口 
-    const PortType    port_broadcast_recv;                  //广播接收端口 
+    const PortType    portBroadcastSend;                  //广播发送端口 
+    const PortType    portBroadcastRecv;                  //广播接收端口 
   public:
     int32_t _uSTN;
     
@@ -69,10 +69,10 @@ namespace devs {
     virtual void output_func(IO_Bag & yb) override;
     virtual devs::TimeType ta() override;
   private:
+    bool  isUseSubTS = false;
     const TimeType  _time_slice_trigger_interval = 20;
     util::MinPriorityQueue<ScheduleBufferNode>  _time_slice_trigger_queue;
 
-    void _deal_time_slice_msg(const util::SptrBlob& sptr_ts_blob, IO_Bag & yb);
   };
 
   inline auto CreatSptrJu(Digraph& _digraph, const std::string&_name, uint64_t _uid,int32_t uSTN) {
@@ -109,7 +109,7 @@ struct devs::Ju::TrackInformation
     time_msec = -1;
   }
 
-  explicit TrackInformation(const msg::ActiveTrack& at, const std::string& sut_name) {
+  explicit TrackInformation(const msg::LocalTrack& at, const std::string& sut_name) {
     track_number = at.track_number;
     from_sut_name = sut_name;
     track_platform = at.track_platform;

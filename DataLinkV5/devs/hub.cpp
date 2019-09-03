@@ -13,12 +13,12 @@ void devs::Hub::add_ju(SptrJu sptr_ju)
   ary_ju.push_back(sptr_ju);
 
   //绑定广播端口
-  digraph.couple(this, this->port_broadcast_send, sptr_ju.get(), sptr_ju->port_broadcast_recv);  // HUB  -->  JU
-  digraph.couple(sptr_ju.get(), sptr_ju->port_broadcast_send, this, this->port_broadcast_recv);  // JU  -->  HUB
+  digraph.couple(this, this->port_broadcast_send, sptr_ju.get(), sptr_ju->portBroadcastRecv);  // HUB  -->  JU
+  digraph.couple(sptr_ju.get(), sptr_ju->portBroadcastSend, this, this->port_broadcast_recv);  // JU  -->  HUB
 
   //绑定私有端口
   map_private_recv_port[sptr_ju->uid] = util::NextUid();  //生存 HUB 与JU 绑定的端口
-  digraph.couple(this, map_private_recv_port[sptr_ju->uid], sptr_ju.get(), sptr_ju->port_private_recv);  //  HUB(private)->JU(private)
+  digraph.couple(this, map_private_recv_port[sptr_ju->uid], sptr_ju.get(), sptr_ju->portPrivateRecv);  //  HUB(private)->JU(private)
   
 
 }
@@ -32,7 +32,7 @@ void devs::Hub::_PushNextTimeSlice()
     int idx = this->tdma_idx%ary_ju.size();
     port = map_private_recv_port[ary_ju[idx]->uid];
   }
-  auto msg = msg::TimeSlice(tdma_idx*time_division_interval, (tdma_idx + 1)*time_division_interval);
+  auto msg = msg::TimeSlice(tdma_idx*time_division_interval , (tdma_idx + 1)*time_division_interval);
   tdma_idx++;
   push_buffer(msg.begin_time, port, msg);
 }

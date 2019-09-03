@@ -13,16 +13,8 @@ namespace devs {
       :AtomicAbstract(_digraph, _name, _uid)
       , parent(ju)
     {
-      digraph.couple(this, this->port_self_send, &ju, ju.port_self_recv); //发送给Ju
-      digraph.couple(this, this->port_self_send_to_transpond, &ju, ju.port_self_recv_to_transpond); //发送给Ju
-
-      digraph.couple(&ju, ju.port_self_send_cmd, this, this->port_self_recv_cmd);
-      digraph.couple(&ju, ju.port_self_send_at, this, this->port_self_recv_at);
-      digraph.couple(&ju, ju.port_self_send_j2, this, this->port_self_recv_j2);
-      digraph.couple(&ju, ju.port_self_send_j3, this, this->port_self_recv_j3);
-      digraph.couple(&ju, ju.port_self_send_j7, this, this->port_self_recv_j7);
-      digraph.couple(&ju, ju.port_self_send_ts, this, this->port_self_recv_ts);
-      digraph.couple(&ju, ju.port_self_send_sub_ts, this, this->port_self_recv_sub_ts);
+      BindPortSelfSend();
+      BindSelfSendToTranspond();
     }
   public:
     // 通过 Atomic 继承
@@ -35,36 +27,98 @@ namespace devs {
     Ju & parent;
 
    
-  public:
-    inline void BindSelfSendPort() {
-      digraph.couple(this, this->port_self_send, &parent, parent.port_self_recv); //发送给Ju
-    }
-
   private:
+
+    /*
+      端口
+    */
+
     /*与Component 传输使用*/
+    static const PortType kPortUndefine=std::numeric_limits<PortType>::min();
+
+    PortType    portSelfSendToTranspond = kPortUndefine;
 
     //内部使用的接收端口
-    PortType    port_self_send              = util::NextUid();
+    PortType    portSelfSend = kPortUndefine;
 
-    PortType    port_self_send_to_transpond = util::NextUid();
     //CMD 转发
-    PortType    port_self_recv_cmd= util::NextUid();
+    PortType    portSelfRecvCmd= kPortUndefine;
     //Active Track 消息转发
-    PortType    port_self_recv_at = util::NextUid();
+    PortType    portSelfRecvLT = kPortUndefine;
     //J_2 消息转发
-    PortType    port_self_recv_j2 = util::NextUid();
+    PortType    portSelfRecvJ2 = kPortUndefine;
     //J_3 消息转发
-    PortType    port_self_recv_j3 = util::NextUid();
+    PortType    portSelfRecvJ3 = kPortUndefine;
     //J_7 消息转发
-    PortType    port_self_recv_j7 = util::NextUid();
+    PortType    portSelfRecvJ7 = kPortUndefine;
     //TimeSlice 消息转发
-    PortType    port_self_recv_ts = util::NextUid();;
+    PortType    portSelfRecvTS = kPortUndefine;
     //Sub TimeSlice 消息转发
-    PortType    port_self_recv_sub_ts = util::NextUid();;
+    PortType    portSelfRecvSubTS = kPortUndefine;
+  private:
+
+    inline void BindPortSelfSend() {
+      portSelfSend = util::NextUid();
+      digraph.couple(this, this->portSelfSend, &parent, parent.portSelfRecv); //发送给Ju
+    }
+    //转发请求
+    inline void BindSelfSendToTranspond() {
+      portSelfSendToTranspond = util::NextUid();
+      digraph.couple(this, this->portSelfSendToTranspond, &parent, parent.portSelfRecvToTranspond); //发送给Ju
+    }
     
+  public:
+
+    inline void BindSelfRecvCmd() {
+      portSelfRecvCmd = util::NextUid();
+      digraph.couple(&parent, parent.portSelfSendCmd,this, this->portSelfRecvCmd); 
+    }
+
+    inline void BindSelfRecvLT() {
+      portSelfRecvLT = util::NextUid();
+      digraph.couple(&parent, parent.portSelfSendLT, this, this->portSelfRecvLT);
+    }
+
+    inline void BindSelfRecvJ2() {
+      portSelfRecvJ2 = util::NextUid();
+      digraph.couple(&parent, parent.portSelfSendJ2, this, this->portSelfRecvJ2);
+    }
+
+    inline void BindSelfRecvJ3() {
+      portSelfRecvJ3 = util::NextUid();
+      digraph.couple(&parent, parent.portSelfSendJ3, this, this->portSelfRecvJ3);
+    }
+
+    inline void BindSelfRecvJ7() {
+      portSelfRecvJ7 = util::NextUid();
+      digraph.couple(&parent, parent.portSelfSendJ7, this, this->portSelfRecvJ7);
+    }
+
+    inline void BindSelfRecvTS() {
+      portSelfRecvTS = util::NextUid();
+      digraph.couple(&parent, parent.portSelfSendTS, this, this->portSelfRecvTS);
+    }
+
+    inline void BindSelfRecvSubTS() {
+      portSelfRecvSubTS = util::NextUid();
+      digraph.couple(&parent, parent.portSelfSendSubTS, this, this->portSelfRecvSubTS);
+      
+    }
+
+#define __GET_FUNC__(name) inline PortType Get##name() { assert(port##name!=kPortUndefine/*端口未绑定*/);return port##name;}
+    __GET_FUNC__(SelfSend);
+    __GET_FUNC__(SelfRecvCmd);
+    __GET_FUNC__(SelfRecvLT);
+    __GET_FUNC__(SelfRecvJ2);
+    __GET_FUNC__(SelfRecvJ3);
+    __GET_FUNC__(SelfRecvJ7);
+    __GET_FUNC__(SelfRecvTS);
+    __GET_FUNC__(SelfRecvSubTS);
+#undef __GET_FUNC__
 
 
-
+    public:
+      inline IO_Type CreatBroadcastIO(util::SptrBlob sptr_blob) { return IO_Type(portSelfSendToTranspond, sptr_blob); }
   };
 
 }

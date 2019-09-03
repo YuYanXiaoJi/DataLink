@@ -135,6 +135,7 @@
     <ClInclude Include="devs\component\core_reporting_responsibility_handler.hpp" />
     <ClInclude Include="devs\component\core_j3_broadcast_handler.hpp" />
     <ClInclude Include="devs\component\RuleA.hpp" />
+    <ClInclude Include="devs\component\verify_msg_component.hpp" />
     <ClInclude Include="devs\handler.hpp" />
     <ClInclude Include="devs\ju_component.hpp" />
     <ClInclude Include="devs\schedule_buffer_node.hpp" />
@@ -161,8 +162,8 @@
     <ClCompile Include="devs\component\core_broadcast_component.cpp" />
     <ClCompile Include="devs\component\core_reporting_responsibility_handler.cpp" />
     <ClCompile Include="devs\component\RuleA.cpp" />
-    <ClCompile Include="devs\component\RuleF.cpp" />
     <ClCompile Include="devs\component\core_j3_broadcast_handler.cpp" />
+    <ClCompile Include="devs\component\verify_msg_component.cpp" />
     <ClCompile Include="devs\hub.cpp" />
     <ClCompile Include="devs\ju.cpp" />
     <ClCompile Include="Main.cpp" />

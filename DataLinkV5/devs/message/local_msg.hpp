@@ -5,9 +5,9 @@
 #include<cstring>
 #include<cstdint>
 namespace devs::message {
-  struct ActiveTrack
+  struct LocalTrack
   {
-    MsgType msg_type = MsgType::Msg_ActiveTrack;
+    MsgType msg_type = MsgType::Msg_LocalTrack;
     // 来源
     TrackPlatform  track_platform;
 
@@ -20,7 +20,7 @@ namespace devs::message {
     // 报文的创造时间
     TimeType  time_msec;
 
-    ActiveTrack(const char* _track_number, TrackPlatform _track_platform,
+    LocalTrack(const char* _track_number, TrackPlatform _track_platform,
       int32_t _track_quality, TimeType _time_msec) {
 
       strcpy(track_number, _track_number);
@@ -29,7 +29,7 @@ namespace devs::message {
       time_msec = _time_msec;
     }
 
-    inline bool operator < (const ActiveTrack& obj) const {
+    inline bool operator < (const LocalTrack& obj) const {
       return track_number < obj.track_number;
     }
   };

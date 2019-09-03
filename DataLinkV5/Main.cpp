@@ -3,7 +3,7 @@
 #include"devs/hub.hpp"
 #include"devs/ju.hpp"
 #include"devs/message/message.hpp"
-
+#include"devs/time.hpp"
 #include"utility/utility.hpp"
 
 #include<iostream>
@@ -17,12 +17,12 @@ int main() {
   hub.add_ju(ju_1);
   hub.add_ju(ju_2);
 
-  auto at_1 = devs::msg::ActiveTrack(
+  auto at_1 = devs::msg::LocalTrack(
     util::TrackNumberHandler::Create("Ultraman").c_str(),
     devs::msg::Platform_AIR, 8, 1000
   );
 
-  auto at_2 = devs::msg::ActiveTrack(
+  auto at_2 = devs::msg::LocalTrack(
     util::TrackNumberHandler::Create("UFO").c_str(),
     devs::msg::Platform_AIR, 8, 1000
   );
@@ -31,11 +31,15 @@ int main() {
     util::TrackNumberHandler::Create("Ultraman").c_str(),
     "ju-3", devs::msg::Platform_AIR, 8, 400,10);
 
-  hub.push_buffer(10000, hub.map_private_recv_port[ju_1->uid], at_1);
-  hub.push_buffer(11000, hub.port_broadcast_send, j30i_1);
-  hub.push_buffer(1500, hub.map_private_recv_port[ju_2->uid], at_2);
+  //hub.push_buffer(10000, hub.map_private_recv_port[ju_1->uid], at_1);
+  //hub.push_buffer(11000, hub.port_broadcast_send, j30i_1);
+  //hub.push_buffer(1500, hub.map_private_recv_port[ju_2->uid], at_2);
 
   devs::Simulator sim = devs::Simulator(&dome);
-  sim.execUntil(100'000'000);
+
+
+
+  while (devs::Time::update(sim.nextEventTime()) < 100'0000)
+    sim.execNextEvent();
   return 0;
 }

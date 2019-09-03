@@ -22,7 +22,7 @@ namespace devs::component {
     //std::list<util::SptrBlob> broadcastSendList;      //直接发送
     std::list<util::SptrBlob> broadcastBuferrList;    //等待发送
   public:
-    const PortType port_self_recv_to_transpond_buffer = util::NextUid();
+    const PortType portSelfRecvToTranspondBuffer = util::NextUid();
   };
   _FUNC_CreatSptr_(CoreBroadcastComponent);
 }

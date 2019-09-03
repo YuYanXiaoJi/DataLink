@@ -3,6 +3,7 @@
 devs::component::CoreReportingResponsibilityHandler::CoreReportingResponsibilityHandler(Ju & ju, Digraph & _digraph, const std::string & _name, PortType _uid)
   :JuComponent(ju, _digraph, _name, _uid)
 {
+  BindSelfRecvCmd();
 }
 
 void devs::component::CoreReportingResponsibilityHandler::delta_int()
@@ -13,7 +14,7 @@ void devs::component::CoreReportingResponsibilityHandler::delta_int()
 void devs::component::CoreReportingResponsibilityHandler::delta_ext(devs::TimeType e, const IO_Bag & xb)
 {
   for (auto&x : xb) {
-    if (x.port == port_self_recv_cmd) {
+    if (x.port == GetSelfRecvCmd()) {
       auto& cmd = x.value->get<msg::LocalCmd>();
       local_cmd_list.push_back(cmd);
     }

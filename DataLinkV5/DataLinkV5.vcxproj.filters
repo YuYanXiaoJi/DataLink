@@ -33,6 +33,15 @@
     <Filter Include="源文件\devs\component">
       <UniqueIdentifier>{ba8e18d3-70bf-4665-b716-e29e4abc3cd6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\devs\core">
+      <UniqueIdentifier>{2f68dd65-48a0-4b29-9301-c34ac1cbd9f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\devs\ju">
+      <UniqueIdentifier>{eb800782-f461-4e28-a1ac-5b25a9ecb279}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\devs\ju">
+      <UniqueIdentifier>{8c1613ae-cba4-4d51-81b1-25b533f7f5d3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="utility\blob.hpp">
@@ -46,12 +55,6 @@
     </ClInclude>
     <ClInclude Include="utility\sync\list.hpp">
       <Filter>头文件\utility\sync</Filter>
-    </ClInclude>
-    <ClInclude Include="devs\atomic.hpp">
-      <Filter>头文件\devs</Filter>
-    </ClInclude>
-    <ClInclude Include="devs\typedef.hpp">
-      <Filter>头文件\devs</Filter>
     </ClInclude>
     <ClInclude Include="utility\utility.hpp">
       <Filter>头文件\utility</Filter>
@@ -74,12 +77,6 @@
     <ClInclude Include="utility\uid_handler.hpp">
       <Filter>头文件\utility</Filter>
     </ClInclude>
-    <ClInclude Include="devs\ju.hpp">
-      <Filter>头文件\devs</Filter>
-    </ClInclude>
-    <ClInclude Include="devs\ju_component.hpp">
-      <Filter>头文件\devs</Filter>
-    </ClInclude>
     <ClInclude Include="devs\component\RuleA.hpp">
       <Filter>头文件\devs\component</Filter>
     </ClInclude>
@@ -98,9 +95,6 @@
     <ClInclude Include="devs\message\joint_msg_base.hpp">
       <Filter>头文件\devs\message</Filter>
     </ClInclude>
-    <ClInclude Include="devs\time.hpp">
-      <Filter>头文件\devs</Filter>
-    </ClInclude>
     <ClInclude Include="devs\schedule_buffer_node.hpp">
       <Filter>头文件\devs</Filter>
     </ClInclude>
@@ -113,19 +107,31 @@
     <ClInclude Include="devs\component\core_j3_broadcast_handler.hpp">
       <Filter>头文件\devs\component</Filter>
     </ClInclude>
+    <ClInclude Include="devs\atomic.hpp">
+      <Filter>头文件\devs\core</Filter>
+    </ClInclude>
+    <ClInclude Include="devs\typedef.hpp">
+      <Filter>头文件\devs\core</Filter>
+    </ClInclude>
+    <ClInclude Include="devs\time.hpp">
+      <Filter>头文件\devs\core</Filter>
+    </ClInclude>
+    <ClInclude Include="devs\ju.hpp">
+      <Filter>头文件\devs\ju</Filter>
+    </ClInclude>
+    <ClInclude Include="devs\ju_component.hpp">
+      <Filter>头文件\devs\ju</Filter>
+    </ClInclude>
+    <ClInclude Include="devs\component\verify_msg_component.hpp">
+      <Filter>头文件\devs\component</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="devs\hub.cpp">
       <Filter>源文件\devs</Filter>
     </ClCompile>
-    <ClCompile Include="devs\ju.cpp">
-      <Filter>源文件\devs</Filter>
-    </ClCompile>
     <ClCompile Include="devs\component\RuleA.cpp">
-      <Filter>源文件\devs\component</Filter>
-    </ClCompile>
-    <ClCompile Include="devs\component\RuleF.cpp">
       <Filter>源文件\devs\component</Filter>
     </ClCompile>
     <ClCompile Include="devs\component\core_broadcast_component.cpp">
@@ -135,6 +141,12 @@
       <Filter>源文件\devs\component</Filter>
     </ClCompile>
     <ClCompile Include="devs\component\core_j3_broadcast_handler.cpp">
+      <Filter>源文件\devs\component</Filter>
+    </ClCompile>
+    <ClCompile Include="devs\ju.cpp">
+      <Filter>源文件\devs\ju</Filter>
+    </ClCompile>
+    <ClCompile Include="devs\component\verify_msg_component.cpp">
       <Filter>源文件\devs\component</Filter>
     </ClCompile>
   </ItemGroup>

@@ -1,9 +1,11 @@
 #include "core_j3_broadcast_handler.hpp"
 #include"../handler.hpp"
 #include<algorithm>
+#include"../time.hpp"
 devs::component::CoreJ3BroadcastHandler::CoreJ3BroadcastHandler(Ju & ju, Digraph & _digraph, const std::string & _name, PortType _uid)
   :JuComponent(ju,_digraph,_name,_uid)
 {
+  BindSelfRecvSubTS();
 }
 
 void devs::component::CoreJ3BroadcastHandler::delta_int()
@@ -14,7 +16,7 @@ void devs::component::CoreJ3BroadcastHandler::delta_int()
 void devs::component::CoreJ3BroadcastHandler::delta_ext(devs::TimeType e, const IO_Bag & xb)
 {
   for (auto&x : xb) {
-    if (x.port == port_self_recv_sub_ts) {
+    if (x.port == GetSelfRecvSubTS()) {
       is_recv_ts = true;
     }
   }
@@ -35,12 +37,15 @@ void devs::component::CoreJ3BroadcastHandler::output_func(IO_Bag & yb)
       parent.dict_r2[track_name] = next_broadcast_time;  //更新时间
 
       //广播 J3i
-      yb.insert(IO_Type(
-        port_self_send_to_transpond,
-        util::CreateSptrBlob(
-          parent.dict_active_track[track_name].get<msg::JointMsg3I>()
-        )
-      ));
+      yb.insert(CreatBroadcastIO(util::CreateSptrBlob(
+        parent.dict_active_track[track_name].get<msg::JointMsg3I>()
+      )));
+    }
+    else if (last_broadcast_time == 0) {//立即发
+      parent.dict_r2[track_name] = Time::now();
+      yb.insert(CreatBroadcastIO(util::CreateSptrBlob(
+        parent.dict_active_track[track_name].get<msg::JointMsg3I>()
+      )));
     }
   }
   //std::cout << "time_silce:" << parent.time_silce.begin_time << "\t" << parent.time_silce.end_time << std::endl;
