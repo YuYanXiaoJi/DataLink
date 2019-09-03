@@ -3,17 +3,15 @@
 #include"../../utility/utility.hpp"
 namespace devs::component {
 
-  /*
-    获得AT时候,将track_name放进缓冲队列中.
-    在
-
-  */
-  class RuleA
+  // 只处理 set_r2 & rm_r2
+  class CoreReportingResponsibilityHandler 
     : JuComponent
   {
 
   public:
-      RuleA(Ju& ju, Digraph& _digraph, const std::string&_name, PortType _uid);
+    CoreReportingResponsibilityHandler(Ju& ju, Digraph& _digraph, const std::string&_name, PortType _uid);
+
+    _FUNC_MakeShared_(CoreReportingResponsibilityHandler);
 
     // 通过 JuComponent 继承
     virtual void delta_int() override;
@@ -21,16 +19,10 @@ namespace devs::component {
     virtual void output_func(IO_Bag & yb) override;
     virtual devs::TimeType ta() override;
 
-    _FUNC_MakeShared_(RuleA)
-  private:
-    //预处理Set
-    std::set<std::string> preTreatmentSet;
-
-    //是否收到sub_ts signal
-    //该变量被 ta() 函数使用. 在 delta_int 被置零
-    bool  isRecvSubTS=false;
-
+    
+  public:
+    std::list<msg::LocalCmd> local_cmd_list;
   };
   //const auto CreatSptrRuleA = RuleA::make_shared;
-  _FUNC_CreatSptr_(RuleA);
+  _FUNC_CreatSptr_(CoreReportingResponsibilityHandler);
 }

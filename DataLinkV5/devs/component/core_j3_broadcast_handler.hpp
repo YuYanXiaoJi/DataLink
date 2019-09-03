@@ -2,21 +2,26 @@
 #include"../ju_component.hpp"
 #include"../../utility/utility.hpp"
 namespace devs::component {
-  class RuleD
+
+  //用于 按规定时间广播 J3 消息
+  class CoreJ3BroadcastHandler
     : JuComponent
   {
 
   public:
-    RuleD(Ju& ju, Digraph& _digraph, const std::string&_name, PortType _uid);
-    _FUNC_MakeShared_(RuleD);
+    CoreJ3BroadcastHandler(Ju& ju, Digraph& _digraph, const std::string&_name, PortType _uid);
+    _FUNC_MakeShared_(CoreJ3BroadcastHandler);
 
     // 通过 JuComponent 继承
     virtual void delta_int() override;
     virtual void delta_ext(devs::TimeType e, const IO_Bag & xb) override;
     virtual void output_func(IO_Bag & yb) override;
     virtual devs::TimeType ta() override;
+    
   private:
-    std::list<util::SptrBlob> j3_sptr_blob_list;
+    bool is_recv_ts=false;
+
+  
   };
-  _FUNC_CreatSptr_(RuleD);
+  _FUNC_CreatSptr_(CoreJ3BroadcastHandler);
 }
