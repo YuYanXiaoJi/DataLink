@@ -45,7 +45,7 @@ void devs::component::RuleE::output_func(IO_Bag & yb)
 
         //发送J7_ACT=0的消息 
         yb.insert(CreatBroadcastIO(util::CreateSptrBlob(
-          msg::JointMsg7I(track_name.c_str(), parent.name.c_str(), 0, Time::now())
+          msg::JointMsg7I(util::TrackNumberHandler::Create(track_name).c_str(), parent.name.c_str(), 0, Time::now())
         )));
 
       }//IF

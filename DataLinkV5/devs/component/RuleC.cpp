@@ -15,7 +15,7 @@ void devs::component::RuleC::delta_int()
 void devs::component::RuleC::delta_ext(devs::TimeType e, const IO_Bag & xb)
 {
   for (auto&x : xb) {
-    if (x.port == GetSelfRecvLT() || x.port == GetSelfRecvTS()) {
+    if ( /*x.port == GetSelfRecvLT() ||*/ x.port == GetSelfRecvTS()) {
       is_recv_ts = true;
     }
   }
@@ -38,6 +38,7 @@ void devs::component::RuleC::output_func(IO_Bag & yb)
       auto attn = parent.dict_active_track[track_name];
 
       if (attn.track_quality - rttn.track_quality >= kThresholdTQ) {
+
         yb.insert(IO_Type(GetSelfSend(),
           util::CreateSptrBlob(msg::LocalCmd(msg::CMD_SET_R2, track_name.c_str()))
         ));
@@ -45,11 +46,11 @@ void devs::component::RuleC::output_func(IO_Bag & yb)
         
         //发送J7_ACT=0的消息 
         yb.insert(CreatBroadcastIO(util::CreateSptrBlob(
-          msg::JointMsg7I(track_name.c_str(), parent.name.c_str(), 0, Time::now())
+          msg::JointMsg7I(util::TrackNumberHandler::Create(track_name).c_str(), parent.name.c_str(), 0, Time::now())
         )));
 
 
-      }//IF
+      }//IF 
     }//IF EXIST
   }//FOR
 }

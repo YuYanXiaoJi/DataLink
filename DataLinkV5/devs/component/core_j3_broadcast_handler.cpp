@@ -38,13 +38,13 @@ void devs::component::CoreJ3BroadcastHandler::output_func(IO_Bag & yb)
 
       //¹ã²¥ J3i
       yb.insert(CreatBroadcastIO(util::CreateSptrBlob(
-        parent.dict_active_track[track_name].get<msg::JointMsg3I>()
+        parent.dict_active_track[track_name].get<msg::JointMsg3I>(Time::now())
       )));
     }
     else if (last_broadcast_time == 0) {//Á¢¼´·¢
       parent.dict_r2[track_name] = Time::now();
       yb.insert(CreatBroadcastIO(util::CreateSptrBlob(
-        parent.dict_active_track[track_name].get<msg::JointMsg3I>()
+        parent.dict_active_track[track_name].get<msg::JointMsg3I>(Time::now())
       )));
     }
   }

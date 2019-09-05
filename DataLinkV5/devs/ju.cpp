@@ -15,8 +15,8 @@
 #include"component/RuleC.hpp"
 #include"component/RuleD.hpp"
 #include"component/RuleE.hpp"
+#include"component/RuleF.hpp"
 
-//#include "component/RuleF.h"
 //#include "component/RuleG.h"
 //#include "component/RuleH.h"
 //#include "component/RuleI.h"
@@ -30,19 +30,19 @@ std::shared_ptr<devs::Ju> devs::Ju::make_shared(devs::Digraph & _digraph, const 
 
 devs::Ju::Ju(Digraph & _digraph, const std::string & _name, uint64_t _uid, int32_t uSTN)
   :AtomicAbstract(_digraph, _name, _uid)
-  , portSelfRecv(util::NextUid())
-  , portSelfRecvToTranspond(util::NextUid())
-  , portSelfSendToTranspondBuffer(util::NextUid())
-  , portSelfSendCmd(util::NextUid())
-  , portSelfSendLT(util::NextUid())
-  , portSelfSendJ2(util::NextUid())
-  , portSelfSendJ3(util::NextUid())
-  , portSelfSendJ7(util::NextUid())
-  , portSelfSendTS(util::NextUid())
-  , portSelfSendSubTS(util::NextUid())
-  , portPrivateRecv(util::NextUid())
-  , portBroadcastSend(util::NextUid())
-  , portBroadcastRecv(util::NextUid())
+  //, portSelfRecv(util::NextUid())
+  //, portSelfRecvToTranspond(util::NextUid())
+  //, portSelfSendToTranspondBuffer(util::NextUid())
+  //, portSelfSendCmd(util::NextUid())
+  //, portSelfSendLT(util::NextUid())
+  //, portSelfSendJ2(util::NextUid())
+  //, portSelfSendJ3(util::NextUid())
+  //, portSelfSendJ7(util::NextUid())
+  //, portSelfSendTS(util::NextUid())
+  //, portSelfSendSubTS(util::NextUid())
+  //, portPrivateRecv(util::NextUid())
+  //, portBroadcastSend(util::NextUid())
+  //, portBroadcastRecv(util::NextUid())
   , _uSTN (uSTN)
 {
   //AddComponent("Verify", component::CreatSptrVerifyMsgComponent(*this, digraph, "", util::NextUid()));
@@ -52,12 +52,11 @@ devs::Ju::Ju(Digraph & _digraph, const std::string & _name, uint64_t _uid, int32
   AddComponent("CORE_Broadcast", component::CreatSptrCoreBroadcastComponent(*this, digraph, "", util::NextUid()));
   AddComponent("CORE_Broadcast_J3", component::CreatSptrCoreJ3BroadcastHandler(*this, digraph, "", util::NextUid()));
 
- 
-
   AddComponent("RuleA", component::CreatSptrRuleA(*this, digraph, "", util::NextUid()));
   AddComponent("RuleC", component::CreatSptrRuleC(*this, digraph, "", util::NextUid()));
   AddComponent("RuleD", component::CreatSptrRuleD(*this, digraph, "", util::NextUid()));
   AddComponent("RuleE", component::CreatSptrRuleE(*this, digraph, "", util::NextUid()));
+  AddComponent("RuleF", component::CreatSptrRuleF(*this, digraph, "", util::NextUid()));
 }
 
 
@@ -68,6 +67,14 @@ std::tuple<bool, bool, bool> devs::Ju::GetExist(const std::string & track_name)
   bool is_exist_at = dict_active_track.exist(track_name);
   bool is_exist_rt = dict_recv_track.exist(track_name);
   return { is_exist_at, is_exist_rt, is_exist_r2 };
+}
+
+bool devs::Ju::CorrelationTest(const std::string& track_name)
+{
+  if (dict_active_track.exist(track_name) == true)
+    return true;
+  else
+    return false;
 }
 
 
@@ -87,8 +94,9 @@ void devs::Ju::delta_ext(devs::TimeType e, const IO_Bag & xb)
 {
   for (auto&iter : xb) {
 
-    if (iter.port == this->portBroadcastRecv 
-      ||iter.port == this->portSelfRecv 
+    //Test RM  "||iter.port == this->portSelfRecv "
+    if (
+      iter.port == this->portBroadcastRecv
       || iter.port == this->portPrivateRecv) 
     {
       auto& blob = *iter.value;
@@ -110,7 +118,7 @@ void devs::Ju::delta_ext(devs::TimeType e, const IO_Bag & xb)
           auto track_name = util::TrackNumberHandler::GetName(msg.track_number);
           dict_active_track[track_name] = TrackInformation(msg, this->name);
 
-          std::cout << Time::now() << "\t" << this->name << "R:LocalTrack\t" << msg.track_number<<std::endl;
+          std::cout << Time::now() << "\t" << this->name << " R: LocalTrack\t" << msg.track_number<<std::endl;
           break;
         }
         case msg::MsgType::Msg_JointMsg3I:
@@ -121,7 +129,7 @@ void devs::Ju::delta_ext(devs::TimeType e, const IO_Bag & xb)
           }
           auto track_name = util::TrackNumberHandler::GetName(msg.track_number);
           dict_recv_track[track_name] = TrackInformation(msg);
-          std::cout << Time::now() << "\t" << this->name << "R:JointMsg3I\t" << msg.track_number << std::endl;
+          std::cout << Time::now() << "\t" << this->name << " R: JointMsg3I\t" << msg.track_number << std::endl;
           break;
         }
         case msg::MsgType::Msg_JointMsg7I:
@@ -130,7 +138,7 @@ void devs::Ju::delta_ext(devs::TimeType e, const IO_Bag & xb)
           if (msg.from_sut_name == this->name) {
             return; // 自己的发出的消息.无视
           }
-          std::cout << Time::now() << "\t" << this->name << "R:JointMsg7I\t" << msg.track_number << std::endl;
+          std::cout << Time::now() << "\t" << this->name << " R: JointMsg7I\t" << msg.track_number << std::endl;
           break;
         }
         case msg::MsgType::Msg_JointMsg2I:
@@ -205,14 +213,19 @@ void devs::Ju::output_func(IO_Bag & yb)
         break;
       }
       }
+
     }
     else if (y.port == this->portSelfRecvToTranspond) {
+      yb.insert(IO_Type(portSelfSendToTranspondBuffer, y.value));
+    }
+    else if (y.port == portToBroadcast) {
       yb.insert(IO_Type(portBroadcastSend, y.value));
+
     }
   }else if (_time_slice_trigger_queue.empty() == false) {
     yb.insert(_time_slice_trigger_queue.top().io_buffer);
   }
-
+  
 }
 
 devs::TimeType devs::Ju::ta()

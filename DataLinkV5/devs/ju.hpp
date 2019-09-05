@@ -23,8 +23,9 @@ namespace devs {
     // usage:  auto [is_exist_at, is_exist_rt, is_exist_r2] = GetExist(track_name); 
     std::tuple<bool, bool, bool> GetExist(const std::string& track_name);
 
-    template<class Ty> void AddComponent(const std::string& name, const shared_ptr<Ty>& sptr_component);
+    bool  CorrelationTest(const std::string& track_name);
 
+    template<class Ty> void AddComponent(const std::string& name, const shared_ptr<Ty>& sptr_component);
   public:
     
     std::list<IO_Type>  buffer_list;                //从 hub 接收的消息 全部保存在这里. 立即通过 output 进行触发
@@ -37,25 +38,25 @@ namespace devs {
     util::sync::Map<std::string, TimeType>          dict_r2;
   public:
     //与Component 传输使用
-    const PortType    portSelfRecv;                       //内部使用的接收端口
+    const PortType    portSelfRecv = util::NextUid();                       //内部使用的接收端口
 
-    const PortType    portSelfRecvToTranspond;          //直接广播 component 想要广播的 数据
-
+    const PortType    portSelfRecvToTranspond = util::NextUid();            //直接广播 component 想要广播的 数据
+    const PortType    portToBroadcast = util::NextUid();  //
     ///注意: 此port 未在 JuComponent 绑定,需要实现绑定
-    const PortType    portSelfSendToTranspondBuffer;   //将 port_self_recv_to_transpond 的数据转发给 CoreBroadcastComponent
+    const PortType    portSelfSendToTranspondBuffer = util::NextUid();      //将 port_self_recv_to_transpond 的数据转发给 CoreBroadcastComponent
 
-    const PortType    portSelfSendCmd;                   //CMD 转发
-    const PortType    portSelfSendLT;                    //Local Track 消息转发
-    const PortType    portSelfSendJ3;                    //J_3 消息转发
-    const PortType    portSelfSendJ7;                    //J_7 消息转发
-    const PortType    portSelfSendJ2;                    //J_2 消息转发
-    const PortType    portSelfSendTS;                    //TimeSlice 消息转发
-    const PortType    portSelfSendSubTS;                  //TimeSlice 消息转发
+    const PortType    portSelfSendCmd   = util::NextUid();                  //CMD 转发
+    const PortType    portSelfSendLT    = util::NextUid();                  //Local Track 消息转发
+    const PortType    portSelfSendJ3    = util::NextUid();                  //J_3 消息转发
+    const PortType    portSelfSendJ7    = util::NextUid();                  //J_7 消息转发
+    const PortType    portSelfSendJ2    = util::NextUid();                  //J_2 消息转发
+    const PortType    portSelfSendTS    = util::NextUid();                  //TimeSlice 消息转发
+    const PortType    portSelfSendSubTS = util::NextUid();                  //TimeSlice 消息转发
     //主要传递 AT 消息
-    const PortType    portPrivateRecv;                    //与广播1v1接收端口
+    const PortType    portPrivateRecv   = util::NextUid();                  //与广播1v1接收端口
     //主要 传送 J 消息
-    const PortType    portBroadcastSend;                  //广播发送端口 
-    const PortType    portBroadcastRecv;                  //广播接收端口 
+    const PortType    portBroadcastSend = util::NextUid();                  //广播发送端口 
+    const PortType    portBroadcastRecv = util::NextUid();                  //广播接收端口 
   public:
     int32_t _uSTN;
     

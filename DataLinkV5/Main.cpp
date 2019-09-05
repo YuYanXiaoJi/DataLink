@@ -23,8 +23,8 @@ int main() {
   );
 
   auto at_2 = devs::msg::LocalTrack(
-    util::TrackNumberHandler::Create("UFO").c_str(),
-    devs::msg::Platform_AIR, 8, 1000
+    util::TrackNumberHandler::Create("Ultraman").c_str(),
+    devs::msg::Platform_AIR, 4, 1000
   );
 
   auto j30i_1 = devs::msg::JointMsg3I(
@@ -33,13 +33,13 @@ int main() {
 
   hub.push_buffer(10000, hub.map_private_recv_port[ju_1->uid], at_1);
   //hub.push_buffer(11000, hub.port_broadcast_send, j30i_1);
-  //hub.push_buffer(1500, hub.map_private_recv_port[ju_2->uid], at_2);
+  hub.push_buffer(1500, hub.map_private_recv_port[ju_2->uid], at_2);
 
   devs::Simulator sim = devs::Simulator(&dome);
 
 
 
-  while (devs::Time::update(sim.nextEventTime()) < 100'0000)
+  while (devs::Time::update(sim.nextEventTime()) < 50'000)
     sim.execNextEvent();
   return 0;
 }

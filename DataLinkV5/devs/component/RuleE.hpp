@@ -7,7 +7,7 @@ namespace devs::component {
     当TS触发时,判断 远程报告是否超时.
   */
   class RuleE
-    : JuComponent
+    :JuComponent
   {
   public:
     RuleE(Ju& ju, Digraph& _digraph, const std::string&_name, PortType _uid);
