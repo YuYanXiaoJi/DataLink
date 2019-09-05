@@ -2,21 +2,21 @@
 #include"../ju_component.hpp"
 #include"../../utility/utility.hpp"
 namespace devs::component {
-	class RuleH
-		: JuComponent
-	{
+  class RuleH
+    : JuComponent
+  {
 
-	public:
-		RuleH(Ju& ju, Digraph& _digraph, const std::string&_name, PortType _uid);
-		FUNC_MakeShared(RuleH);
+  public:
+    RuleH(Ju& ju, Digraph& _digraph, const std::string&_name, PortType _uid);
+    _FUNC_MakeShared_(RuleH);
 
-		// 通过 JuComponent 继承
-		virtual void delta_int() override;
-		virtual void delta_ext(devs::TimeType e, const IO_Bag & xb) override;
-		virtual void output_func(IO_Bag & yb) override;
-		virtual devs::TimeType ta() override;
-	private:
-		std::list<util::SptrBlob> j2_sptr_blob_list;
-	};
-	FUNC_CreatSptr(RuleH);
+    // 通过 JuComponent 继承
+    virtual void delta_int() override;
+    virtual void delta_ext(devs::TimeType e, const IO_Bag & xb) override;
+    virtual void output_func(IO_Bag & yb) override;
+    virtual devs::TimeType ta() override;
+  private:
+    std::list<util::SptrBlob> j2_sptr_blob_list;
+  };
+  _FUNC_CreatSptr_(RuleH);
 }

@@ -131,27 +131,31 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="devs\atomic.hpp" />
-    <ClInclude Include="devs\component\reporting_responsibility.hpp" />
+    <ClInclude Include="devs\component\core_broadcast_component.hpp" />
+    <ClInclude Include="devs\component\core_reporting_responsibility_handler.hpp" />
+    <ClInclude Include="devs\component\core_j3_broadcast_handler.hpp" />
+    <ClInclude Include="devs\component\RuleA.hpp" />
     <ClInclude Include="devs\component\RuleC.hpp" />
     <ClInclude Include="devs\component\RuleD.hpp" />
     <ClInclude Include="devs\component\RuleE.hpp" />
-    <ClInclude Include="devs\component\RuleF.h" />
-    <ClInclude Include="devs\component\RuleG.h" />
-    <ClInclude Include="devs\component\RuleH.h" />
-    <ClInclude Include="devs\component\RuleI.h" />
-    <ClInclude Include="devs\component\rule_broadcast.hpp" />
-    <ClInclude Include="devs\component\RuleA.hpp" />
+    <ClInclude Include="devs\component\RuleF.hpp" />
+    <ClInclude Include="devs\component\verify_msg_component.hpp" />
     <ClInclude Include="devs\handler.hpp" />
     <ClInclude Include="devs\ju_component.hpp" />
-    <ClInclude Include="devs\global_time.hpp" />
+    <ClInclude Include="devs\schedule_buffer_node.hpp" />
+    <ClInclude Include="devs\time.hpp" />
     <ClInclude Include="devs\hub.hpp" />
     <ClInclude Include="devs\ju.hpp" />
-    <ClInclude Include="devs\message\joint_msg.hpp" />
+    <ClInclude Include="devs\message\joint_msg_base.hpp" />
+    <ClInclude Include="devs\message\joint_msg_2.hpp" />
+    <ClInclude Include="devs\message\joint_msg_3.hpp" />
+    <ClInclude Include="devs\message\joint_msg_7.hpp" />
     <ClInclude Include="devs\message\local_msg.hpp" />
     <ClInclude Include="devs\message\message.hpp" />
     <ClInclude Include="devs\message\msg_type.hpp" />
     <ClInclude Include="devs\message\track_platform_type.hpp" />
     <ClInclude Include="devs\typedef.hpp" />
+    <ClInclude Include="sim_handler.hpp" />
     <ClInclude Include="utility\blob.hpp" />
     <ClInclude Include="utility\priority_queue.hpp" />
     <ClInclude Include="utility\sync\list.hpp" />
@@ -160,16 +164,15 @@
     <ClInclude Include="utility\utility.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="devs\component\reporting_responsibility.cpp" />
+    <ClCompile Include="devs\component\core_broadcast_component.cpp" />
+    <ClCompile Include="devs\component\core_reporting_responsibility_handler.cpp" />
     <ClCompile Include="devs\component\RuleA.cpp" />
+    <ClCompile Include="devs\component\core_j3_broadcast_handler.cpp" />
     <ClCompile Include="devs\component\RuleC.cpp" />
     <ClCompile Include="devs\component\RuleD.cpp" />
     <ClCompile Include="devs\component\RuleE.cpp" />
     <ClCompile Include="devs\component\RuleF.cpp" />
-    <ClCompile Include="devs\component\RuleG.cpp" />
-    <ClCompile Include="devs\component\RuleH.cpp" />
-    <ClCompile Include="devs\component\RuleI.cpp" />
-    <ClCompile Include="devs\component\rule_broadcast.cpp" />
+    <ClCompile Include="devs\component\verify_msg_component.cpp" />
     <ClCompile Include="devs\hub.cpp" />
     <ClCompile Include="devs\ju.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -178,6 +181,9 @@
     <ProjectReference Include="..\Lib\Adevs\Adevs.vcxproj">
       <Project>{b1169e35-f784-462d-93af-ae1c6ee3093b}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Test\0.csv" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

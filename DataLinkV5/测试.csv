@@ -1,0 +1,4 @@
+﻿Local Track,,,,,,,,,,,,,,,
+时间,To SUT Name,类型(LT),Track Name,Track Platform,Track Quality,time_msec,,时间,From SUT Name,类型(J3),Track Name,Track Platform,Track Quality,u_stn,time_msec
+1500,ju-1,LT,Ultraman,air,8,1500,,1000,ju-3,J3,Ultraman,air,4,10,1000
+2000,ju-2,LT,UFO,air,8,2000,,,,,,,,,
