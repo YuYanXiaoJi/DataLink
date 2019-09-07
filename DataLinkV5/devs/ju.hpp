@@ -147,7 +147,7 @@ struct devs::Ju::TrackInformation
     );
 
 
-    if (_time > 0)
+    if (is_new_info)
       ojb.time_msec = _time;
     return ojb;
   }

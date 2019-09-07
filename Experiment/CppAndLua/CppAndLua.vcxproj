@@ -9,11 +9,19 @@
       <Configuration>Release</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{3AC1F823-3581-4082-9302-73291DA96DF4}</ProjectGuid>
-    <RootNamespace>DataLinkV5</RootNamespace>
+    <ProjectGuid>{7BA06FDF-FD25-481B-89BD-BCC6FA1E5789}</ProjectGuid>
+    <RootNamespace>CppAndLua</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -24,6 +32,19 @@
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
@@ -41,27 +62,19 @@
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>..\Lib;$(IncludePath)</IncludePath>
+    <IncludePath>;../../Lib;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>..\Lib;$(IncludePath)</IncludePath>
+    <IncludePath>;../../Lib;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
-      <Optimization>Disabled</Optimization>
-      <SDLCheck>true</SDLCheck>
-      <ConformanceMode>true</ConformanceMode>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <LanguageStandard>stdcpp17</LanguageStandard>
-      <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
-    </ClCompile>
-    <Link>
-      <SubSystem>Console</SubSystem>
-    </Link>
-  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -70,9 +83,6 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <LanguageStandard>stdcpp17</LanguageStandard>
-      <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -80,61 +90,49 @@
       <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="devs\atomic.hpp" />
-    <ClInclude Include="devs\component\core_broadcast_component.hpp" />
-    <ClInclude Include="devs\component\core_reporting_responsibility_handler.hpp" />
-    <ClInclude Include="devs\component\core_j3_broadcast_handler.hpp" />
-    <ClInclude Include="devs\component\RuleA.hpp" />
-    <ClInclude Include="devs\component\RuleC.hpp" />
-    <ClInclude Include="devs\component\RuleD.hpp" />
-    <ClInclude Include="devs\component\RuleE.hpp" />
-    <ClInclude Include="devs\component\RuleF.hpp" />
-    <ClInclude Include="devs\component\verify_msg_component.hpp" />
-    <ClInclude Include="devs\handler.hpp" />
-    <ClInclude Include="devs\ju_component.hpp" />
-    <ClInclude Include="devs\schedule_buffer_node.hpp" />
-    <ClInclude Include="devs\time.hpp" />
-    <ClInclude Include="devs\hub.hpp" />
-    <ClInclude Include="devs\ju.hpp" />
-    <ClInclude Include="devs\message\joint_msg_base.hpp" />
-    <ClInclude Include="devs\message\joint_msg_2.hpp" />
-    <ClInclude Include="devs\message\joint_msg_3.hpp" />
-    <ClInclude Include="devs\message\joint_msg_7.hpp" />
-    <ClInclude Include="devs\message\local_msg.hpp" />
-    <ClInclude Include="devs\message\message.hpp" />
-    <ClInclude Include="devs\message\msg_type.hpp" />
-    <ClInclude Include="devs\message\track_platform_type.hpp" />
-    <ClInclude Include="devs\typedef.hpp" />
-    <ClInclude Include="sim_handler.hpp" />
-    <ClInclude Include="utility\blob.hpp" />
-    <ClInclude Include="utility\priority_queue.hpp" />
-    <ClInclude Include="utility\sync\list.hpp" />
-    <ClInclude Include="utility\sync\map.hpp" />
-    <ClInclude Include="utility\uid_handler.hpp" />
-    <ClInclude Include="utility\utility.hpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="devs\component\core_broadcast_component.cpp" />
-    <ClCompile Include="devs\component\core_reporting_responsibility_handler.cpp" />
-    <ClCompile Include="devs\component\RuleA.cpp" />
-    <ClCompile Include="devs\component\core_j3_broadcast_handler.cpp" />
-    <ClCompile Include="devs\component\RuleC.cpp" />
-    <ClCompile Include="devs\component\RuleD.cpp" />
-    <ClCompile Include="devs\component\RuleE.cpp" />
-    <ClCompile Include="devs\component\RuleF.cpp" />
-    <ClCompile Include="devs\component\verify_msg_component.cpp" />
-    <ClCompile Include="devs\hub.cpp" />
-    <ClCompile Include="devs\ju.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Lib\Adevs\Adevs.vcxproj">
-      <Project>{b1169e35-f784-462d-93af-ae1c6ee3093b}</Project>
-    </ProjectReference>
+    <Text Include="1.lua" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Test\0.csv" />
+    <ProjectReference Include="..\..\Lib\Lua\Lua.vcxproj">
+      <Project>{00850e1b-e98f-4f08-bf05-9024eca987d2}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
