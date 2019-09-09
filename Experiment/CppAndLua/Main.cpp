@@ -12,6 +12,11 @@ public:
   ~test_lua()
   {
   }
+
+  void T(std::string a, std::string b) {
+    m_T_string = a + " " + b;
+  }
+
   //test方法
   void test(int a, int b)
   {
@@ -38,6 +43,7 @@ public:
     //返回参数个数
     return 2;
   }
+  std::string m_T_string;
   std::string m_test_string;
   std::string m_name;
   static int m_static_data;
@@ -73,6 +79,8 @@ int main() {
     .addFunction("test", &test_lua::test)//注册test、方法到lua（addStaticFunction静态函数注册也类似）
     .addProperty("name", &test_lua::GetName, &test_lua::SetName)//属性方法的注册（addStaticProperty静态属性方法也类似）
     .addCFunction("cFunc", &test_lua::cFunc)//注册返回多个参数给lua的方法
+    .addFunction("T",&test_lua::T)
+    .addData("T_string", &test_lua::m_T_string)
     .endClass()
     .deriveClass<test_lua_child, test_lua>("test_lua_child")//子类的注册
     .addConstructor<void(*) (std::string)>()//有参构造函数的注册

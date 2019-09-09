@@ -6,11 +6,11 @@ print(test_lua.test_str)
 test.test_lua.static_data=12
 print("static_data: "..test.test_lua.static_data)
 --调用c++类test_lua属性name
-test_lua.name="name_property";
+test_lua.name="name_property ydar";
 print("name: "..test_lua.name);
 --lua调用c++方法test_lua为c++类在lua的注册名，调用test方法
 test_lua:test(3,4)
-
+test_lua:T("12345","6789")
 --调用c++调用方法返回多个值
 local ret1,ret2 = test_lua:cFunc()
 print("ret1="..ret1.." ret2="..ret2)
@@ -34,3 +34,5 @@ function lua_add_str_function(a,b)
     print("lua_add_str_function") 
     return a..b;
 end
+
+
