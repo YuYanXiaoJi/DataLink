@@ -6,15 +6,10 @@
 
 int main() {
   devs::Digraph dome;
-  cc::CalcEven even;
-  cc::CalcOdd odd;
   cc::Generator gener;
 
-  dome.couple(&gener, gener.sendOdd, &odd, odd.recvOdd);
-  dome.couple(&gener, gener.sendEven, &even, even.recvEven);
-
-  dome.couple(&odd, odd.send, &gener, gener.recv);
-  dome.couple(&even, even.send, &gener, gener.recv);
+  cc::CalcEven even(dome,gener);
+  cc::CalcOdd odd(dome, gener);
 
 
   devs::Simulator sim(&dome);

@@ -1,11 +1,12 @@
 #pragma once
 #include"devs.hpp"
+#include"component.hpp"
 #include<list>
 namespace cc {
   class CalcEven :
-    public devs::AtomicAbstract {
+    public Component {
   public:
-    CalcEven();
+    CalcEven(devs::Digraph &digrapg, Generator &parent);
 
     // Í¨¹ý AtomicAbstract ¼Ì³Ð
     virtual void External(const devs::PortType & recvPort, const devs::SptrBlob sptrBlob) override;
@@ -15,14 +16,6 @@ namespace cc {
     virtual void Output(devs::IO_Bag & yb) override;
 
     virtual devs::TimeType Ta() override;
-
-    const devs::Port recvEven = devs::Port("r_Even");
-    const devs::Port send = devs::Port("Send");
-  public:
-    std::list<devs::SptrBlob> buffer_list;
-
-
-
 
   };
 

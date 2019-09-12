@@ -24,4 +24,15 @@
       <Filter>资源文件</Filter>
     </Text>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="integer.lua">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="Template.lua">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="List.lua">
+      <Filter>资源文件</Filter>
+    </None>
+  </ItemGroup>
 </Project>

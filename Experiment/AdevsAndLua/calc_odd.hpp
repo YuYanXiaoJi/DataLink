@@ -1,11 +1,11 @@
 #pragma once
 #include"devs.hpp"
-#include<list>
+#include"component.hpp"
 namespace cc {
   class CalcOdd :
-    public devs::AtomicAbstract {
+    public Component {
   public:
-    CalcOdd();
+    CalcOdd(devs::Digraph &digrapg, Generator &parent);
 
 
     // Í¨¹ý AtomicAbstract ¼Ì³Ð
@@ -14,10 +14,7 @@ namespace cc {
     virtual void Output(devs::IO_Bag & yb) override;
     virtual devs::TimeType Ta() override;
 
-    const devs::Port recvOdd  = devs::Port("r_Odd");
-    const devs::Port send     = devs::Port("Send");
-  public:
-    std::list<devs::SptrBlob> buffer_list;
+
 
   };
 

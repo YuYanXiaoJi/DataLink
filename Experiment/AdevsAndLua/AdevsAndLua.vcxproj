@@ -28,13 +28,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
@@ -140,10 +140,12 @@
     <ClInclude Include="blob.hpp" />
     <ClInclude Include="calc_odd.hpp" />
     <ClInclude Include="clac_even.hpp" />
+    <ClInclude Include="component.hpp" />
     <ClInclude Include="devs.hpp" />
     <ClInclude Include="generator.hpp" />
     <ClInclude Include="integer.hpp" />
     <ClInclude Include="port.hpp" />
+    <ClInclude Include="script_component.hpp" />
     <ClInclude Include="typedef.hpp" />
   </ItemGroup>
   <ItemGroup>
@@ -151,6 +153,7 @@
     <ClCompile Include="clac_even.cpp" />
     <ClCompile Include="generator.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="script_component.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -26,12 +26,12 @@ void cc::Generator::Output(devs::IO_Bag & yb)
     std::cout << i.src << "\t" << i.inc << std::endl;
   }
   else if (i.val%2==1) {
-    yb.insert({ sendOdd,sptr_blob });
-    std::cout << i.src << "\t" << i.inc << std::endl;
+    yb.insert(devs::IO_Type(odd, sptr_blob));
+    //std::cout << i.src << "\t" << i.inc << std::endl;
   }
-  else if (i.val == 1) {
-    yb.insert({ sendEven,sptr_blob });
-    std::cout << i.src << "\t" << i.inc << std::endl;
+  else {
+    yb.insert(devs::IO_Type(even, sptr_blob));
+    //std::cout << i.src << "\t" << i.inc << std::endl;
   }
 }
 
