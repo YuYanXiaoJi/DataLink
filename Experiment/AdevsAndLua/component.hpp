@@ -25,10 +25,10 @@ namespace cc {
     }
 
   public:
-    const devs::Port odd  = devs::Port("Odd");
-    const devs::Port even = devs::Port("Even");
-    const devs::Port print = devs::Port("Print");
-    const devs::Port send = devs::Port("Send");
+    const devs::PortType odd  = devs::PortType("Odd");
+    const devs::PortType even = devs::PortType("Even");
+    const devs::PortType print = devs::PortType("Print");
+    const devs::PortType send = devs::PortType("Send");
   private:
     Generator       &parent;
     devs::Digraph   &digrapg;

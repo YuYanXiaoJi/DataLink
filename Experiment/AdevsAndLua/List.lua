@@ -25,7 +25,7 @@ function List:PushFront(value)
 end
 
 function List:PushBack(value)
-  self.m_back = self.m_back-1;
+  self.m_back = self.m_back+1;
   self.m_ary[self.m_back]=value;
   self.m_size=self.m_size+1;
 end

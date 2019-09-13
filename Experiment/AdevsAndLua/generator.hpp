@@ -17,10 +17,10 @@ namespace cc {
     virtual devs::TimeType Ta() override;
 
   public:
-    const devs::Port recv  = devs::Port("Recv");
-    const devs::Port odd   = devs::Port("Odd");
-    const devs::Port even  = devs::Port("Even");
-    const devs::Port print = devs::Port("Print");
+    const devs::PortType recv  = devs::PortType("Recv");
+    const devs::PortType odd   = devs::PortType("Odd");
+    const devs::PortType even  = devs::PortType("Even");
+    const devs::PortType print = devs::PortType("Print");
   public:
     std::list<devs::SptrBlob> buffer_list;
   };

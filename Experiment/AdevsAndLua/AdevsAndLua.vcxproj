@@ -144,6 +144,7 @@
     <ClInclude Include="devs.hpp" />
     <ClInclude Include="generator.hpp" />
     <ClInclude Include="integer.hpp" />
+    <ClInclude Include="lua_handler.hpp" />
     <ClInclude Include="port.hpp" />
     <ClInclude Include="script_component.hpp" />
     <ClInclude Include="typedef.hpp" />
@@ -154,6 +155,14 @@
     <ClCompile Include="generator.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="script_component.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="API.md" />
+    <None Include="even.lua" />
+    <None Include="List.lua" />
+    <None Include="odd.lua" />
+    <None Include="print.lua" />
+    <None Include="Template.lua" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -139,6 +139,9 @@
     <None Include="List.lua" />
     <None Include="Template.lua" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="lua_handler.hpp" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

@@ -22,8 +22,8 @@ void cc::Generator::Output(devs::IO_Bag & yb)
   auto & sptr_blob = buffer_list.front();
   auto & i = sptr_blob->get<Integer>();
   if (i.val == 1) {
-    //yb.insert({ sendPrint,sptr_blob });
-    std::cout << i.src << "\t" << i.inc << std::endl;
+    yb.insert({ print,sptr_blob });
+    //std::cout << i.src << "\t" << i.inc << std::endl;
   }
   else if (i.val%2==1) {
     yb.insert(devs::IO_Type(odd, sptr_blob));

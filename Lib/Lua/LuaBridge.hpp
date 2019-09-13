@@ -38,10 +38,11 @@
 #define LUABRIDGE_MINOR_VERSION 3
 #define LUABRIDGE_VERSION 203
 
+
 #ifndef LUA_VERSION_NUM
 #error "Lua headers must be included prior to LuaBridge ones"
+#else
 #endif
-
 
 #include "LuaBridge/detail/LuaHelpers.h"
 #include "LuaBridge/detail/TypeTraits.h"

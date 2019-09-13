@@ -1,5 +1,22 @@
 
 
+
+function IntPrint( obj )
+	print(obj.val)
+	print(obj.inc)
+	print(obj.src)
+end
+
+IntPrint(i);
+
+local j = Msg.Integer(100)
+IntPrint(j);
+
+
+
+ary={1,2,3,4,5,6};
+
+--[[
 while(obj.val ~= 1 )
 do
 	if(obj.val%2==1)
@@ -10,5 +27,5 @@ do
 	end
 	obj.inc = obj.inc+1
 end
-
+--]]
 

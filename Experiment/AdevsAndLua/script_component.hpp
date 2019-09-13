@@ -1,8 +1,10 @@
 #pragma once
 #include"component.hpp"
+#include"integer.hpp"
 #include<Lua/lua.hpp>
-#include<string>
 
+#include<string>
+#include<iostream>
 namespace cc {
   class ScriptComponent
     :public Component
@@ -16,8 +18,13 @@ namespace cc {
     virtual void Output(devs::IO_Bag &yb) override;
     virtual devs::TimeType Ta() override;
 
+    void SendFunc(devs::PortType sendPort , Integer info);
+
   private:
     //private pointer lua state
-    lua_State *m_pluaState;
+    lua_State *m_pLuaState;
+    //luabridge::LuaRef m_luaRefInit;
+    devs::IO_Bag *p_yb=nullptr;
+    
   };
 }

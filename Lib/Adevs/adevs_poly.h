@@ -86,9 +86,9 @@ namespace adevs
 	    InterPoly(const InterPoly&){}
 	    void operator=(const InterPoly&){}
 
-	    double* tdat;
-	    double* udat;
-	    unsigned int n;
+	    double* tdat=nullptr;
+	    double* udat = nullptr;
+	    unsigned int n=0;
     };
 }
 

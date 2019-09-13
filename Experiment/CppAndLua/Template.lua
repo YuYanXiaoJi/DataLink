@@ -7,11 +7,4 @@ Interger obj{
 --]]
 
 
--- old
-function Input(port)
-	-- body
-end
 
-function Ta( )
-	-- body
-end
