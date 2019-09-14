@@ -3,6 +3,7 @@
 #include"typedef.hpp"
 #include"schedule_buffer_node.hpp"
 #include"message/message.hpp"
+#include"handler.hpp"
 #include"../utility/utility.hpp"
 
 #include<memory>
@@ -134,8 +135,8 @@ struct devs::Ju::TrackInformation
 
     std::string t_track_number = this->track_number;
     if (is_new_info)
-      t_track_number = util::TrackNumberHandler::Create(
-        util::TrackNumberHandler::GetName(t_track_number));
+      t_track_number = TrackNumberHandler::Create(
+        TrackNumberHandler::GetName(t_track_number));
 
     auto ojb = msg::JointMsg3I(
       t_track_number.c_str(),

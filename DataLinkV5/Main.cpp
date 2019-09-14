@@ -18,17 +18,17 @@ int main() {
   hub.add_ju(ju_2);
 
   auto at_1 = devs::msg::LocalTrack(
-    util::TrackNumberHandler::Create("Ultraman").c_str(),
+    devs::TrackNumberHandler::Create("Ultraman").c_str(),
     devs::msg::Platform_AIR, 8, 1000
   );
 
   auto at_2 = devs::msg::LocalTrack(
-    util::TrackNumberHandler::Create("Ultraman").c_str(),
+    devs::TrackNumberHandler::Create("Ultraman").c_str(),
     devs::msg::Platform_AIR, 4, 1000
   );
 
   auto j30i_1 = devs::msg::JointMsg3I(
-    util::TrackNumberHandler::Create("Ultraman").c_str(),
+    devs::TrackNumberHandler::Create("Ultraman").c_str(),
     "ju-3", devs::msg::Platform_AIR, 8, 400,10);
 
   hub.push_buffer(10000, hub.map_private_recv_port[ju_1->uid], at_1);

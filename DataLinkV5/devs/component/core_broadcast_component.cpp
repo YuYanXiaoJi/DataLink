@@ -52,14 +52,14 @@ void devs::component::CoreBroadcastComponent::log(util::SptrBlob sptr_blob)
   case msg::MsgType::Msg_LocalTrack:
   {
     auto& msg = blob.get<msg::LocalTrack>();
-    auto track_name = util::TrackNumberHandler::GetName(msg.track_number);
+    auto track_name = TrackNumberHandler::GetName(msg.track_number);
     std::cout << Time::now() << "\t" << parent.name << " S: LocalTrack\t" << msg.track_number << std::endl;
     break;
   }
   case msg::MsgType::Msg_JointMsg3I:
   {
     auto& msg = blob.get<msg::JointMsg3I>();
-    auto track_name = util::TrackNumberHandler::GetName(msg.track_number);
+    auto track_name = TrackNumberHandler::GetName(msg.track_number);
     std::cout << Time::now() << "\t" << parent.name << " S: JointMsg3I\t" << msg.track_number << std::endl;
     break;
   }

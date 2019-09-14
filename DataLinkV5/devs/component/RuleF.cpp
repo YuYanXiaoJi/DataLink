@@ -21,7 +21,7 @@ void devs::component::RuleF::delta_ext(devs::TimeType e, const IO_Bag & xb)
       auto&j7 = x.value->get<msg::JointMsg7I>();
       if (j7.action==0)
       {
-        string track_name = util::TrackNumberHandler::GetName(j7.track_number);
+        string track_name = TrackNumberHandler::GetName(j7.track_number);
         auto[is_exist_at, is_exist_rt, is_exist_r2] = parent.GetExist(track_name);
         if(is_exist_at==true)
           j7ActZeroList.push_back(j7);
@@ -41,7 +41,7 @@ void devs::component::RuleF::output_func(IO_Bag & yb)
 
     // F规则只处理ACT=0的情况
     if (j7.action != 0) return;
-    auto track_name = util::TrackNumberHandler::GetName(j7.track_number);
+    auto track_name = TrackNumberHandler::GetName(j7.track_number);
     auto[is_exist_at, is_exist_rt, is_exist_r2] = parent.GetExist(track_name);
 
     if(is_exist_rt==false 

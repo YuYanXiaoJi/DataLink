@@ -115,7 +115,7 @@ void devs::Ju::delta_ext(devs::TimeType e, const IO_Bag & xb)
         case msg::MsgType::Msg_LocalTrack:
         {
           auto& msg = blob.get<msg::LocalTrack>();
-          auto track_name = util::TrackNumberHandler::GetName(msg.track_number);
+          auto track_name = TrackNumberHandler::GetName(msg.track_number);
           dict_active_track[track_name] = TrackInformation(msg, this->name);
 
           std::cout << Time::now() << "\t" << this->name << " R: LocalTrack\t" << msg.track_number<<std::endl;
@@ -127,7 +127,7 @@ void devs::Ju::delta_ext(devs::TimeType e, const IO_Bag & xb)
           if (msg.from_sut_name == this->name) {
             return; // 自己的发出的消息.无视
           }
-          auto track_name = util::TrackNumberHandler::GetName(msg.track_number);
+          auto track_name = TrackNumberHandler::GetName(msg.track_number);
           dict_recv_track[track_name] = TrackInformation(msg);
           std::cout << Time::now() << "\t" << this->name << " R: JointMsg3I\t" << msg.track_number << std::endl;
           break;

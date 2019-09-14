@@ -30,9 +30,6 @@ namespace devs::message {
       time_msec = _time_msec;
     }
 
-    inline bool operator < (const JointMsg7I& obj) const {
-      return track_number < obj.track_number;
-    }
   };
 
 }
