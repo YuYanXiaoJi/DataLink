@@ -27,18 +27,72 @@
     <ClInclude Include="utility\utility.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="devs\massage\joint_msg_base.hpp">
+    <ClInclude Include="devs\core\typedef.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="devs\massage\msg_type.hpp">
+    <ClInclude Include="devs\core\abstract_atomic.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="devs\massage\joint_track_platform_type.hpp">
+    <ClInclude Include="devs\core\time.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="devs\handler\schedule_buffer_node.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="devs\core\hub.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="devs\core\ju.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="utility\math.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="devs\message\interior_msg.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="devs\message\joint_msg_2.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="devs\message\joint_msg_3.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="devs\message\joint_msg_7.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="devs\message\joint_msg_base.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="devs\message\local_msg.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="devs\message\msg_type.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="devs\message\message.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="devs\handler\track_infomation.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="devs\handler\track_number_handler.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="devs\handler\time_interval_handler.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="devs\message\track_platform_type.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="devs\core\ju.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="devs\core\hub.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

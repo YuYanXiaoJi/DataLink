@@ -3,7 +3,7 @@
 #include <cstddef>
 namespace devs::message {
 
-  enum class MsgType:std::uint8_t
+  enum MsgType
   {
     Msg_JointMsgBase ,
     Msg_JointMsg3I ,

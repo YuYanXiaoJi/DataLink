@@ -13,7 +13,7 @@ namespace devs::message {
     // º½¼£Ä¿±ê
     char  track_number[STR_MAX_LENGTH];
 
-    char  from_sut_name[STR_MAX_LENGTH];
+   
 
     TrackPlatform  track_platform;
 

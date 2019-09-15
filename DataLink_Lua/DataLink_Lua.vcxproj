@@ -130,15 +130,33 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="devs\massage\joint_msg_base.hpp" />
-    <ClInclude Include="devs\massage\joint_track_platform_type.hpp" />
-    <ClInclude Include="devs\massage\msg_type.hpp" />
+    <ClInclude Include="devs\core\abstract_atomic.hpp" />
+    <ClInclude Include="devs\core\hub.hpp" />
+    <ClInclude Include="devs\core\ju.hpp" />
+    <ClInclude Include="devs\core\time.hpp" />
+    <ClInclude Include="devs\core\typedef.hpp" />
+    <ClInclude Include="devs\handler\schedule_buffer_node.hpp" />
+    <ClInclude Include="devs\handler\time_interval_handler.hpp" />
+    <ClInclude Include="devs\handler\track_infomation.hpp" />
+    <ClInclude Include="devs\handler\track_number_handler.h" />
+    <ClInclude Include="devs\message\interior_msg.hpp" />
+    <ClInclude Include="devs\message\joint_msg_2.hpp" />
+    <ClInclude Include="devs\message\joint_msg_3.hpp" />
+    <ClInclude Include="devs\message\joint_msg_7.hpp" />
+    <ClInclude Include="devs\message\joint_msg_base.hpp" />
+    <ClInclude Include="devs\message\track_platform_type.hpp" />
+    <ClInclude Include="devs\message\local_msg.hpp" />
+    <ClInclude Include="devs\message\message.hpp" />
+    <ClInclude Include="devs\message\msg_type.hpp" />
     <ClInclude Include="utility\blob.hpp" />
+    <ClInclude Include="utility\math.hpp" />
     <ClInclude Include="utility\priority_queue.hpp" />
     <ClInclude Include="utility\uid.hpp" />
     <ClInclude Include="utility\utility.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="devs\core\hub.cpp" />
+    <ClCompile Include="devs\core\ju.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
