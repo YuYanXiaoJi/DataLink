@@ -39,5 +39,11 @@ namespace utility {
       return buff;
     }
 
+    //返回 enum class 类型, 放在内存的第pos字节位置,从0开始
+    template<class Ty> const Ty blob_type(std::size_t pos = 0) const{
+      return *reinterpret_cast<const Ty* >( data() + pos );
+    }
   };
+
+
 }

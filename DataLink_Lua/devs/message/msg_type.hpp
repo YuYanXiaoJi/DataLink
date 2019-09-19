@@ -3,23 +3,25 @@
 #include <cstddef>
 namespace devs::message {
 
+
   enum MsgType
   {
-    Msg_JointMsgBase ,
-    Msg_JointMsg3I ,
-    Msg_JointMsg7I ,
-    Msg_JointMsg2I ,
-    //////////////////////
-    Msg_LocalTrack ,
-    Msg_MissingTrack ,
-    Msg_TimeSilce ,
-    Msg_SubTimeSilce ,
-    //////////////////////
-    Msg_LocalMsg ,
-    //////////////////////
-    Msg_VerifyMsg ,
-    Msg_VerifyCalc ,
+#define __Msg__(name) Msg_##name , /* Msg_$Name */
+#include"msg_type_name.def"
+#undef __Msg__
   };
 
+
+
+  inline std::string GetMsgTypeName(MsgType val) {
+    switch(val)
+    {
+#define __Msg__(name) case devs::message::Msg_##name : return "Msg_"#name; 
+#include"msg_type_name.def"
+#undef __Msg__
+    default:
+      return "Unknow";
+    }
+  }
 
 }

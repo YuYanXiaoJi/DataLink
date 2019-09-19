@@ -16,9 +16,31 @@ namespace devs::handler {
 
     TimeType  create_time;
 
-    explicit TrackInformation();
-    explicit TrackInformation(const msg::LocalTrack &at , const std::string &sut_name);
-    explicit TrackInformation(const msg::JointMsg3I &j30i);
+    TrackInformation()
+    {
+      track_number = "";
+      from = "";
+      track_platform = msg::Platform_UNDEFINED;
+      track_quality = -1;
+      create_time = -1;
+    }
+
+    TrackInformation(const msg::LocalTrack &at , const std::string &sut_name) {
+      track_number = at.track_number;
+      from = sut_name;
+      track_platform = at.track_platform;
+      track_quality = at.track_quality;
+      create_time = at.create_time;
+    }
+
+    TrackInformation(const msg::JointMsg3I &j30i) {
+      track_number = j30i.track_number;
+      from = j30i.from;
+      track_platform = j30i.track_platform;
+      track_quality = j30i.track_quality;
+      create_time = j30i.create_time;
+      _uSTN = j30i._uSTN;
+    }
 
     template<class Ty> Ty Get(bool is_create_new = true) {
       static_assert(false,"该类型不在生成范围内!!!");
@@ -32,31 +54,7 @@ namespace devs::handler {
 
 
 namespace devs::handler {
-  TrackInformation::TrackInformation()
-  {
-    track_number = "";
-    from = "";
-    track_platform = msg::Platform_UNDEFINED;
-    track_quality = -1;
-    create_time = -1;
-  }
 
-  TrackInformation::TrackInformation(const msg::LocalTrack &at , const std::string &sut_name) {
-    track_number = at.track_number;
-    from = sut_name;
-    track_platform = at.track_platform;
-    track_quality = at.track_quality;
-    create_time = at.create_time;
-  }
-
-  TrackInformation::TrackInformation(const msg::JointMsg3I &j30i) {
-    track_number = j30i.track_number;
-    from = j30i.from;
-    track_platform = j30i.track_platform;
-    track_quality = j30i.track_quality;
-    create_time = j30i.create_time;
-    _uSTN = j30i._uSTN;
-  }
 
   template <> inline devs::msg::JointMsg3I  TrackInformation::Get(bool is_create_new) {
 

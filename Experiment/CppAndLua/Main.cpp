@@ -47,10 +47,6 @@ void Inject<Integer>(lua_State *pLuaState) {
     .endNamespace();
 }
 
-
-
-
-
 int main() {
   
   lua_State* lua_state = luaL_newstate();

@@ -14,7 +14,7 @@ namespace devs::core {
     void AddJu(std::shared_ptr<Ju> sptr_ju);
 
     template<class Ty>void PushBuffer(TimeType schedule_time , PortType send_port , const Ty &msg) {
-      priority_blob_queue.push(ScheduleBufferNode(schedule_time , IO_Type(send_port , util::Blob(msg))));
+      priority_blob_queue.push(handler::ScheduleBufferNode(schedule_time , IO_Type(send_port ,util::CreateSptrBlob(msg))));
     }
   public:
     // 通过 AbstractAtomic 继承
@@ -25,8 +25,8 @@ namespace devs::core {
 
   public:
     //广播端口(双向)
-    const  PortType  port_broadcast=utility::Uid();   //用于 广播<发送,接收>的端口  
-    const  PortType  port_abandon = -1;               //用于抛弃一些无效消息
+    const  PortType  sigio_broadcast=utility::Uid();   //用于 广播<发送,接收>的端口  
+    const  PortType  sig_abandon = -1;               //用于抛弃一些无效消息
 
     //私有端口(单向)
     std::map<uint64_t, PortType> map_private_port;   //map<uid,private_port> 

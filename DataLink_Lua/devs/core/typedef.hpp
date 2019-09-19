@@ -5,7 +5,7 @@ namespace devs {
 
   typedef int32_t             PortType;
   typedef int64_t             TimeType;
-  typedef utility::Blob       ValueType;
+  typedef std::shared_ptr<utility::Blob>       ValueType;
 
 
   typedef adevs::PortValue<ValueType , PortType> IO_Type;

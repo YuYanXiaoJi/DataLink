@@ -26,7 +26,7 @@ namespace devs::message {
 
   struct TimeSlice
   {
-    MsgType msg_type = MsgType::Msg_TimeSilce;
+    MsgType msg_type = MsgType::Msg_TimeSlice;
     TimeType begin_time;
     TimeType end_time;
 
@@ -38,7 +38,7 @@ namespace devs::message {
 
   struct SubTimeSlice
   {
-    MsgType msg_type = MsgType::Msg_SubTimeSilce;
+    MsgType msg_type = MsgType::Msg_SubTimeSlice;
     TimeType begin_time;
     TimeType end_time;
     TimeType current_time;
