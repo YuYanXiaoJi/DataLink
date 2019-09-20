@@ -1,13 +1,19 @@
 #pragma once
 #include"abstract_atomic.hpp"
 #include"ju.hpp"
-
+#include<memory>
 namespace devs::core {
   class JuComponent 
     :public AbstractAtomic
   {
   public:
-    JuComponent(Digraph &_digraph , Ju &_ju , const std::string &_name);
+    JuComponent(Digraph &_digraph , Ju &_ju , const std::string &_name)
+      :AbstractAtomic(_digraph , _name) , ju(_ju)
+    {
+      BindOutInterior();
+      BindOutSecureBroadcast();
+      BindOutImmediateBroadcast();
+    }
     
   public:
 #pragma region 端口信号定义
@@ -56,34 +62,47 @@ namespace devs::core {
     }
   public:
     inline void BindInBroadcastBuffer(){
-      BindSend(ju.sigo_broadcast_buffer , sigi_broadcast_buffer);
+      BindRecv(ju.sigo_broadcast_buffer , sigi_broadcast_buffer);
     }
     inline void BindInTS() {
-      BindSend(ju.sigo_time_slice , sigi_time_slice);
+      BindRecv(ju.sigo_time_slice , sigi_time_slice);
     }
     inline void BindInSTS() {
-      BindSend(ju.sigo_sub_ts , sigi_sub_ts);
+      BindRecv(ju.sigo_sub_ts , sigi_sub_ts);
     }
     inline void BindInCMD() {
-      BindSend(ju.sigo_command , sigi_command);
+      BindRecv(ju.sigo_command , sigi_command);
     }
     inline void BindInLT() {
-      BindSend(ju.sigo_local_track , sigi_local_track);
+      BindRecv(ju.sigo_local_track , sigi_local_track);
     }
     inline void BindInJ2() {
-      BindSend(ju.sigo_j2, sigi_j2);
+      BindRecv(ju.sigo_j2, sigi_j2);
     }
     inline void BindInJ3() {
-      BindSend(ju.sigo_j3 , sigi_j3);
+      BindRecv(ju.sigo_j3 , sigi_j3);
     }
     inline void BindInJ7() {
-      BindSend(ju.sigo_j7 , sigi_j7);
+      BindRecv(ju.sigo_j7 , sigi_j7);
     }
 #pragma endregion
 
 #pragma region emmm
 
+    // 设置想要 安全广播的
+    inline void InsertSecureBroadcast(ValueType value , devs::IO_Bag &yb) {
+      yb.insert(IO_Type(sigo_secure_broadcast , value));
+    }
 
+    // 设置想要 立即广播的
+    inline void InsertImmediateBroadcast(ValueType value , devs::IO_Bag &yb) {
+      yb.insert(IO_Type(sigo_immediate_broadcast , value));
+    }
+
+    // 设置想要 内部传播的内容
+    inline void InsertInteriorBroadcast( ValueType value , devs::IO_Bag &yb ) {
+      yb.insert(IO_Type(sigo_interior , value));
+    }
 
 #pragma endregion
   public:
@@ -91,4 +110,15 @@ namespace devs::core {
 
 
   };
+
+  //template<typename Ty>
+  //shared_ptr<JuComponent> Creator(Ju&ju) {
+  //  static_assert( false , "在未实现的类型中调用了");
+  //  return nullptr;
+  //}
+
+#define __CREATOR__(name) \
+  inline static shared_ptr<JuComponent> Creator(Ju&ju) {    \
+    auto ptr=std::make_shared<name>(ju.digraph ,ju);        \
+    return static_pointer_cast<JuComponent>(ptr);  }
 }

@@ -1,6 +1,35 @@
+buffer_list =List:new()
+function Init()
+	Some Code
+end
+
+function Input(recvPort,value)
+	Some Code
+end
+
+function Internal()
+	Some Code
+end
+
+function Output()
+	Some Code
+end
+
+function Ta( )
+	Some Code
+end
+
+
+
+
+
+
+
+
+
+
 
 buffer_list =List:new()
-
 function Init()
 	this:BindOdd();
 	this:BindEven();
@@ -33,4 +62,6 @@ function Ta( )
 		return 0;
 	end
 end
+
+
 

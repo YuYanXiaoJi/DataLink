@@ -87,6 +87,9 @@
     <ClInclude Include="devs\core\ju_component.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="devs\core\core_ju_component\print_component.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -99,6 +102,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="devs\core\ju_component.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="devs\core\core_ju_component\print_component.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

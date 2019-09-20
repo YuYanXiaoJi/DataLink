@@ -31,7 +31,7 @@ namespace devs::core {
   public:
     util::MinPriorityQueue<handler::ScheduleBufferNode> recv_buffer_queue;
     //std::list<IO_Type>  buffer_list;                //从 hub 接收的消息 全部保存在这里. 立即通过 output 进行触发
-    std::map<std::string , std::shared_ptr<JuComponent> > map_component;
+    std::map<int64_t/*uid*/ , std::shared_ptr<JuComponent> > map_component;
 
     msg::TimeSlice    time_silce;                   //保存 接收到的时间片信息
 

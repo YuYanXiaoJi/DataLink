@@ -10,7 +10,8 @@ int main() {
 
   devs::Simulator sim = devs::Simulator(&dome);
 
-  while(devs::Time::Update(sim.nextEventTime()) < 500'000)
+  int64_t total_time = 200;
+  while(devs::Time::Update(sim.nextEventTime()) < total_time)
     sim.execNextEvent();
   return 0;
 }

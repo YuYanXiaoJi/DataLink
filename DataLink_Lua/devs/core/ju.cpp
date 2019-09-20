@@ -1,5 +1,10 @@
 #include "ju.hpp"
 #include<iostream>
+
+#include"core_ju_component/print_component.hpp"
+#include"core_ju_component/core_broadcast_component.hpp"
+#include"core_ju_component/core_period_broadcast_component.hpp"
+
 namespace devs::core {
 
   std::shared_ptr<Ju> devs::core::Ju::make_shared(Digraph &_digraph , const std::string &_name , int32_t _uSTN)
@@ -7,7 +12,13 @@ namespace devs::core {
     return std::make_shared<Ju>(_digraph, _name, _uSTN);
   }
 
-  devs::core::Ju::Ju(Digraph &_digraph , const std::string &_name , int32_t _uSTN):AbstractAtomic(_digraph,_name),_uSTN(_uSTN){}
+  devs::core::Ju::Ju(Digraph &_digraph , const std::string &_name , int32_t _uSTN)
+    :AbstractAtomic(_digraph,_name),_uSTN(_uSTN)
+  {
+    //AddComponent(ju_component::PrintComponent::Creator(*this));
+    AddComponent(ju_component::CoreBroadcastComponent::Creator(*this));
+    AddComponent(ju_component::CorePeriodBroadcastComponent::Creator(*this));
+  }
 
   void Ju::Input(const devs::IO_Type &x)
   {
@@ -77,7 +88,8 @@ namespace devs::core {
 
   void Ju::AddComponent(const shared_ptr<JuComponent> sptr_component)
   {
-    
+    assert(sptr_component != nullptr);
+    map_component[sptr_component->uid] = sptr_component;
   }
 
   bool Ju::CheckIsSelfSend(const util::Blob &blob)
@@ -111,10 +123,12 @@ namespace devs::core {
     if(type == msg::Msg_TimeSlice) {
       auto ts = blob.get<msg::TimeSlice>();
       this->time_silce = ts;
-      for(auto t = ts.begin_time; t < ts.end_time; t += _time_slice_trigger_interval) {
+      for(auto t = ts.begin_time; t < ts.end_time-1; t += _time_slice_trigger_interval) {
         auto sptr_sts = util::CreateSptrBlob(msg::SubTimeSlice(ts , t));
         PushBuffer(t , IO_Type(sigi_interior , sptr_sts));
       }
+      auto sptr_sts = util::CreateSptrBlob(msg::SubTimeSlice(ts , ts.end_time - 1));
+      PushBuffer(ts.end_time - 1 , IO_Type(sigi_interior , sptr_sts));
     }
   }
   void Ju::LogMsg(const util::Blob &blob)

@@ -137,6 +137,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="devs\core\abstract_atomic.hpp" />
+    <ClInclude Include="devs\core\core_ju_component\print_component.hpp" />
     <ClInclude Include="devs\core\hub.hpp" />
     <ClInclude Include="devs\core\ju.hpp" />
     <ClInclude Include="devs\core\ju_component.hpp" />
@@ -162,6 +163,7 @@
     <ClInclude Include="utility\utility.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="devs\core\core_ju_component\print_component.cpp" />
     <ClCompile Include="devs\core\hub.cpp" />
     <ClCompile Include="devs\core\ju.cpp" />
     <ClCompile Include="devs\core\ju_component.cpp" />
