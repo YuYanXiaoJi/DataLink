@@ -8,8 +8,10 @@ namespace devs::core::ju_component {
     PrintComponent(Digraph & _digraph , Ju & _ju)
       :JuComponent(_digraph , _ju , "PrintComponent")
     {
-      BindInTS();
-      BindInSTS();
+      //BindInTS();
+      BindInLT();
+      BindInCMD();
+      //BindInSTS();
     }
 
     __CREATOR__(PrintComponent);

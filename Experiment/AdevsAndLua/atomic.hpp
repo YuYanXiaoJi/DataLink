@@ -38,7 +38,7 @@ namespace devs {
     }
     virtual inline void delta_ext(devs::TimeType e, const IO_Bag& xb)override {
       for (auto& io : xb) {
-        External(io.port, io.value);
+        Input(io.port, io.value);
       }
     }
     virtual inline void output_func(IO_Bag& yb) override {

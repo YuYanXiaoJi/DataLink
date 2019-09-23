@@ -8,7 +8,7 @@ namespace devs::handler {
   struct TrackInformation
   {
     std::string track_number;
-    std::string from;
+    //std::string from;
 
     msg::TrackPlatform  track_platform;
     int32_t             track_quality;
@@ -19,7 +19,7 @@ namespace devs::handler {
     TrackInformation()
     {
       track_number = "";
-      from = "";
+      //from = "";
       track_platform = msg::Platform_UNDEFINED;
       track_quality = -1;
       create_time = -1;
@@ -27,7 +27,7 @@ namespace devs::handler {
 
     TrackInformation(const msg::LocalTrack &at , const std::string &sut_name) {
       track_number = at.track_number;
-      from = sut_name;
+      //from = sut_name;
       track_platform = at.track_platform;
       track_quality = at.track_quality;
       create_time = at.create_time;
@@ -35,7 +35,7 @@ namespace devs::handler {
 
     TrackInformation(const msg::JointMsg3I &j30i) {
       track_number = j30i.track_number;
-      from = j30i.from;
+      //from = j30i.from;
       track_platform = j30i.track_platform;
       track_quality = j30i.track_quality;
       create_time = j30i.create_time;
@@ -64,7 +64,7 @@ namespace devs::handler {
 
     auto ojb = msg::JointMsg3I(
       t_track_number.c_str() ,
-      this->from.c_str() ,
+     // this->from.c_str() ,
       this->track_platform ,
       this->track_quality ,
       this->create_time ,

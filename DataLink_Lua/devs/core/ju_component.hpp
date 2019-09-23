@@ -15,7 +15,7 @@ namespace devs::core {
       BindOutImmediateBroadcast();
     }
     
-  public:
+  
 #pragma region 端口信号定义
     /*
       端口的定义为 sig+i+o+_+name
@@ -23,6 +23,7 @@ namespace devs::core {
                   i   :input,接收 ,替代 recv
                   o   :output,发送,替代 send
     */
+  private:
     /// 与 Hub 通信 端口
     inline const static PortType  sigo_interior = util::Uid();        //  发送数据给Ju
 
@@ -32,12 +33,13 @@ namespace devs::core {
     inline const static PortType  sigo_secure_broadcast = util::Uid();     
     inline const static PortType  sigo_immediate_broadcast = util::Uid();  
 
+  public:
     /*Ju->Component*/
     inline const static PortType  sigi_broadcast_buffer = util::Uid();  
-    inline const static PortType  sigi_time_slice = util::Uid();       
-    inline const static PortType  sigi_sub_ts = util::Uid();            
-    inline const static PortType  sigi_command = util::Uid();        
-    inline const static PortType  sigi_local_track = util::Uid();
+    inline const static PortType  sigi_ts = util::Uid();       
+    inline const static PortType  sigi_sts = util::Uid();            
+    inline const static PortType  sigi_cmd = util::Uid();        
+    inline const static PortType  sigi_lt = util::Uid();
     inline const static PortType  sigi_j2 = util::Uid();
     inline const static PortType  sigi_j3 = util::Uid();
     inline const static PortType  sigi_j7 = util::Uid();
@@ -65,16 +67,16 @@ namespace devs::core {
       BindRecv(ju.sigo_broadcast_buffer , sigi_broadcast_buffer);
     }
     inline void BindInTS() {
-      BindRecv(ju.sigo_time_slice , sigi_time_slice);
+      BindRecv(ju.sigo_ts , sigi_ts);
     }
     inline void BindInSTS() {
-      BindRecv(ju.sigo_sub_ts , sigi_sub_ts);
+      BindRecv(ju.sigo_sts , sigi_sts);
     }
     inline void BindInCMD() {
-      BindRecv(ju.sigo_command , sigi_command);
+      BindRecv(ju.sigo_cmd , sigi_cmd);
     }
     inline void BindInLT() {
-      BindRecv(ju.sigo_local_track , sigi_local_track);
+      BindRecv(ju.sigo_lt , sigi_lt);
     }
     inline void BindInJ2() {
       BindRecv(ju.sigo_j2, sigi_j2);
@@ -118,7 +120,7 @@ namespace devs::core {
   //}
 
 #define __CREATOR__(name) \
-  inline static shared_ptr<JuComponent> Creator(Ju&ju) {    \
+  inline static shared_ptr<devs::core::JuComponent> Creator(devs::core::Ju&ju) {    \
     auto ptr=std::make_shared<name>(ju.digraph ,ju);        \
-    return static_pointer_cast<JuComponent>(ptr);  }
+    return static_pointer_cast<devs::core::JuComponent>(ptr);  }
 }

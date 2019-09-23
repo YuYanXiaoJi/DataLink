@@ -9,7 +9,7 @@ devs::core::ju_component::CorePeriodBroadcastComponent::CorePeriodBroadcastCompo
 
 void devs::core::ju_component::CorePeriodBroadcastComponent::Input(const devs::IO_Type & x)
 {
-  if(x.port == sigi_sub_ts) {
+  if(x.port == sigi_sts) {
     is_recv_ts = true;
   }
 }

@@ -8,7 +8,7 @@ namespace cc {
     Generator();
 
     // Í¨¹ý AtomicAbstract ¼Ì³Ð
-    virtual void External(const devs::PortType & recvPort, const devs::SptrBlob sptrBlob) override;
+    virtual void Input(const devs::PortType & recvPort, const devs::SptrBlob sptrBlob) override;
 
     virtual void Internal() override;
 

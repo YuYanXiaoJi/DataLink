@@ -4,8 +4,8 @@
 namespace devs::component {
 
   /*
-    获得LT时候,将track_name放进缓冲队列中.
-    随后,由Sub Time Slice触发,再进行判别
+    ���LTʱ��,��track_name�Ž����������.
+    ���,��Sub Time Slice����,�ٽ����б�
   */
   class RuleA
     : JuComponent
@@ -14,7 +14,7 @@ namespace devs::component {
   public:
       RuleA(Ju& ju, Digraph& _digraph, const std::string&_name, PortType _uid);
 
-    // 通过 JuComponent 继承
+    // ͨ�� JuComponent �̳�
     virtual void delta_int() override;
     virtual void delta_ext(devs::TimeType e, const IO_Bag & xb) override;
     virtual void output_func(IO_Bag & yb) override;
@@ -22,11 +22,11 @@ namespace devs::component {
 
     _FUNC_MakeShared_(RuleA)
   private:
-    //预处理Set
+    //Ԥ����Set
     std::set<std::string> preTreatmentSet;
 
-    //是否收到sub_ts signal
-    //该变量被 ta() 函数使用. 在 delta_int 被置零
+    //�Ƿ��յ�sub_ts signal
+    //�ñ����� ta() ����ʹ��. �� delta_int ������
     bool  isRecvSubTS=false;
 
   };

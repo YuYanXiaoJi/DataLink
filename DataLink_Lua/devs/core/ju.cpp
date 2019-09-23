@@ -2,12 +2,16 @@
 #include<iostream>
 
 #include"core_ju_component/print_component.hpp"
+
 #include"core_ju_component/core_broadcast_component.hpp"
 #include"core_ju_component/core_period_broadcast_component.hpp"
+#include"core_ju_component/core_reporting_responsibility_component.hpp"
 
+
+#include"../rule/rule_a.hpp"
 namespace devs::core {
 
-  std::shared_ptr<Ju> devs::core::Ju::make_shared(Digraph &_digraph , const std::string &_name , int32_t _uSTN)
+  std::shared_ptr<Ju> Ju::make_shared(Digraph &_digraph , const std::string &_name , int32_t _uSTN)
   {
     return std::make_shared<Ju>(_digraph, _name, _uSTN);
   }
@@ -15,9 +19,20 @@ namespace devs::core {
   devs::core::Ju::Ju(Digraph &_digraph , const std::string &_name , int32_t _uSTN)
     :AbstractAtomic(_digraph,_name),_uSTN(_uSTN)
   {
-    //AddComponent(ju_component::PrintComponent::Creator(*this));
+    AddComponent(ju_component::PrintComponent::Creator(*this));
+
     AddComponent(ju_component::CoreBroadcastComponent::Creator(*this));
     AddComponent(ju_component::CorePeriodBroadcastComponent::Creator(*this));
+    AddComponent(ju_component::CoreReportingResponsibilityComponent::Creator(*this));
+
+    AddComponent(ju_component::RuleA::Creator(*this));
+  }
+
+  std::tuple<bool , bool , bool> Ju::GetExist(const std::string &track_name) {
+    bool is_exist_r2 = dict_r2.exist(track_name);
+    bool is_exist_at = dict_local_track.exist(track_name);
+    bool is_exist_rt = dict_recv_track.exist(track_name);
+    return std::tuple(is_exist_at,is_exist_rt,is_exist_r2);
   }
 
   void Ju::Input(const devs::IO_Type &x)
@@ -69,11 +84,12 @@ namespace devs::core {
     }
 
     if(blob_sig == sigi_secure_broadcast) {
-      PushBuffer(Time::Now() , IO_Type(sigo_broadcast_buffer , io.value));
+      yb.insert(IO_Type(sigo_broadcast_buffer , io.value));
     }
 
     if(blob_sig == sigi_immediate_broadcast) {
-      PushBuffer(Time::Now() , IO_Type(sigio_hub , io.value));
+      RecordMsgTrackNumber(*io.value);
+      yb.insert(IO_Type(sigio_hub , io.value));
     }
   }
 
@@ -99,8 +115,7 @@ namespace devs::core {
     //判断是不是 J系列的报文. 是J系列的报文才有判断是否是自己发的意义
     if(type == msg::Msg_JointMsg2I || type == msg::Msg_JointMsg3I || type == msg::Msg_JointMsg7I) {
       auto base_msg = blob.get<msg::JointMsgBase>();
-      if(this->name == base_msg.from) //只有相等才能是 true
-        return true;
+      return set_record_track_number.find(base_msg.track_number) == set_record_track_number.end();
     }
     return false;
   }
@@ -133,12 +148,15 @@ namespace devs::core {
   }
   void Ju::LogMsg(const util::Blob &blob)
   {
+    if(blob.blob_type<msg::MsgType>() == msg::Msg_TimeSlice)
+      return;
     std::cout << Time::Now() << "\t" << "R: " << msg::GetMsgTypeName(blob.blob_type<msg::MsgType>()) << std::endl;
   }
   void Ju::PushBuffer(TimeType schedule_time , const IO_Type& x){
     recv_buffer_queue.push(handler::ScheduleBufferNode(schedule_time , x));
   }
 
+  
   void Ju::InsertToYBag(const devs::IO_Type x , devs::IO_Bag &yb) {
     auto sptr_blob = recv_buffer_queue.top().io_buffer.value;
     auto & blob = *sptr_blob;
@@ -155,19 +173,27 @@ namespace devs::core {
       yb.insert(IO_Type(sigo_j7 , sptr_blob));
       break;
     case devs::message::Msg_LocalTrack:
-      yb.insert(IO_Type(sigo_local_track , sptr_blob));
+      yb.insert(IO_Type(sigo_lt , sptr_blob));
       break;
     case devs::message::Msg_TimeSlice:
-      yb.insert(IO_Type(sigo_time_slice , sptr_blob));
+      yb.insert(IO_Type(sigo_ts , sptr_blob));
       break;
     case devs::message::Msg_SubTimeSlice:
-      yb.insert(IO_Type(sigo_sub_ts , sptr_blob));
+      yb.insert(IO_Type(sigo_sts , sptr_blob));
       break;
     case devs::message::Msg_LoaclCmdType:
-      yb.insert(IO_Type(sigo_command , sptr_blob));
+      yb.insert(IO_Type(sigo_cmd , sptr_blob));
       break;
     default:
       break;
+    }
+  }
+  void Ju::RecordMsgTrackNumber(const util::Blob & blob)
+  {
+    auto type = blob.blob_type<msg::MsgType>();
+    if(type == msg::Msg_JointMsg2I || type == msg::Msg_JointMsg3I || type == msg::Msg_JointMsg7I) {
+      auto base_msg = blob.get<msg::JointMsgBase>();
+      set_record_track_number.insert(base_msg.track_number);
     }
   }
 }

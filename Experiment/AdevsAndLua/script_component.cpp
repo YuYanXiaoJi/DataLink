@@ -36,7 +36,7 @@ cc::ScriptComponent::ScriptComponent(const string &filename , devs::Digraph &dig
   
 }
 
-void cc::ScriptComponent::External(const devs::PortType &recvPort , const devs::SptrBlob sptrBlob)
+void cc::ScriptComponent::Input(const devs::PortType &recvPort , const devs::SptrBlob sptrBlob)
 {
   auto m_luaRefInput = luabridge::getGlobal(m_pLuaState , "Input");
   if(m_luaRefInput.isFunction())

@@ -6,7 +6,7 @@ end
 
 function Input(recvPort,value)
 	if(recvPort=="Print") then
-		print("ret:"..value.src.."\tinc:"..value.inc)
+		print("ret:"..value.src.."\tinc:"..value.inc.."\ttype"..value.type.."\tT"..Integer.t)
 	end
 end
 

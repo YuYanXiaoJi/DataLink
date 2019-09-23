@@ -4,7 +4,7 @@
 namespace devs::message {
 
 
-  enum MsgType
+  enum  MsgType 
   {
 #define __Msg__(name) Msg_##name , /* Msg_$Name */
 #include"msg_type_name.def"

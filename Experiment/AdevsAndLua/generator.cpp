@@ -7,7 +7,7 @@ cc::Generator::Generator() {
   }
 }
 
-void cc::Generator::External(const devs::PortType & recvPort, const devs::SptrBlob sptrBlob)
+void cc::Generator::Input(const devs::PortType & recvPort, const devs::SptrBlob sptrBlob)
 {
   buffer_list.push_front(sptrBlob);
 }

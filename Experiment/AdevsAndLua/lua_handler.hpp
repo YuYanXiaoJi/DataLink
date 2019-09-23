@@ -11,13 +11,17 @@ namespace cc::lua_handler {
     static_assert( false , "this class no define its inject func" );
   }
 
+
+
   template<> inline void Inject<Integer>(lua_State *pLuaState) {
     luabridge::getGlobalNamespace(pLuaState)
       .beginClass<Integer>("Integer")
       .addConstructor<void( * )( std::int32_t )>()
       .addData("src" , &Integer::src , false)
+      .addData("type" ,&Integer::type , false)
       .addData("val" , &Integer::val)
       .addData("inc" , &Integer::inc)
+      .addStaticData("t",&Integer::t,false)
       .endClass();
   }
 

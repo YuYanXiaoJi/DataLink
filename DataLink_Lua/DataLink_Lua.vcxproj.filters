@@ -90,6 +90,30 @@
     <ClInclude Include="devs\core\core_ju_component\print_component.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="devs\core\core_ju_component\core_broadcast_component.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="devs\core\core_ju_component\core_period_broadcast_component.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="devs\rule\rule_a.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="utility\sync\list.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="utility\sync\map.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="devs\core\core_ju_component\core_reporting_responsibility_component.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="devs\handler\message_stream_handler.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="devs\handler\lua_inject_handler.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -101,10 +125,16 @@
     <ClCompile Include="devs\core\hub.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="devs\core\ju_component.cpp">
+    <ClCompile Include="devs\core\core_ju_component\core_broadcast_component.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="devs\core\core_ju_component\print_component.cpp">
+    <ClCompile Include="devs\core\core_ju_component\core_period_broadcast_component.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="devs\rule\rule_a.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="devs\core\core_ju_component\core_reporting_responsibility_component.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

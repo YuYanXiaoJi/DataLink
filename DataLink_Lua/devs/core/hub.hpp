@@ -16,6 +16,10 @@ namespace devs::core {
     template<class Ty>void PushBuffer(TimeType schedule_time , PortType send_port , const Ty &msg) {
       priority_blob_queue.push(handler::ScheduleBufferNode(schedule_time , IO_Type(send_port ,util::CreateSptrBlob(msg))));
     }
+    template<>void PushBuffer(TimeType schedule_time , PortType send_port , const std::shared_ptr<util::Blob> &msg_sptr_blob) {
+      priority_blob_queue.push(handler::ScheduleBufferNode(schedule_time , IO_Type(send_port , msg_sptr_blob)));
+    }
+  
   public:
     // Í¨¹ý AbstractAtomic ¼Ì³Ð
     virtual void Input(const devs::IO_Type &x) override;
