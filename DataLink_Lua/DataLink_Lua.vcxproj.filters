@@ -114,6 +114,9 @@
     <ClInclude Include="devs\handler\lua_inject_handler.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="devs\core\ju_script_component.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">

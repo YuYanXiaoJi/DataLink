@@ -144,6 +144,7 @@
     <ClInclude Include="devs\core\hub.hpp" />
     <ClInclude Include="devs\core\ju.hpp" />
     <ClInclude Include="devs\core\ju_component.hpp" />
+    <ClInclude Include="devs\core\ju_script_component.hpp" />
     <ClInclude Include="devs\core\time.hpp" />
     <ClInclude Include="devs\core\typedef.hpp" />
     <ClInclude Include="devs\handler\lua_inject_handler.hpp" />

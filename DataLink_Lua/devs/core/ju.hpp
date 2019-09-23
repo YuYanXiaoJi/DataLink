@@ -29,17 +29,16 @@ namespace devs::core {
 
     void AddComponent(const shared_ptr<JuComponent> sptr_component);
   public:
-    util::MinPriorityQueue<handler::ScheduleBufferNode> recv_buffer_queue;
+    
     //std::list<IO_Type>  buffer_list;                //从 hub 接收的消息 全部保存在这里. 立即通过 output 进行触发
-    std::map<int64_t/*uid*/ , std::shared_ptr<JuComponent> > map_component;
+   
 
     msg::TimeSlice    time_silce;                   //保存 接收到的时间片信息
-
     util::sync::Map<std::string , handler::TrackInformation>   dict_local_track;
     util::sync::Map<std::string , handler::TrackInformation>   dict_recv_track;
     util::sync::Map<std::string , TimeType>                    dict_r2;
 
-    std::set<std::string/*track_number*/>                     set_record_track_number;  //用于记录本JU广播出去的消息的TN;
+    
   public:
 #pragma region 端口信号定义
     /*
@@ -70,9 +69,10 @@ namespace devs::core {
   public:
     int32_t _uSTN;
   private:
-    const TimeType  _time_slice_trigger_interval = 20;
-    //util::MinPriorityQueue<handler::ScheduleBufferNode>  _time_slice_trigger_queue;
-
+    const TimeType                                        time_slice_trigger_interval = 20;
+    std::set<std::string/*track_number*/>                 set_record_track_number;  //用于记录本JU广播出去的消息的TN;
+    util::MinPriorityQueue<handler::ScheduleBufferNode>   recv_buffer_queue;
+    std::map<int64_t/*uid*/,std::shared_ptr<JuComponent>> map_component;
   private:
     bool CheckIsSelfSend(const util::Blob &blob);
     void UpdateInfo(const util::Blob &blob);

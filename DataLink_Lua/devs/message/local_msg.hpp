@@ -6,7 +6,7 @@
 namespace devs::message {
   struct LocalTrack
   {
-    MsgType msg_type = MsgType::Msg_LocalTrack;
+    int32_t msg_type = MsgType::Msg_LocalTrack;
     // 来源
     TrackPlatform  track_platform;
     // 航迹目标
@@ -22,11 +22,15 @@ namespace devs::message {
       track_platform = _track_platform;
       create_time =  _create_time;
     }
+
+    std::string GetTrackName() {
+      return handler::TrackNumberHandler::GetName(track_number);
+    }
   };
 
   struct TimeSlice
   {
-    MsgType msg_type = MsgType::Msg_TimeSlice;
+    int32_t msg_type = MsgType::Msg_TimeSlice;
     TimeType begin_time;
     TimeType end_time;
 
@@ -38,7 +42,7 @@ namespace devs::message {
 
   struct SubTimeSlice
   {
-    MsgType msg_type = MsgType::Msg_SubTimeSlice;
+    int32_t msg_type = MsgType::Msg_SubTimeSlice;
     TimeType begin_time;
     TimeType end_time;
     TimeType current_time;

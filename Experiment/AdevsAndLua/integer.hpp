@@ -18,7 +18,7 @@ namespace cc {
     std::int32_t src;
     std::int32_t val;
     std::int32_t inc;
-    inline static std::int32_t t=100;
+    inline  static std::int32_t t=100;
     template<class... _Types>
     [[nodiscard]] inline static auto MakeShared(_Types&&... _Args) {
       return std::make_shared<Integer>(_Args);

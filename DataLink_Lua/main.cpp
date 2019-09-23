@@ -1,6 +1,7 @@
 #include"devs/core/ju.hpp"
 #include"devs/core/hub.hpp"
 
+#if 0
 int main() {
   devs::Digraph dome;
   devs::core::Hub hub = devs::core::Hub(dome , "123");
@@ -23,3 +24,30 @@ int main() {
     sim.execNextEvent();
   return 0;
 }
+#elif 1
+//—È÷§ Message to Lua 
+#include"devs/message/message.hpp"
+#include"devs/handler/lua_inject_handler.hpp"
+
+#include<Lua/lua.hpp>
+#include<Lua/LuaBridge.hpp>
+
+using namespace devs::message;
+using namespace devs;
+int main() {
+  lua_State *L = luaL_newstate();
+  luaL_openlibs(L);
+
+  lua_handler::LuaInject<msg::TimeSlice>(L);
+  lua_handler::LuaInject<msg::SubTimeSlice>(L);
+  lua_handler::LuaInject<msg::JointMsg2I>(L);
+  lua_handler::LuaInject<msg::JointMsg3I>(L);
+  lua_handler::LuaInject<msg::JointMsg7I>(L);
+  lua_handler::LuaInject<msg::LocalTrack>(L);
+  lua_handler::LuaInject<msg::LocalCmd>(L);
+
+
+
+}
+
+#endif
