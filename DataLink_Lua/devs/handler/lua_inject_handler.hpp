@@ -22,10 +22,18 @@ namespace devs::lua_handler {
       .addStaticData("Msg_LocalTrack" , &EnumWrapper::Msg_LocalTrack , false)
       .addStaticData("Msg_SubTimeSlice" , &EnumWrapper::Msg_SubTimeSlice , false)
       .addStaticData("Msg_TimeSlice" , &EnumWrapper::Msg_TimeSlice , false)
+
       .addStaticData("Platform_AIR" , &EnumWrapper::Platform_AIR , false)
       .addStaticData("Platform_LAND" , &EnumWrapper::Platform_LAND , false)
       .addStaticData("Platform_MARITIME" , &EnumWrapper::Platform_MARITIME , false)
       .addStaticData("Platform_UNDEFINED" , &EnumWrapper::Platform_UNDEFINED , false)
+
+      .addStaticData("CMD_SET_R2" , &EnumWrapper::CMD_SET_R2 , false)
+      .addStaticData("CMD_RM_R2" , &EnumWrapper::CMD_RM_R2 , false)
+      .addStaticData("CMD_BROADCAST_J3" , &EnumWrapper::CMD_BROADCAST_J3 , false)
+      .addStaticData("CMD_BROADCAST_J7" , &EnumWrapper::CMD_BROADCAST_J7 , false)
+
+      .addStaticData("TIME_MAX",&EnumWrapper::TIME_MAX,false)
       .endClass();
   }
 

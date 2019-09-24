@@ -182,7 +182,7 @@ namespace devs::core {
     case devs::message::Msg_SubTimeSlice:
       yb.insert(IO_Type(sigo_sts , sptr_blob));
       break;
-    case devs::message::Msg_LoaclCmd:
+    case devs::message::Msg_LocalCmd:
       yb.insert(IO_Type(sigo_cmd , sptr_blob));
       break;
     default:

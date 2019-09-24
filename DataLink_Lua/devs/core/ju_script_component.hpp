@@ -43,6 +43,7 @@ namespace devs::core {
 
   private:
     void InjectTheSoul();//( ͡° ͜ʖ ͡°)滑稽
+    util::SptrBlob LuaRefToBlob(luabridge::LuaRef &luaref);
   private:
     lua_State    *plua  = nullptr;
     devs::IO_Bag *pyb = nullptr;
