@@ -4,6 +4,7 @@
 #include"integer.hpp"
 #include"script_component.hpp"
 #include"typedef.hpp"
+#include"blob.hpp"
 namespace cc::lua_handler {
 
 
@@ -24,6 +25,13 @@ namespace cc::lua_handler {
       .addStaticData("t",&Integer::t,false)
       .endClass();
   }
+  template<> inline void Inject<Blob>(lua_State *pLuaState) {
+    luabridge::getGlobalNamespace(pLuaState)
+      .beginClass<Blob>("Blob")
+      .addConstructor<void( * )( const Integer & )>()
+      .endClass();
+  }
+
 
   template<> inline void Inject<cc::ScriptComponent>(lua_State *pLuaState) {
     luabridge::getGlobalNamespace(pLuaState)
@@ -33,6 +41,8 @@ namespace cc::lua_handler {
       .addFunction("BindPrint" , &cc::ScriptComponent::BindPrint)
       .addFunction("BindSend" , &cc::ScriptComponent::BindSend)
       .addFunction("SendFunc" , &cc::ScriptComponent::SendFunc)
+      .addFunction("SendFuncBlob" , &cc::ScriptComponent::SendFuncBlob)
+      .addFunction("SendFuncLuaRef" , &cc::ScriptComponent::SendFuncLuaRef)
       .endClass();
   }
 

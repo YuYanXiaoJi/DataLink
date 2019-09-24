@@ -8,7 +8,7 @@ namespace cc {
     Generator();
 
     // Í¨¹ý AtomicAbstract ¼Ì³Ð
-    virtual void Input(const devs::PortType & recvPort, const devs::SptrBlob sptrBlob) override;
+    virtual void Input(const devs::PortType & recvPort, const SptrBlob sptrBlob) override;
 
     virtual void Internal() override;
 
@@ -22,7 +22,7 @@ namespace cc {
     const devs::PortType even  = devs::PortType("Even");
     const devs::PortType print = devs::PortType("Print");
   public:
-    std::list<devs::SptrBlob> buffer_list;
+    std::list<SptrBlob> buffer_list;
   };
 
 }

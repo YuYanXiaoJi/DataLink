@@ -137,8 +137,8 @@ namespace devs::core {
 
     if(type == msg::Msg_TimeSlice) {
       auto ts = blob.get<msg::TimeSlice>();
-      this->time_silce = ts;
-      for(auto t = ts.begin_time; t < ts.end_time-1; t += _time_slice_trigger_interval) {
+      this->time_slice = ts;
+      for(auto t = ts.begin_time; t < ts.end_time-1; t += time_slice_trigger_interval) {
         auto sptr_sts = util::CreateSptrBlob(msg::SubTimeSlice(ts , t));
         PushBuffer(t , IO_Type(sigi_interior , sptr_sts));
       }
@@ -154,6 +154,7 @@ namespace devs::core {
   }
   void Ju::PushBuffer(TimeType schedule_time , const IO_Type& x){
     recv_buffer_queue.push(handler::ScheduleBufferNode(schedule_time , x));
+
   }
 
   
@@ -181,7 +182,7 @@ namespace devs::core {
     case devs::message::Msg_SubTimeSlice:
       yb.insert(IO_Type(sigo_sts , sptr_blob));
       break;
-    case devs::message::Msg_LoaclCmdType:
+    case devs::message::Msg_LoaclCmd:
       yb.insert(IO_Type(sigo_cmd , sptr_blob));
       break;
     default:

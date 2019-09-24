@@ -8,7 +8,7 @@ __Msg__(MissingTrack)
 __Msg__(TimeSlice) 
 __Msg__(SubTimeSlice) 
 //////////////////////
-__Msg__(LoaclCmdType) 
+__Msg__(LoaclCmd) 
 //////////////////////
 __Msg__(VerifyMsg) 
 __Msg__(VerifyCalc) 

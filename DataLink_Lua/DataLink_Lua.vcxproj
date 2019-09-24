@@ -22,7 +22,7 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{B05558E3-0E31-42E0-8E74-5E8148288D61}</ProjectGuid>
     <RootNamespace>DataLinkLua</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -41,13 +41,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
@@ -147,6 +147,7 @@
     <ClInclude Include="devs\core\ju_script_component.hpp" />
     <ClInclude Include="devs\core\time.hpp" />
     <ClInclude Include="devs\core\typedef.hpp" />
+    <ClInclude Include="devs\handler\enum_handler.hpp" />
     <ClInclude Include="devs\handler\lua_inject_handler.hpp" />
     <ClInclude Include="devs\handler\message_stream_handler.hpp" />
     <ClInclude Include="devs\handler\schedule_buffer_node.hpp" />
@@ -177,11 +178,13 @@
     <ClCompile Include="devs\core\core_ju_component\core_reporting_responsibility_component.cpp" />
     <ClCompile Include="devs\core\hub.cpp" />
     <ClCompile Include="devs\core\ju.cpp" />
+    <ClCompile Include="devs\core\ju_script_component.cpp" />
     <ClCompile Include="devs\rule\rule_a.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="devs\message\msg_type_name.def" />
+    <None Include="res\VerifyMessage.lua" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

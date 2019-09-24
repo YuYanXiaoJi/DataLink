@@ -117,6 +117,9 @@
     <ClInclude Include="devs\core\ju_script_component.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="devs\handler\enum_handler.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -140,10 +143,14 @@
     <ClCompile Include="devs\core\core_ju_component\core_reporting_responsibility_component.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="devs\core\ju_script_component.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="devs\message\msg_type_name.def">
       <Filter>源文件</Filter>
     </None>
+    <None Include="res\VerifyMessage.lua" />
   </ItemGroup>
 </Project>

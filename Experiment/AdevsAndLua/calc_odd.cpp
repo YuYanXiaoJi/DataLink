@@ -9,7 +9,7 @@ cc::CalcOdd::CalcOdd(devs::Digraph & digrapg, Generator & parent)
   BindSend();
 }
 
-void cc::CalcOdd::Input(const devs::PortType & recvPort, const devs::SptrBlob sptrBlob)
+void cc::CalcOdd::Input(const devs::PortType & recvPort, const SptrBlob sptrBlob)
 {
   buffer_list.push_back(sptrBlob);
 }

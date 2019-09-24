@@ -8,7 +8,7 @@ namespace devs {
   {
   public:
     //  等价=delta_ext
-    virtual void Input(const devs::PortType& recvPort, const devs::SptrBlob sptrBlob) = 0;
+    virtual void Input(const devs::PortType& recvPort, const SptrBlob sptrBlob) = 0;
 
     //  等价=delta_int
     virtual void Internal() = 0;

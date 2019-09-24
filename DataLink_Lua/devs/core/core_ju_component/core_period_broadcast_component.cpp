@@ -24,7 +24,7 @@ void devs::core::ju_component::CorePeriodBroadcastComponent::Output(devs::IO_Bag
   using namespace devs::handler::time_interval_handler;
   auto current_time = Time::Now();  //当前时间
 
-  auto& ts = ju.time_silce;
+  auto& ts = ju.time_slice;
   for(auto[track_name , last_broadcast_time]/*[key,value] c++17*/ : ju.dict_r2) {
     auto& ltn = ju.dict_local_track[track_name];
     auto broadcast_interval_min = GetMinBroadcastInterval(ltn.track_platform);

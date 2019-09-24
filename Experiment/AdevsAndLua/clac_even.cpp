@@ -9,7 +9,7 @@ cc::CalcEven::CalcEven(devs::Digraph & digrapg, Generator & parent)
   BindSend();
 }
 
-void cc::CalcEven::Input(const devs::PortType & recvPort, const devs::SptrBlob sptrBlob)
+void cc::CalcEven::Input(const devs::PortType & recvPort, const SptrBlob sptrBlob)
 {
   buffer_list.push_back(sptrBlob);
 }

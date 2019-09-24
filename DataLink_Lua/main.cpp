@@ -1,3 +1,6 @@
+#include<Lua/lua.hpp>
+#include<Lua/LuaBridge.hpp>
+
 #include"devs/core/ju.hpp"
 #include"devs/core/hub.hpp"
 
@@ -29,8 +32,7 @@ int main() {
 #include"devs/message/message.hpp"
 #include"devs/handler/lua_inject_handler.hpp"
 
-#include<Lua/lua.hpp>
-#include<Lua/LuaBridge.hpp>
+
 
 using namespace devs::message;
 using namespace devs;
@@ -39,15 +41,35 @@ int main() {
   luaL_openlibs(L);
 
   lua_handler::LuaInject<msg::TimeSlice>(L);
+  auto ts = msg::TimeSlice(0 , 999);
+  luabridge::setGlobal(L , &ts , "ts");
+
   lua_handler::LuaInject<msg::SubTimeSlice>(L);
+  auto sts = msg::SubTimeSlice(ts , 666);
+  luabridge::setGlobal(L , &sts , "sts");
+
   lua_handler::LuaInject<msg::JointMsg2I>(L);
+  auto j2 = msg::JointMsg2I("yd-00000001" , 77 , 200);
+  luabridge::setGlobal(L , &j2 , "j2");
+
   lua_handler::LuaInject<msg::JointMsg3I>(L);
+  auto j3 = msg::JointMsg3I("yd-00000002" , TrackPlatform::Platform_AIR , 66 , 300 , 77);
+  luabridge::setGlobal(L , &j3 , "j3");
+
+
   lua_handler::LuaInject<msg::JointMsg7I>(L);
+  auto j7 = msg::JointMsg7I("yd-00000003" , 0 , 700);
+  luabridge::setGlobal(L , &j7 , "j7");
+
   lua_handler::LuaInject<msg::LocalTrack>(L);
+  auto lt = msg::LocalTrack("yd-00000004" , TrackPlatform::Platform_LAND , 33 , 888);
+  luabridge::setGlobal(L , &lt , "lt");
+
   lua_handler::LuaInject<msg::LocalCmd>(L);
+  auto cmd = msg::LocalCmd(100 , "yd");
+  luabridge::setGlobal(L , &cmd , "cmd");
 
-
-
+  luaL_dofile(L , "res/VerifyMessage.lua");
 }
 
 #endif

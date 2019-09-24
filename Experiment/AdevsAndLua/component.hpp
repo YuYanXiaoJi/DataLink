@@ -33,7 +33,7 @@ namespace cc {
     Generator       &parent;
     devs::Digraph   &digrapg;
   public:
-    std::list<devs::SptrBlob> buffer_list;
+    std::list<SptrBlob> buffer_list;
 
 
   };

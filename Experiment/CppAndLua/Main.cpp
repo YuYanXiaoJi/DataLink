@@ -8,7 +8,7 @@
 #include<map>
 class Integer {
 public:
-  Integer(std::int32_t val) {
+  Integer(std::int32_t val=-1) {
     this->src = val;
     this->val = val;
     this->inc = 0;
@@ -21,6 +21,10 @@ public:
   template<class... _Types>
   inline static auto MakeShared(_Types&&... _Args) {
     return std::make_shared<Integer>(_Args);
+  }
+
+  std::string to_string() {
+    return std::to_string(src);
   }
 }; 
 
@@ -40,16 +44,33 @@ void Inject<Integer>(lua_State *pLuaState) {
     .beginNamespace("Msg")
     .beginClass<Integer>("Integer")
     .addConstructor<void(*)(std::int32_t)>()
+    .addFunction("__tostring",&Integer::to_string)
     .addData("src" , &Integer::src , false)
     .addData("val" , &Integer::val)
     .addData("inc" , &Integer::inc)
     .endClass()
     .endNamespace();
 }
+lua_State *lua_state;
+
+luabridge::LuaRef view_map() {
+  std::map<std::string , Integer> dict;
+  dict["a"] = Integer(1);
+  dict["b"] = Integer(2);
+  dict["c"] = Integer(3);
+
+  luabridge::LuaRef table(lua_state , luabridge::newTable(lua_state));//= luabridge::newTable(lua_state);
+  for(auto [key , value] : dict) {
+    std::string k = key;
+    table[k] = value;
+  }
+
+  return table;
+}
 
 int main() {
   
-  lua_State* lua_state = luaL_newstate();
+  lua_state = luaL_newstate();
   luaL_openlibs(lua_state);
 
   /*
@@ -64,11 +85,13 @@ int main() {
 */
   Inject<Integer>(lua_state);
 
-  Integer i(27);
-  luabridge::setGlobal(lua_state, &i, "i");
-
+  luabridge::getGlobalNamespace(lua_state)
+    .addFunction("view_map" , view_map);
+    
   
-  luaL_dofile(lua_state , "integer.lua");
+
+  luaL_dofile(lua_state , "1.lua");
+  /*luaL_dofile(lua_state , "integer.lua");
   luabridge::LuaRef v = luabridge::getGlobal(lua_state , "i");
   v["inc"] = 6666;
 
@@ -80,7 +103,7 @@ int main() {
 
   auto ary = luabridge::getGlobal(lua_state , "ary");
   for(auto i : { 0,1,2,3,4 })
-    std::cout << ary[i].cast<int>();
+    std::cout << ary[i].cast<int>();*/
   /*auto ret = 0;
   ret = luaL_dofile(lua_state , "List.lua");
   ret = luaL_dofile(lua_state,  "integer.lua");*/

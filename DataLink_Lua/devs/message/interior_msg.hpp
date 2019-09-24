@@ -14,7 +14,7 @@ namespace devs::message {
   };
 
   struct LocalCmd {
-    int32_t   msg_type = MsgType::Msg_LoaclCmdType;
+    int32_t   msg_type = MsgType::Msg_LoaclCmd;
     int32_t   cmd_id;
     char  track_name[32];
 

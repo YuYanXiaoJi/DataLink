@@ -23,7 +23,11 @@ function Output()
 	--val = val*3+1
 	i.val=i.val*3+1;
 	i.inc=i.inc+1;
-	this:SendFunc("Send",i);
+	blob=Blob(i)
+	--this:SendFunc("Send",i);
+	--this:SendFuncBlob("Send",blob)
+	this:SendFuncLuaRef("Send",i)
+	--this:SendFuncBlob("Send",i)
 end
 
 function Ta( )

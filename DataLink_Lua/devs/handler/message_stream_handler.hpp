@@ -1,3 +1,4 @@
+#pragma once
 #include"../message/joint_msg_3.hpp"
 #include"../message/local_msg.hpp"
 

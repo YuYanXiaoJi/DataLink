@@ -10,9 +10,9 @@ namespace devs::handler {
     std::string track_number;
     //std::string from;
 
-    msg::TrackPlatform  track_platform;
-    int32_t             track_quality;
-    int32_t             _uSTN;
+    int32_t   track_platform;
+    int32_t   track_quality;
+    int32_t   _uSTN;
 
     TimeType  create_time;
 
@@ -64,7 +64,7 @@ namespace devs::handler {
 
     auto ojb = msg::JointMsg3I(
       t_track_number.c_str() ,
-     // this->from.c_str() ,
+      // this->from.c_str() ,
       this->track_platform ,
       this->track_quality ,
       this->create_time ,

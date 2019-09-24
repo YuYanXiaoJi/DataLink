@@ -4,7 +4,7 @@ namespace devs::message {
   struct JointMsg3I :
     public JointMsgBase
   {
-    TrackPlatform  track_platform;
+    uint32_t  track_platform;
 
     // 信号质量 越高越好
     int32_t track_quality;
@@ -13,7 +13,7 @@ namespace devs::message {
 
     JointMsg3I(
       const char *_track_number , /*const char *_from ,*/
-      TrackPlatform _track_platform , int32_t _track_quality , TimeType _create_time , int32_t uSTN)
+      uint32_t _track_platform , int32_t _track_quality , TimeType _create_time , int32_t uSTN)
       :JointMsgBase("J3" , "0I" , _track_number,/*_from,*/_create_time, MsgType::Msg_JointMsg3I)
     {
       _uSTN = uSTN;

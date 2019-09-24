@@ -34,7 +34,7 @@ namespace devs::core::ju_component {
   {
     //时间要在时间片内 && 待发送队列不为空 
     auto now = Time::Now();
-    auto&ts = ju.time_silce;
+    auto&ts = ju.time_slice;
     if(ts.begin_time <= now && now < ts.end_time  && this->broadcast_buffer_queue.empty() == false) {
       return 0;
     }

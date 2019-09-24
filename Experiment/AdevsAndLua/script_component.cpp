@@ -15,6 +15,7 @@ cc::ScriptComponent::ScriptComponent(const string &filename , devs::Digraph &dig
 
 
   lua_handler::Inject<Integer>(this->m_pLuaState);
+  lua_handler::Inject<Blob>(this->m_pLuaState);
   lua_handler::Inject<devs::TimeType>(this->m_pLuaState);
   lua_handler::Inject<cc::ScriptComponent>(this->m_pLuaState);
 
@@ -36,7 +37,7 @@ cc::ScriptComponent::ScriptComponent(const string &filename , devs::Digraph &dig
   
 }
 
-void cc::ScriptComponent::Input(const devs::PortType &recvPort , const devs::SptrBlob sptrBlob)
+void cc::ScriptComponent::Input(const devs::PortType &recvPort , const SptrBlob sptrBlob)
 {
   auto m_luaRefInput = luabridge::getGlobal(m_pLuaState , "Input");
   if(m_luaRefInput.isFunction())
@@ -74,7 +75,18 @@ devs::TimeType cc::ScriptComponent::Ta()
 
 void cc::ScriptComponent::SendFunc(devs::PortType sendPort , Integer info)
 {
-  p_yb->insert({ sendPort,devs::Blob::MakeShared(info)});
+  p_yb->insert({ sendPort,Blob::MakeShared(info)});
+}
+
+void cc::ScriptComponent::SendFuncBlob(devs::PortType sendPort , Blob info)
+{
+  SendFunc(sendPort , info.get<Integer>());
+}
+
+void cc::ScriptComponent::SendFuncLuaRef(devs::PortType sendPort , luabridge::LuaRef info)
+{
+  if(info["type"].cast<uint8_t>()== MsgType::MSG_Integer)
+    SendFunc(sendPort , info.cast<Integer>());
 }
 
 

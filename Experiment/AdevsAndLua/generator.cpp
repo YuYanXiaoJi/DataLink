@@ -3,11 +3,11 @@
 #include<iostream>
 cc::Generator::Generator() {
   for (auto i : { 1,2,3,5,7,11,13 }) {
-    buffer_list.push_back(devs::Blob::MakeShared(Integer(i)));
+    buffer_list.push_back(Blob::MakeShared(Integer(i)));
   }
 }
 
-void cc::Generator::Input(const devs::PortType & recvPort, const devs::SptrBlob sptrBlob)
+void cc::Generator::Input(const devs::PortType & recvPort, const SptrBlob sptrBlob)
 {
   buffer_list.push_front(sptrBlob);
 }

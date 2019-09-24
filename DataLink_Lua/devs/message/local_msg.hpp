@@ -8,7 +8,7 @@ namespace devs::message {
   {
     int32_t msg_type = MsgType::Msg_LocalTrack;
     // 来源
-    TrackPlatform  track_platform;
+    uint32_t  track_platform;
     // 航迹目标
     char  track_number[STR_MAX_LENGTH];
     // 信号质量 越高越好
@@ -16,7 +16,7 @@ namespace devs::message {
     // 报文的创造时间
     TimeType  create_time;
 
-    LocalTrack(const char *_track_number , TrackPlatform _track_platform ,int32_t _track_quality , TimeType _create_time) {
+    LocalTrack(const char *_track_number , uint32_t _track_platform ,int32_t _track_quality , TimeType _create_time) {
       strcpy(track_number , _track_number);
       track_quality = _track_quality;
       track_platform = _track_platform;
@@ -38,6 +38,7 @@ namespace devs::message {
       begin_time = _begin_time;
       end_time = _end_time;
     }
+
   };
 
   struct SubTimeSlice

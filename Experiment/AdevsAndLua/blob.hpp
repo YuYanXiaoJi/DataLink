@@ -3,7 +3,7 @@
 #include<vector>
 #include<cstdint>
 #include<memory>
-namespace devs {
+
 
   //binary large object
   class Blob :public std::vector<std::uint8_t> {
@@ -44,6 +44,5 @@ namespace devs {
       return *reinterpret_cast<Ty*>(data());
     }
   };
-  typedef std::shared_ptr<devs::Blob> SptrBlob;
+  typedef std::shared_ptr<Blob> SptrBlob;
   
-}

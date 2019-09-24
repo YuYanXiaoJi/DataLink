@@ -29,11 +29,8 @@ namespace devs::core {
 
     void AddComponent(const shared_ptr<JuComponent> sptr_component);
   public:
-    
-    //std::list<IO_Type>  buffer_list;                //从 hub 接收的消息 全部保存在这里. 立即通过 output 进行触发
-   
 
-    msg::TimeSlice    time_silce;                   //保存 接收到的时间片信息
+    msg::TimeSlice    time_slice;                   //保存 接收到的时间片信息
     util::sync::Map<std::string , handler::TrackInformation>   dict_local_track;
     util::sync::Map<std::string , handler::TrackInformation>   dict_recv_track;
     util::sync::Map<std::string , TimeType>                    dict_r2;

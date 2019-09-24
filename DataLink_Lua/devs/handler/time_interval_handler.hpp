@@ -4,7 +4,7 @@
 namespace devs::handler {
   namespace time_interval_handler {
     //主要为 规则E 提供等待时间
-    inline TimeType GetWaitInterval(message::TrackPlatform track_platform) {
+    inline TimeType GetWaitInterval(uint32_t track_platform) {
       using namespace message;
       TimeType t = TIME_MAX;
       if(track_platform == Platform_AIR) t = kWaitTimeFromAir;
@@ -14,7 +14,7 @@ namespace devs::handler {
       return t;
     }
 
-    inline TimeType GetMinBroadcastInterval(message::TrackPlatform track_platform) {
+    inline TimeType GetMinBroadcastInterval(uint32_t track_platform) {
       using namespace message;
       TimeType t = TIME_MAX;
       if(track_platform == Platform_AIR) t = kBroadcastInterval_Air;
