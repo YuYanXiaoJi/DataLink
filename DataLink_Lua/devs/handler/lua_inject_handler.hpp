@@ -3,12 +3,22 @@
 #include<Lua/LuaBridge.hpp>
 
 #include"enum_handler.hpp"
+#include"function_handler.hpp"
 #include"track_infomation.hpp"
 #include"../message/message.hpp"
 #include"../core/ju_script_component.hpp"
 
 namespace devs::lua_handler {
   template<typename _Ty> void LuaInject(lua_State *p_lua_state) { static_assert( false , "未实现该类型的 Inject" ); }
+
+  template<> inline void LuaInject<handler::FuncWrapper>(lua_State *p_lua_state) {
+    using namespace handler;
+    luabridge::getGlobalNamespace(p_lua_state)
+      .beginClass<FuncWrapper>("Func")
+      .addStaticFunction("Now" , &FuncWrapper::Now)
+      .addStaticFunction("GetMsgName" , &FuncWrapper::GetMsgName)
+      .endClass();
+  }
 
   template<> inline void LuaInject<handler::EnumWrapper>(lua_State *p_lua_state) {
     using namespace handler;

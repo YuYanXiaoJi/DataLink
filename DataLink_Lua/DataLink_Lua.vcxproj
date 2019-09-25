@@ -154,6 +154,7 @@
     <ClInclude Include="devs\handler\time_interval_handler.hpp" />
     <ClInclude Include="devs\handler\track_infomation.hpp" />
     <ClInclude Include="devs\handler\track_number_handler.h" />
+    <ClInclude Include="devs\handler\function_handler.hpp" />
     <ClInclude Include="devs\message\interior_msg.hpp" />
     <ClInclude Include="devs\message\joint_msg_2.hpp" />
     <ClInclude Include="devs\message\joint_msg_3.hpp" />
@@ -184,6 +185,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="devs\message\msg_type_name.def" />
+    <None Include="res\PrintComponent.lua" />
     <None Include="res\VerifyMessage.lua" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

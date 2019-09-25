@@ -28,6 +28,7 @@ namespace devs::core {
     //bool  CorrelationTest(const std::string &track_name);
 
     void AddComponent(const shared_ptr<JuComponent> sptr_component);
+    void LoadScriptComponent(const std::string& lua_file , const std::string& jsc_name);
   public:
 
     msg::TimeSlice    time_slice;                   //保存 接收到的时间片信息

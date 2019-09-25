@@ -1,4 +1,6 @@
 #include "ju.hpp"
+
+#include"ju_script_component.hpp"
 #include<iostream>
 
 #include"core_ju_component/print_component.hpp"
@@ -6,7 +8,6 @@
 #include"core_ju_component/core_broadcast_component.hpp"
 #include"core_ju_component/core_period_broadcast_component.hpp"
 #include"core_ju_component/core_reporting_responsibility_component.hpp"
-
 
 #include"../rule/rule_a.hpp"
 namespace devs::core {
@@ -108,6 +109,12 @@ namespace devs::core {
     map_component[sptr_component->uid] = sptr_component;
   }
 
+  void Ju::LoadScriptComponent(const std::string & lua_file,const std::string& jsc_name)
+  {
+    auto jsc_ptr = std::make_shared<JuScriptComponent>(digraph , *this , lua_file , jsc_name);
+    AddComponent(jsc_ptr);
+  }
+
   bool Ju::CheckIsSelfSend(const util::Blob &blob)
   {
     auto type = blob.blob_type<msg::MsgType>();
@@ -150,7 +157,7 @@ namespace devs::core {
   {
     if(blob.blob_type<msg::MsgType>() == msg::Msg_TimeSlice)
       return;
-    std::cout << Time::Now() << "\t" << "R: " << msg::GetMsgTypeName(blob.blob_type<msg::MsgType>()) << std::endl;
+    std::cout << Time::Now() << "\t" << "R: " << msg::GetMsgName(blob.blob_type<msg::MsgType>()) << std::endl;
   }
   void Ju::PushBuffer(TimeType schedule_time , const IO_Type& x){
     recv_buffer_queue.push(handler::ScheduleBufferNode(schedule_time , x));

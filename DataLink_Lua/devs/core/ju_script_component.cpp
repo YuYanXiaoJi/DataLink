@@ -193,7 +193,7 @@ void devs::core::JuScriptComponent::SetR2(std::string track_name , int64_t time)
 void devs::core::JuScriptComponent::InjectTheSoul()
 {
 
-
+  lua_handler::LuaInject<handler::FuncWrapper>(plua);
   lua_handler::LuaInject<handler::EnumWrapper>(plua);
   lua_handler::LuaInject<msg::TimeSlice>(plua);
   lua_handler::LuaInject<msg::SubTimeSlice>(plua);

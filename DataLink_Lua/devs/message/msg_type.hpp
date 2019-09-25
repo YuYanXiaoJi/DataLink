@@ -12,7 +12,7 @@ namespace devs::message {
   };
 
 
-  inline std::string GetMsgTypeName(MsgType val) {  
+  inline std::string GetMsgName(int32_t val) {  
     switch(val)
     {
 #define __Msg__(name) case devs::message::Msg_##name : return "Msg_"#name; 

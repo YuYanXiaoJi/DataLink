@@ -4,12 +4,15 @@
 #include"devs/core/ju.hpp"
 #include"devs/core/hub.hpp"
 
-#if 0
+#if 1
 int main() {
   devs::Digraph dome;
   devs::core::Hub hub = devs::core::Hub(dome , "123");
   auto ju_1 = devs::core::Ju::make_shared(dome , "ju_1" ,10 );
   auto ju_2 = devs::core::Ju::make_shared(dome , "ju_2" , 10);
+
+  ju_1->LoadScriptComponent("res/PrintComponent.lua" , "PrintComponent");
+
   hub.AddJu(ju_1);
   hub.AddJu(ju_2);
   devs::Simulator sim = devs::Simulator(&dome);
@@ -27,7 +30,7 @@ int main() {
     sim.execNextEvent();
   return 0;
 }
-#elif 1
+#elif 0
 //—È÷§ Message to Lua 
 #include"devs/message/message.hpp"
 #include"devs/handler/lua_inject_handler.hpp"

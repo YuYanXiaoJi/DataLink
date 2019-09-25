@@ -45,7 +45,7 @@ namespace devs::core::ju_component {
 
   void CoreBroadcastComponent::Log(devs::ValueType value)
   {
-    std::cout << Time::Now() << "\t" << "CoreBroadcastComponent S: " << msg::GetMsgTypeName(value->blob_type<msg::MsgType>()) << std::endl;
+    std::cout << Time::Now() << "\t" << "CoreBroadcastComponent S: " << msg::GetMsgName(value->blob_type<msg::MsgType>()) << std::endl;
   }
 
 

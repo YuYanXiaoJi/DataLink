@@ -120,6 +120,9 @@
     <ClInclude Include="devs\handler\enum_handler.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="devs\handler\function_handler.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -152,5 +155,6 @@
       <Filter>源文件</Filter>
     </None>
     <None Include="res\VerifyMessage.lua" />
+    <None Include="res\PrintComponent.lua" />
   </ItemGroup>
 </Project>

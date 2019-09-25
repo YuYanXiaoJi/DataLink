@@ -1,7 +1,7 @@
 #pragma once
 #include"../message/msg_type.hpp"
 #include"../message/track_platform_type.hpp"
-
+#include"../message/interior_msg.hpp"
 /*
   由于 LuaBridge 不支持 c++ enum 类型 
  2019年9月24日 

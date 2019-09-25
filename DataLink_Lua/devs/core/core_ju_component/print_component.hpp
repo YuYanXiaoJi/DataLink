@@ -18,7 +18,7 @@ namespace devs::core::ju_component {
 
     // Í¨¹ý JuComponent ¼Ì³Ð
     inline virtual void Input(const devs::IO_Type & x) override {
-      std::cout << Time::Now() << "\tPrintComponent R:" << msg::GetMsgTypeName(x.value->blob_type<msg::MsgType>()) << std::endl;
+      std::cout << Time::Now() << "\tPrintComponent R:" << msg::GetMsgName(x.value->blob_type<msg::MsgType>()) << std::endl;
     };
 
     inline virtual void Internal() override {};
