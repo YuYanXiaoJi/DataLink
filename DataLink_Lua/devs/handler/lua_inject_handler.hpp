@@ -17,6 +17,8 @@ namespace devs::lua_handler {
       .beginClass<FuncWrapper>("Func")
       .addStaticFunction("Now" , &FuncWrapper::Now)
       .addStaticFunction("GetMsgName" , &FuncWrapper::GetMsgName)
+      .addStaticFunction("GetMinBroadcastInterval" , &FuncWrapper::GetMinBroadcastInterval)
+      .addStaticFunction("GetWaitInterval" , &FuncWrapper::GetWaitInterval)
       .endClass();
   }
 
@@ -173,6 +175,10 @@ namespace devs::lua_handler {
       .addFunction("ViewR2Dict"         , &JuScriptComponent::ViewR2Dict)
 
       .addFunction("SetR2" , &JuScriptComponent::SetR2)
+
+      .addFunction("SecureBroadcast" , &JuScriptComponent::SecureBroadcast)
+      .addFunction("ImmediateBroadcast" , &JuScriptComponent::ImmediateBroadcast)
+      .addFunction("InteriorBroadcast" , &JuScriptComponent::InteriorBroadcast)
 
       .endClass();
   }

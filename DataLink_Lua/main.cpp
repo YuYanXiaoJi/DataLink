@@ -12,7 +12,7 @@ int main() {
   auto ju_2 = devs::core::Ju::make_shared(dome , "ju_2" , 10);
 
   ju_1->LoadScriptComponent("res/PrintComponent.lua" , "PrintComponent");
-
+  ju_1->LoadScriptComponent("res/CorePeriodBroadcastComponent.lua" , "CorePeriodBroadcastComponent");
   hub.AddJu(ju_1);
   hub.AddJu(ju_2);
   devs::Simulator sim = devs::Simulator(&dome);

@@ -23,7 +23,7 @@ namespace devs::core {
     AddComponent(ju_component::PrintComponent::Creator(*this));
 
     AddComponent(ju_component::CoreBroadcastComponent::Creator(*this));
-    AddComponent(ju_component::CorePeriodBroadcastComponent::Creator(*this));
+    //AddComponent(ju_component::CorePeriodBroadcastComponent::Creator(*this));
     AddComponent(ju_component::CoreReportingResponsibilityComponent::Creator(*this));
 
     AddComponent(ju_component::RuleA::Creator(*this));

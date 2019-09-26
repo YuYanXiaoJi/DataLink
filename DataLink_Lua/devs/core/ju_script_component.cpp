@@ -208,7 +208,7 @@ void devs::core::JuScriptComponent::InjectTheSoul()
 
 util::SptrBlob devs::core::JuScriptComponent::LuaRefToBlob(luabridge::LuaRef& luaref)
 {
-  auto type = static_cast<msg::MsgType>(luaref["type"].cast<int32_t>());
+  auto type = static_cast<msg::MsgType>(luaref["msg_type"].cast<int32_t>());
   switch(type)
   {
   case devs::message::Msg_JointMsgBase:
