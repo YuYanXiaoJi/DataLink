@@ -22,7 +22,7 @@ namespace devs::core {
 
   public:
     void SecureBroadcast(luabridge::LuaRef msg);
-    void ImmediateBroadcast(luabridge::LuaRef msg);
+    void ImmediateBroadcast(util::Blob);
     void InteriorBroadcast(luabridge::LuaRef msg);
 
 

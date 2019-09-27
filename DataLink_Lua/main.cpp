@@ -13,6 +13,7 @@ int main() {
 
   ju_1->LoadScriptComponent("res/PrintComponent.lua" , "PrintComponent");
   ju_1->LoadScriptComponent("res/CorePeriodBroadcastComponent.lua" , "CorePeriodBroadcastComponent");
+  ju_1->LoadScriptComponent("res/CoreBroadcastComponent.lua" , "CoreBroadcastComponent");
   hub.AddJu(ju_1);
   hub.AddJu(ju_2);
   devs::Simulator sim = devs::Simulator(&dome);

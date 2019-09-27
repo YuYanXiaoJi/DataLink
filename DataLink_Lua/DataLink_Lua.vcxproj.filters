@@ -156,5 +156,8 @@
     </None>
     <None Include="res\VerifyMessage.lua" />
     <None Include="res\PrintComponent.lua" />
+    <None Include="res\CorePeriodBroadcastComponent.lua" />
+    <None Include="res\List.lua" />
+    <None Include="res\CoreBroadcastComponent.lua" />
   </ItemGroup>
 </Project>

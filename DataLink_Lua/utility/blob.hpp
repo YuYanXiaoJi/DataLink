@@ -43,6 +43,11 @@ namespace utility {
     template<class Ty> const Ty blob_type(std::size_t pos = 0) const{
       return *reinterpret_cast<const Ty* >( data() + pos );
     }
+
+    int32_t msg_type() {
+      return blob_type<int32_t>();
+    }
+    
   };
 
 

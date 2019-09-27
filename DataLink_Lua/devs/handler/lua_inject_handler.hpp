@@ -45,6 +45,16 @@ namespace devs::lua_handler {
       .addStaticData("CMD_BROADCAST_J3" , &EnumWrapper::CMD_BROADCAST_J3 , false)
       .addStaticData("CMD_BROADCAST_J7" , &EnumWrapper::CMD_BROADCAST_J7 , false)
 
+
+      .addStaticData("SigI_BB" , &EnumWrapper::SigI_BB , false)
+      .addStaticData("SigI_TS" , &EnumWrapper::SigI_TS , false)
+      .addStaticData("SigI_STS" , &EnumWrapper::SigI_STS , false)
+      .addStaticData("SigI_CMD" , &EnumWrapper::SigI_CMD , false)
+      .addStaticData("SigI_LT" , &EnumWrapper::SigI_LT , false)
+      .addStaticData("SigI_J2" , &EnumWrapper::SigI_J2 , false)
+      .addStaticData("SigI_J3" , &EnumWrapper::SigI_J3 , false)
+      .addStaticData("SigI_J7" , &EnumWrapper::SigI_J7 , false)
+
       .addStaticData("TIME_MAX",&EnumWrapper::TIME_MAX,false)
       .endClass();
   }
@@ -144,6 +154,14 @@ namespace devs::lua_handler {
       .endClass()
       .endNamespace();
   }
+
+  template<> inline void LuaInject<util::Blob>(lua_State *pLuaState) {
+    luabridge::getGlobalNamespace(pLuaState)
+      .beginClass<util::Blob>("Blob")
+      .addFunction("GetMsgType",&util::Blob::msg_type)
+      .endClass();
+  }
+
 
   template<> inline void LuaInject<devs::core::JuScriptComponent>(lua_State *p_lua_state) {
 

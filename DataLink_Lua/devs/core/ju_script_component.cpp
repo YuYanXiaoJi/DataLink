@@ -9,6 +9,8 @@ devs::core::JuScriptComponent::JuScriptComponent(Digraph &digraph , Ju &ju , con
   this->plua = luaL_newstate();
   luaL_openlibs(plua);
   InjectTheSoul();
+  luaL_dofile(plua , "res/List.lua"); //load lua file
+
 
   luabridge::setGlobal(plua , &( *this ) , "this");
 
@@ -29,31 +31,31 @@ void devs::core::JuScriptComponent::Input(const devs::IO_Type &x)
   auto m_luaRefInput = luabridge::getGlobal(plua , "Input");
   if(m_luaRefInput.isFunction()) {
     if(x.port == sigi_broadcast_buffer) {
-      m_luaRefInput(*x.value);
+      auto ret = m_luaRefInput(x.port, *x.value );
     }
 
     if(x.port == sigi_cmd) {
-      m_luaRefInput(x.value->get<msg::LocalCmd>());
+      auto ret = m_luaRefInput(x.port , x.value->get<msg::LocalCmd>());
     }
 
     if(x.port == sigi_j2) {
-      m_luaRefInput(x.value->get<msg::JointMsg2I>());
+      auto ret = m_luaRefInput(x.port , x.value->get<msg::JointMsg2I>());
     }
 
     if(x.port == sigi_j3) {
-      m_luaRefInput(x.value->get<msg::JointMsg3I>());
+      auto ret = m_luaRefInput(x.port , x.value->get<msg::JointMsg3I>());
     }
 
     if(x.port == sigi_lt) {
-      m_luaRefInput(x.value->get<msg::LocalTrack>());
+      auto ret = m_luaRefInput(x.port , x.value->get<msg::LocalTrack>());
     }
 
     if(x.port == sigi_sts) {
-      m_luaRefInput(x.value->get<msg::SubTimeSlice>());
+      auto ret = m_luaRefInput(x.port , x.value->get<msg::SubTimeSlice>());
     }
 
     if(x.port == sigi_ts) {
-      m_luaRefInput(x.value->get<msg::TimeSlice>());
+      auto ret = m_luaRefInput(x.port , x.value->get<msg::TimeSlice>());
     }
 
   }
@@ -107,10 +109,10 @@ void devs::core::JuScriptComponent::SecureBroadcast(luabridge::LuaRef msg)
   InsertSecureBroadcast(LuaRefToBlob(msg) , *pyb);
 }
 
-void devs::core::JuScriptComponent::ImmediateBroadcast(luabridge::LuaRef msg)
+void devs::core::JuScriptComponent::ImmediateBroadcast(util::Blob blob)
 {
   assert(pyb != nullptr);
-  InsertImmediateBroadcast(LuaRefToBlob(msg) , *pyb);
+  InsertImmediateBroadcast(std::make_shared<util::Blob>(blob) , *pyb);
 }
 
 void devs::core::JuScriptComponent::InteriorBroadcast(luabridge::LuaRef msg)
@@ -203,6 +205,7 @@ void devs::core::JuScriptComponent::InjectTheSoul()
   lua_handler::LuaInject<msg::LocalTrack>(plua);
   lua_handler::LuaInject<msg::LocalCmd>(plua);
   lua_handler::LuaInject<handler::TrackInformation>(plua);
+  lua_handler::LuaInject<util::Blob>(plua);
   lua_handler::LuaInject<JuScriptComponent>(plua);
 }
 

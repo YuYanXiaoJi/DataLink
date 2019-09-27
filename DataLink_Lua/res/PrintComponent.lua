@@ -9,7 +9,7 @@ function Init()
     this:BindInCMD();
 end
 
-function Input(msg)
+function Input(sig,msg)
 
 	print(Func.Now().."\tPrintComponent R:"..Func.GetMsgName(msg.msg_type).."\t..lua")
 end

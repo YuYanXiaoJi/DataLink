@@ -2,6 +2,7 @@
 #include"../message/msg_type.hpp"
 #include"../message/track_platform_type.hpp"
 #include"../message/interior_msg.hpp"
+#include"../core/ju_component.hpp"
 /*
   由于 LuaBridge 不支持 c++ enum 类型 
  2019年9月24日 
@@ -32,7 +33,18 @@ namespace devs::handler {
     inline static int32_t CMD_RM_R2 = message::CMD_RM_R2;
     inline static int32_t CMD_BROADCAST_J3 = message::CMD_BROADCAST_J3;
     inline static int32_t CMD_BROADCAST_J7 = message::CMD_BROADCAST_J7;
+    
+    //JuComponent Recv Port
+    inline static int32_t SigI_BB = core::JuComponent::sigi_broadcast_buffer;
+    inline static int32_t SigI_TS = core::JuComponent::sigi_ts;
+    inline static int32_t SigI_STS = core::JuComponent::sigi_sts;
+    inline static int32_t SigI_CMD = core::JuComponent::sigi_cmd;
+    inline static int32_t SigI_LT = core::JuComponent::sigi_lt;
+    inline static int32_t SigI_J2 = core::JuComponent::sigi_j2;
+    inline static int32_t SigI_J3 = core::JuComponent::sigi_j3;
+    inline static int32_t SigI_J7 = core::JuComponent::sigi_j7;
 
+    //Const
     inline static TimeType TIME_MAX = devs::TIME_MAX;
   };
 }

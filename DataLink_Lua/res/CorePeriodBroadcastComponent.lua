@@ -4,8 +4,9 @@ function Init()
     this:BindInSTS()
 end
 
-function Input(msg)
-    if(msg.msg_type==Enum.Msg_SubTimeSlice) then
+function Input(sig,msg)
+    --if(msg.msg_type==Enum.Msg_SubTimeSlice) then
+	if(sig==Enum.SigI_STS) then
         --print(Func.Now().."\tCPBC R:"..Func.GetMsgName(msg.msg_type).."\t..lua")
         is_local_ts=true
     end
